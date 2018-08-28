@@ -1,0 +1,176 @@
+\documentclass[toc=sectionentrywithdots,a4paper,11pt,oneside, openright]{scrartcl}
+
+% Stilistische Vorgaben nach Standard der HS
+%--------------------------------------------------------------------------
+\usepackage{geometry}
+\geometry{top=2.0cm,bottom=3cm,left=3.5cm,right=2cm}
+%----------------Schriftart/-form------------------
+%Serifen######
+%-------------
+%\usepackage{mathptmx} % setzt auf Times New Roman
+%\renewcommand{\familydefault}{\rmdefault}
+\setkomafont{section}{\fontfamily{\rmdefault}\Large}
+\setkomafont{subsection}{\fontfamily{\rmdefault}\large}
+\setkomafont{subsubsection}{\fontfamily{\rmdefault}\normalsize}
+\setkomafont{sectionentry}{\fontfamily{\rmdefault}}
+
+%Seriflos#####
+%-------------
+\renewcommand{\familydefault}{\sfdefault}
+%\setkomafont{section}{\fontfamily{\sfdefault}\Large}
+%\setkomafont{subsection}{\fontfamily{\sfdefault}\large}
+%\setkomafont{subsubsection}{\fontfamily{\sfdefault}\normalsize}
+%\setkomafont{sectionentry}{\fontfamily{\sfdefault}}
+%---------------------------------------------------
+\usepackage[T1]{fontenc} %
+\usepackage{setspace}
+\setcounter{tocdepth}{4}
+%--------------------------------------------------------------------------
+% Pakete für die Bearbeitung (Sprache, Tabellen, Grafiken, Mathe,...)
+\usepackage[ngerman]{babel} % Sprachpaket
+\usepackage[utf8]{inputenc} % Zeichenkodierung inkl. Umlaute
+\usepackage{graphicx} % Einbinden von Bildern
+\usepackage{longtable} % Tabellen die über eine Seite gehen
+\usepackage{tabularx} % Standardtabellen
+\usepackage{amsmath} % Für mathematische Zeichen, Formeln, etc...
+\usepackage{tabto}
+\usepackage{blindtext}
+%Abkürzungsverzeichnis; Option: acronym trägt nur die Abkürzungen in das Verzeichnis ein. Kompilieren im TeXStudio über Tools-->Glossary-->dann gesamtest Dokument kompilieren
+\usepackage[nonumberlist,nomain,acronym,xindy,automake,toc]{glossaries}
+\makeglossaries
+\loadglsentries{_glossary.tex}
+
+%Kopf-/Fußzeile
+%------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{\fancyhf{}}
+\fancyhf{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%--------------------------------------------------------------------------
+\usepackage[backend=biber,sorting=none]{biblatex}
+\addbibresource{_bibliography.bib}
+
+%-------------------------------------
+% eigene pakete
+\usepackage{textcomp}
+
+%---------------------------------------------------
+% PLATZHALTER FÜLLEN MIT NAMEN, THEMA, ETC.
+\newcommand{\grad}{Bachelor of Science}
+\newcommand{\matrinr}{s158109}
+\newcommand{\thema}{Thema, wie beantragt.}
+\newcommand{\name}{Janine Kostka}
+\newcommand{\geb}{08.01.1994}
+\newcommand{\ort}{Kirchheim unter Teck}
+\newcommand{\erstp}{Prof. Benjamin Fabian}
+\newcommand{\instituterst}{Hochschule für Telekommunikation Leipzig}
+\newcommand{\zweitp}{M.Sc. Mario Hoffmann}
+\newcommand{\institutzweit}{Hochschule für Telekommunikation Leipzig}
+\newcommand{\abgabe}{31.10.2018}
+%---------------------------------------------------
+
+
+\begin{document}
+	%---------------------------------------------------
+	% TITELSEITE/DECKBLATT
+	\begin{titlepage}
+		\begin{figure}[h]
+			\includegraphics[scale=0.2]{hftl_logo.png}
+		\end{figure}
+		\vspace*{20pt}
+		\centering
+		Hochschule für Telekommunikation Leipzig\\
+		\vspace*{40pt}
+		\large \textbf{Abschlussarbeit zur Erlangung des akademischen Grades}\\
+		\doublespacing
+		\textbf{\grad} % ggf. Grad anpassen
+		\vspace*{100pt}
+		\begin{table}[h!]
+			\begin{tabular}{p{0.2\linewidth}p{0.7\linewidth}}
+				Thema: & \large \thema \\
+				\\[3em]
+				& \large Serifenlose Schrift 
+				\\[5em]
+				Vorgelegt von: & \large \name  \\
+				\\[2em]
+				geboren am: & \geb \\
+				in: & \ort \\
+				Matrikelnummer: & \matrinr \\
+			 	\\[2em]
+			 	eingereicht am: & \abgabe \\
+			 	\\[2em]
+			 	Erstprüfer: & \erstp, \instituterst \\
+			 	Zweitprüfer: & \zweitp, \institutzweit \\
+			\end{tabular}
+		\end{table}
+	\end{titlepage}
+	\newpage
+	%---------------------------------------------------
+	%---------------------------------------------------
+	% SELBSTSTÄNDIGKEITSERKLÄRUNG
+	\thispagestyle{empty}
+	\vspace*{3em}
+	\begin{center}
+		\LARGE \textbf{Selbstständigkeitserklärung}
+	\end{center}
+	\normalsize
+	\vspace*{3em}
+	Hiermit erkläre ich, dass die von mir an der Hochschule für Telekommunikation Leipzig (FH)
+	eingereichte Abschlussarbeit zum Thema
+	\vspace*{1em}
+	\begin{center}
+		\thema
+	\end{center}
+	\vspace*{1em}
+	vollkommen selbständig verfasst und keine anderen als die angegebenen Quellen und
+	Hilfsmittel benutzt habe.
+	\\[2em]
+	Stellen, die wörtlich oder sinngemäß aus veröffentlichten oder noch nicht veröffentlichten
+	Quellen entnommen sind, sind als solche kenntlich gemacht.
+	\\[2em]
+	Die Abbildungen in dieser Arbeit sind von mir selbst erstellt oder mit einem entsprechenden
+	Quellennachweis versehen.
+	\\[2em]
+	Diese Arbeit ist in gleicher oder ähnlicher Form noch bei keiner anderen Hochschule/
+	Universität eingereicht worden.
+	\\[6em]
+	
+	Leipzig, den \abgabe \tab \rule{6cm}{0.5pt}\\
+	\hspace*{22em}\name
+	\newpage
+	%---------------------------------------------------
+	%---------------------------------------------------
+	% VERZEICHNISSE -- AUTOMATISCHE EINTRAGUNG
+	\normalsize
+	\tableofcontents
+	\newpage
+	\listoffigures
+	\newpage
+	\listoftables
+	\newpage
+	\printglossary[type=\acronymtype]
+	\thispagestyle{empty}
+	\newpage
+	%---------------------------------------------------
+	%---------------------------------------------------
+	%########################################################################################################
+	%!!!!!!!!!!!!!!!!!!!!!!!!AB HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
+
+    \include{expose}
+    \include{01_einleitung}
+    \include{02_state_of_the_art}
+    \include{030_vorgehen}
+    \include{031_prototyp}
+    \include{04_evaluation}
+    \include{05_schluss}
+
+	%!!!!!!!!!!!!!!!!!!!!!!!!BIS HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
+	%########################################################################################################
+	
+	
+\newpage	
+\printbibliography[title=Literaturverzeichnis]
+\end{document}
