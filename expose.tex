@@ -1,21 +1,32 @@
 \section*{Einführung/Motivation}
-    % Was wollen Sie mit Ihrer Bachelorarbeit herausfinden? Was ist das Forschungsziel? Was wollen Sie erreichen? In diesem Kontext gehen Sie auch kurz auf die Ausgangslage ein: Wie ist der Forschungsstand zum Thema, welches Problem wird in Ihrer Bachelorarbeit behandelt werden und wo starten Sie mit der Untersuchung?
+    %Was wollen Sie mit Ihrer Bachelorarbeit herausfinden? Was ist das Forschungsziel? Was wollen Sie erreichen? In diesem Kontext gehen Sie auch kurz auf die Ausgangslage ein: Wie ist der Forschungsstand zum Thema, welches Problem wird in Ihrer Bachelorarbeit behandelt werden und wo starten Sie mit der Untersuchung?
     
     Mit stetig zunehmender Vernetzung des Lebens ist davon auch häufig der eigene Wohnraum betroffen. 
     Der Trend zu sogenannten Smart Homes ist klar erkennbar. 
-    Von Küchengeräten über Beleuchtung, Sprinkleranlagen im Garten und Ga\-ra\-gen\-tü\-ren - immer mehr Geräte werden mit einem Netzwerk und gar mit dem Internet verbunden. 
+    Von Küchengeräten über Beleuchtung, Sprinkleranlagen im Garten und Ga\-ra\-gen\-tü\-ren - immer mehr Geräte werden mit einem Netzwerk und gar mit dem Internet zu einem sogenannten \gls{iot} verbunden. 
     Gesteurert wird dies meist mit dem Smartphone entweder direkt oder über ein spezielles Hub, über das alle Informationen zentral fließen.
     So auch Smart Locks (wörtl. ,,intelligente Schlösser``).
-    Diese werden häufig auch bei Buchung und Vermietung von privaten Unterkünften oder auch im eigenen Heim eingesetzt und sollen den Besitzern die Möglichkeit bieten schlüssellos und bequem mittels Smartphone das Schloss zu öffnen und zu schließen.
-    Häufig bieten Smart Locks auch Funktionen zur Administration von Berechtigungen, wie beispielsweise bestimmte Nutzer zeitweise dazu zu berechtigen das Türschloss zu öffnen und zu schließen. 
+
+    Diese werden häufig auch bei Buchung und Vermietung von privaten Unterkünften oder im eigenen Heim an der als Türschlosser oder auch in Form von Vorhängeschlössern eingesetzt und sollen den Besitzern die Möglichkeit bieten schlüssellos und bequem mittels Smartphone das Schloss zu öffnen und zu schließen.
+    Häufig bieten Smart Locks auch Funktionen zur Administration von Berechtigungen, wie beispielsweise bestimmte Nutzer zeitweise dazu zu berechtigen das Türschloss zu öffnen und zu schließen.
+    Oft wird zur Übertragung der Signale Bluetooth Low Energy verwendet.
     
     Ebenfalls im Trend liegt die Technologie der Blockchain, welche mit dem Erfolg der Kryptowährung Bitcoin nun auch in anderen Gebieten wie im Internet of Things und im Smart Home Anwendung findet.
     Da im Smart Home häufig auch kritische Daten, wie beispielsweise personenbezogene Daten ausgetauscht werden, ist deren Sicherheit zu garantieren wichtig.
-    Ein zentrales Merkmal der Blockchain ist die Dezentralisierung der ,,Buchführung`` von Transaktionen.
+    Ein zentrales Merkmal der Blockchain ist die Dezentralisierung der ,,Buchführung`` von Transaktionen.\newline
+    
+    Aufgrund vermehrter Berichte über Sicherheitsvorfälle bei \gls{iot}-Geräten ist es umso nötiger die Sicherheit der im \gls{iot} verarbeiteten Daten und die Funktion der vernetzten Geräte zu gewährleisten.
+    Diese Berichte umfassen Schwachstellen wie hardcoded Schlüssel, im Klartext gespeicherte Passwörter, Möglichkeit für Replay-Angriffe, Device-Spoofing\cite{Rose2016} und ungesicherte APIs beim Kommunikation mit der Cloud\cite{Stykas2018}. 
+    Als eine der schwerwiegensten Schwachstellen wird außerdem die Zentralisierung von \gls{iot}-Geräten vor allem in der Cloud beschrieben\cite{Kshetri2017}.
+
 
 \section*{Problemstellung}
-    % Anhand welcher Theorien, Methoden und Vorgehensweisen erledigt die Bachelorarbeit diese Aufgabe?
-    Das Ziel der Arbeit soll die Frage erörtern ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks (und erweitert im Bereich Smart Home) eingesetzt zu werden.
+    %Anhand welcher Theorien, Methoden und Vorgehensweisen erledigt die Bachelorarbeit diese Aufgabe?
+    Gerade bei Smart Locks ist es unbedingt nötig diese Schwachstellen zu unterbinden.
+    Durch das oben erwähnte dezentrale Konzept der Blockchain\cite{Nakamoto2008} lohnt es sich diese Technologie im Kontext des \gls{iot}, am Beispiel von Smart Locks zu untersuchen.
+    Zudem verspricht man sich auch im Bereich des Identitäts- und Zugriffsmanagements von dem Konzept Blockchain Angriffe wie Device-Spoofing durch das Speichern von Gerätesignaturen zu unterbinden\cite{Kshetri2017}.
+    \newline
+    \noindent Als Ziel der Arbeit soll die Frage erörtern ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks (und erweitert im Bereich Smart Home) eingesetzt zu werden.
     Dies soll mit Hilfe eines Prototypen eines Smart Locks untersucht werden.
     
     Der Fokus des Prototypen soll dabei aber nicht auf der Umsetzung der Hardware liegen, sondern auf der Nutzung eines aktuell vorhandenen Frameworks, also auf aktuell plausiblen Implementierungen. 
@@ -23,17 +34,24 @@
     Dies wird nach fertigstellung des Prototypen untersucht.
     Je nach Ergebnis lässt sich dann auf die Kernfrage schließen.
 
-\section*{Stand der Wissenschaft}
-    In dem Stand der Wissenschaft werden folgende Themen verschieden ausführlich abgedeckt:
-    \begin{itemize}
-        \item Blockchain (ausführlich): (eventuell kurze Historie, )Grundkonzepte, Anwendungsgebiete, Bezug auf Sicherheit
-        \item \gls{iot} (kurz)
-        \item Smart Home (kurz)
-        \item Smart Locks (ausführlich): u.a. Architekturen, Sicherheitsmechanismen, ..
-        \item Sicherheitsanalysen (von Smart Locks bzw. Geräten im Interet of Things) (ausführlich)
-    \end{itemize}
+    \subsection*{Methodik}
+        Zunächst sollen bekannte Schwachstellen aktueller Produkte analysiert werden.
+        Als roter Faden der Analyse werden die \gls{owasp}-Top10 für das \gls{iot}\cite{Miessler2015a} verwendet.
+        Im Anschluss wird als erstes ein passendes Framework ausgewählt, welches theoretisch die in der Analyse gefundenen Lücken schließen könnte.
+        Auf Basis dieses Frameworks wird dann der Prototyp entworfen und umgesetzt.
+        Der Prototyp soll ebenfalls anhand der \gls{owasp}-Top10 evaluiert werden.
+        Danach wird zwsichen den beim Prototyp gefundenen und den zuvor bei aktuellen Produkten analysierten Schwachstellen verglichen.
+        Dies geschieht mit Hilfe des \gls{cvss}-Bewertungsschemas, welches eine Vergleichbarkeit zwischen den gefundenen Lücken schaffen soll.
+        Abschließend wird die Problemstellung mittels des Vergleichs erörtert.
+
 
 \section*{Vorgehen}
+    \subsection*{Analyse von aktuellen Produkten}
+    \label{sec:analyse}
+        Die Analyse von aktuellen Produkten soll Teil der Literaturrecherche sein. 
+        Dabei werden beispielsweise die Case Study eines Smart Locks von der Firma August\cite{Ye2017}, sowie Nachrichtenartikel\cite{Tsing2017} und Präsentationen von Konferenzen\cite{Rose2016} herangezogen.\\
+        \noindent Aus die in dieser Analyse identifizierten spezifischen Schwachstellen bei Smart Locks sollen die Anforderungen an den Prototypen abgeleitet werden.
+    
     \subsection*{Auswahl des Frameworks}
         Ein (kurzer) Abschnitt der Arbeit soll die Auswahl des genutzen Frameworks für den Prototypen darstellen, da dies eine zentrale Entscheidung für die Arbeit und somit auch essentiell für die Bearbeitung der Problemstellung ist.
         Es existieren mittlerweile diverse Frameworks mit verschiedenen Anwendungsgebieten, daher sollte das letztendlich verwendete Framework folgenden Kriterien entsprechen:
@@ -42,6 +60,7 @@
             \item aktive Community \textrightarrow\ Unterstützung bei Schwierigkeiten
             \item aktive Weiterentwicklung \textrightarrow\ zumindest in naher Zukunft besteht die Möglichkeit, dass das Framework auch in Produkten auf dem Markt genutzt werden könnte
             \item Auswahl an Sicherheitsmechanismen \textrightarrow\ Evaluierung von verschiedenen Konfigurationen möglich
+            \item Theoretische Möglichkeit des Schließens von den in \ref{sec:analyse} erarbeiteten Sicherheitslücken
         \end{itemize}
         \medskip
         \textbf{Auswahl verfügbarer Frameworks nach erster Recherche}
@@ -52,11 +71,7 @@
             \item Ethereum
             \item Multichain
         \end{itemize}
-
-    \subsection*{Analyse von aktuellen Produkten}
-        Die Analyse von aktuellen Produkten soll Teil der Literaturrecherche sein. 
-        Dabei werden beispielsweise die Case Study eines Smart Locks von der Firma August\cite{Ye2017}, sowie Nachrichtenartikel\cite{Tsing2017} und Präsentationen von Konferenzen\cite{Rose2014} herangezogen.
-        Aus die in dieser Analyse identifizierten spezifischen Schwachstellen bei Smart Locks sollen die Anforderungen an den Prototypen abgeleitet werden.
+    
     \subsection*{Prototypische Umsetzung}
         Je nach Aufwand und Zeigbudget kann der Prototyp in seiner Funktion variieren. 
         Folgend die Vorstellungen der Mindestfunktionen des Prototyps.
@@ -74,10 +89,12 @@
             Jedoch existieren generell eher wenige Sammlungen an Informationen über das Testen von Geräten im \gls{iot}.
             Das \gls{owasp} hat jedoch bereits eine Auflistung möglicher Angriffsflächen, sowie einen Testing Guide veröffentlicht, welche als Grundlagen für die Sicherheitsuntersuchung genutzt werden sollen.
             Damit soll eine breitgefächerte und einheitliche Teststruktur garantiert werden.
+            
 
         \subsubsection*{Bewertung der Testergebnisse}
             Die Testergebnisse sollen nach dem \gls{cvss} V3.0 bewertet werden.
-
+        
+        
         \subsubsection*{Beantworten der Fragestellung}
             Es soll schließlich im Bezug auf die Problemstellung mit den Ergebnissen argumentiert werden.
             Mögliche Ergebnisse der Frage, ob die Blockchain-Technologie geeignet wäre in Smart Locks eingesetzt zu werden:
@@ -96,6 +113,7 @@
     Dadurch, dass es kritisch ist seine Eingangstür zu Verschließen, ist ein Schloss ein guter Repräsentant für die Sicherheit im Smart Home bzw. im Internet of Things. 
     Das erarbeitete Konzept lässt sich auf weitere Anwendungen mit gleichen oder ähnlichen Sicherheitsanforderungen (Identität, Authorisierung, Authentifizierung, Vertraulichkeit, ...)in den o.g. Gebieten übertragen.
 
+
 \section*{Planung}
     \subsection*{Termine}
         \begin{itemize}
@@ -106,7 +124,7 @@
             \item Kolloquium: am liebsten zwischen Oktober/November 
             Da ich nach Ende des Studiums eine Weiterbildung zum Cyber Secrutiy Professional machen werde, werde ich für ein Modul am 8.10, sowie am 5.11. wohl ganztägig an der HfTL sein. Für das Kolloquium werden wir freigestellt, was bedeutet, dass sich die darauffolgenden Tage 9.10. und 6.11. für mich als Zeitpunkt anbieten würden. Andernfalls bin ich terminlich nicht eingeschränkt.
         \end{itemize}
-
+        
     \subsection*{Zeitplanung}
         \begin{itemize}
             \item evtl. 1 Woche Vorbereitung (Literaturrecherche, Einarbeitung ins Framework)
@@ -114,11 +132,18 @@
             \item 4 Wochen Inhalt der Arbeit schreiben
             \item 1-2 Wochen Puffer für Korrekturen und Verbesserungen
         \end{itemize}
-
+        
     \subsection*{Vorläufige Gliederung}
         \begin{enumerate}
             \item Einführung
-            \item Stand der Wissenschaft (mit den o.g. Unterpunkten)
+            \item Stand der Wissenschaft - folgende Themen werden verschieden ausführlich abgedeckt:
+                \begin{itemize}
+                    \item Blockchain (ausführlich): (eventuell kurze Historie, )Grundkonzepte, Anwendungsgebiete, Bezug auf Sicherheit
+                    \item \gls{iot} (kurz)
+                    \item Smart Home (kurz)
+                    \item Smart Locks (ausführlich): u.a. Architekturen, Sicherheitsmechanismen, ..
+                    \item Sicherheitsanalysen (von Smart Locks bzw. Geräten im Interet of Things) (ausführlich)
+                \end{itemize}
             \item Analyse vorhandener Produkte
             \item Konzipierung und Implementierung des Prototypen
             \item Evaluation des Prototypen
@@ -126,11 +151,3 @@
             \item Schluss
             \item Anhang: Auszüge aus der Implementierung des Prototypen
         \end{enumerate}
-
-%%   Fragen:
-%% - Ist die Anzahl der Themen im Stand der Wissenschaft zu viel oder noch zu wenig?
-%% - Welche Codeschnipsel aus dem Prototypen sind relevant und sollten als Anhang in der Arbeit sein?
-%% - Titel so okay oder muss noch angepasst werden?
-%% - Weitere mögliche Ergebnisse als die bereits aufgelisteten?
-
-\nocite{*}

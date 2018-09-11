@@ -56,19 +56,23 @@
 %-------------------------------------
 % eigene pakete
 \usepackage{textcomp}
-\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage[breaklinks]{hyperref}
 
 %---------------------------------------------------
 % PLATZHALTER FÜLLEN MIT NAMEN, THEMA, ETC.
 \newcommand{\grad}{Bachelor of Science}
 \newcommand{\matrinr}{s158109}
-\newcommand{\thema}{Thema, wie beantragt.}
+\newcommand{\thema}{Untersuchung des Einsatzes der Blockchain-Technologie bei Smart Locks anhand eines Prototypen hinsichtlich der Sicherheit}
 \newcommand{\name}{Janine Kostka}
 \newcommand{\geb}{08.01.1994}
 \newcommand{\ort}{Kirchheim unter Teck}
-\newcommand{\erstp}{Prof. Benjamin Fabian}
+\newcommand{\erstp}{Prof. Dr. rer.pol.habil. Benjamin Fabian}
 \newcommand{\instituterst}{Hochschule für Telekommunikation Leipzig}
-\newcommand{\zweitp}{M.Sc. Mario Hoffmann}
+\newcommand{\zweitp}{M.Eng. Mario Hoffmann}
 \newcommand{\institutzweit}{Hochschule für Telekommunikation Leipzig}
 \newcommand{\abgabe}{31.10.2018}
 %---------------------------------------------------
@@ -92,8 +96,7 @@
 		\begin{table}[h!]
 			\begin{tabular}{p{0.2\linewidth}p{0.7\linewidth}}
 				Thema: & \large \thema \\
-				\\[3em]
-				& \large Serifenlose Schrift 
+				\\[4em]
 				\\[5em]
 				Vorgelegt von: & \large \name  \\
 				\\[2em]
@@ -160,13 +163,15 @@
 	%########################################################################################################
 	%!!!!!!!!!!!!!!!!!!!!!!!!AB HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
 
-    \include{expose}
+    \include{99_fragen}
     \include{01_einleitung}
-    \include{02_state_of_the_art}
+    \include{020_state_of_the_art}
+    \include{021_blockchain}
     \include{030_vorgehen}
     \include{031_prototyp}
     \include{04_evaluation}
     \include{05_schluss}
+    \nocite{*}
 
 	%!!!!!!!!!!!!!!!!!!!!!!!!BIS HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
 	%########################################################################################################
