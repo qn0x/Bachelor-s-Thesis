@@ -1,4 +1,4 @@
-\documentclass[toc=sectionentrywithdots,a4paper,11pt,oneside]{scrartcl}
+\documentclass[toc=sectionentrywithdots,a4paper,12pt,oneside]{scrartcl}
 %\documentclass[toc=sectionentrywithdots,a4paper,11pt,oneside,openright]{scrartcl}
 
 % Stilistische Vorgaben nach Standard der HS
@@ -56,14 +56,19 @@
 
 %-------------------------------------
 % eigene pakete
+\usepackage{setspace}
+\setstretch{1.2}
+
+\usepackage{float}
 \usepackage{textcomp}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{enumitem}
 \usepackage{csquotes}
 \usepackage[breaklinks]{hyperref}
+\usepackage[plain,german]{fancyref}
 \usepackage{xcolor}
-\usepackage{todonotes}
+\usepackage[colorinlistoftodos,textsize=scriptsize,textwidth=2cm]{todonotes}
 \reversemarginpar
 
 %---------------------------------------------------
@@ -86,6 +91,7 @@
 	%---------------------------------------------------
 	% TITELSEITE/DECKBLATT
 	\begin{titlepage}
+    \begin{spacing}{1.0}
 		\begin{figure}[h]
 			\includegraphics[scale=0.2]{hftl_logo.png}
 		\end{figure}
@@ -100,7 +106,7 @@
 		\begin{table}[h!]
 			\begin{tabular}{p{0.2\linewidth}p{0.7\linewidth}}
 				Thema: & \large \thema \\
-				\\[4em]
+				%\\[4em]
 				\\[5em]
 				Vorgelegt von: & \large \name  \\
 				\\[2em]
@@ -114,6 +120,8 @@
 			 	Zweitprüfer: & \zweitp, \institutzweit \\
 			\end{tabular}
 		\end{table}
+	\normalsize
+	\end{spacing}
 	\end{titlepage}
 	\newpage
 	%---------------------------------------------------
@@ -171,7 +179,10 @@
     \include{99_fragen}
     \include{01_einleitung}
     \include{020_state_of_the_art}
+    \include{0211_notes_bc}
     \include{021_blockchain}
+    \include{022_iot_smart_home_locks}
+    \include{023_security_analysis}
     \include{030_vorgehen}
     \include{031_prototyp}
     \include{04_evaluation}
