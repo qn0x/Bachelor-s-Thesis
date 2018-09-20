@@ -1,23 +1,50 @@
-\subsection*{Bitcoin: A Peer-to-Peer Electronic Cash System}\cite{Nakamoto2008}
-    \begin{itemize}
-        \item Mangel: finanzelle Institutionen dienen als Third-Party -> Schwächen des vertrauensbasierten Modells
-        \begin{itemize}
-            \item Irreversible Transaktionen sind nicht wirklich möglich (können keine Schlichtungen bei Auseinandersetzungen vermeiden -> erhöht Transaktionskosten -> minimale Transaktionsgröße)
-            \item Händler müssen aufpassen an wen sie verkaufen (z.B. mehr Informationen als eigentlich nötig sammeln)
-            \item ein bestimmer Anteil an Fraud wird angenommen
-            \item durch physische Währung vermeidbar, aber nicht elektronisch
-        \end{itemize}
-        \item basiert auf kryptographischen Beweisen anstatt Vertrauen
-        \item zwei Entitäten können direkt Transaktionen durchführen
-        \item Transaktionen sollen rechnerisch unpraktisch rückgängig sein -> Verkäufer vor Täuschung schützen, Treuhandmechanismen können einfach implementiert werden
-        \item Lösung für das Double-Spend Problem
-    \end{itemize}
+\subsection{Blockchain}
+    Eine Blockchain ist eine immer größer werdene Kette von Einträgen, die dezentral gespeichert wird. 
+    Erstmals 2008 von Satoshi Nakamoto, ursprünglich als Peer-to-Peer Electronic Cash System ,,Bitcoin`` erfunden, fand die Technologie aufgrund ihren vermeindlichen Vorteilen wie des dezentralen, anonymen Konzepts schnell viele <Anhänger>. \todo[color=cyan]{Einleitung schreiben}
+    
+    \subsubsection{Einführung in das Konzept}
+    Bitcoin war die erste digitale Währung, die urprünglich ohne zentrale Authorität bzw. zentralen Server das double-spendung Problem lösen sollte\cite{Nakamoto2008}. 
+    Dies wird mittels kryptographischem Beweis anstatt des laut \citeauthor{Nakamoto2008} mangelhaften Modells der vertrauensbasierten Thrird-Party gelöst.
+    Dies wiederrum ermöglichte es zwei Entitäten, die sich gegenseitig nicht vertrauen müssen eine direkte Transaktion druchzuführen.
+    Getätigte Transaktionen sollen rückgängig machbar sein, in dem die Rückrechnung des Beweises rechnerisch zu auwändig sein soll\cite{Nakamoto2008}.
+    Somit wird der Verkäufer vor Täuschung geschützt und Treuhandmechanismen können einfach implementiert werden.  
+    
+    Grundlegend ist das System ein P2P-verteilter Server, der Zeitstempel und rechnerische Beweise der chronologischen Reihenfolge der Transaktionen generiert\cite{Nakamoto2008}.
+    Das System is so lange sicher, wie die ,,ehrlichen'` Knoten gemiensam mehr Rechenleistung als eventuell zusammenarbeitende Angreifen haben\cite{Nakamoto2008}.
+    
+    Zunächst wurde mit digitalen Coins gehandelt, welche einer Kette digitaler Signaturen entspricht.
+    \missingfigure[figheight=4cm]{Bild mit Kette digitaler Signaturen}
+    
+    Später 
+    
+    Diese werden von einem Besitzer zum anderen transferiert indem er einen Hash der vorigen Transaktion und den öffentlichen Schlüssel des nächsten Besitzers digital signiert den Hash dann am Ende des Coins anfügt.
+    Der Empfänger kann den Besitz über die Kette der digitalen Signaturen zurückverfolgen\cite{Nakamoto2008}.
+    \missingfigure[figheight=4cm]{Bild mit Transaktion}
+    
+    Güter werden von einem Versender zu einem Empfänger transferiert, in dem der Versender einen Hash der vorigen Transaktion und den öffentlichen Schlüssel des Empfängers mit seinem eigenen privaten Schlüssel digital signiert und diese Hash dann am Ende des 
+    
+    
+    \subsubsection{Double Spending Problem}
+    Das Double Spending Problem: beschreibt die Möglichkeit den gleichen Token nochmal auszugeben\cite{Chohan2017}.
+    Empfänger kann nicht verifizieren, dass mit dem Coin nicht auch mehfach gezahlt wurde -> häufig: TTP zur Prüfung: Coin muss an Mint zurückgegeben werden, erzeugt neue - nur dieseknn vertraut werden, dass sie nicht mehrfach genutzt wurden\cite{Nakamoto2008}
+    Übertragen auf Bitcoin: der Empfänger muss sichergehen können, dass die vorigen Besitzer keine vorherigen Transaktionen signiert haben \cite{Nakamoto2008}
+    
+    \subsubsection{Sicherheit}
+    Byzantine Fault Tolerance
+    
+    \subsubsection{Identity Management}
+    \subsubsection{Self-Sovereign Identitity}
 
-\subsubsection*{Konzept}
-    \begin{itemize}
-        \item P2P verteilter Timestamp-Server, der rechnerische Beweise der chronologischen Reihenfolge der Transaktionen generiert
-        \item so lange sicher, wie die "ehrlichen" Knoten gemeinsam mehr Rechenleistung als zusammenarbeitende Angreifer halten
-    \end{itemize}
+\subsection{Internet of Things}
+    \subsubsection{Sicherheit}
+    \subsubsection{Protokolle (BLE, Z-WAVE)}
+    \subsubsection{Smart Homes}
+
+\subsection{Smart Locks}
+    \subsubsection{Häufig vorgefundene Gemeinsamkeiten}
+
+
+\subsection*{Bitcoin: A Peer-to-Peer Electronic Cash System}\cite{Nakamoto2008}
 
 \subsubsection*{Transaktionen}
     \begin{itemize}
@@ -215,8 +242,75 @@
         \begin{itemize}
             \item 1994 von Nick Szabo eingeführt. Definition: ,,computergesteuertes Transaktionsprotokoll, das die Vertragsbedingungen ausführt``\cite{Szabo1996}
             \item Übersetzung von Vertragsklauseln in Code, der selbst in Hardware/Software eingebettet wird, um diese selbst durchzusetzen \textrightarrow\ möglich wenig Bedarf von vertrauten Vermittlern zwischen den den Parteien einer Transaktion und weniger Aufkommen von bösartigen oder unbeabsichtigten Ausnahmen
-            \item bei BC: Skripte, die auf der BC gespeichert werden (analog: Stored Procedures in einem relationalen Datenbanksystem
+            \item bei BC: Skripte, die auf der BC gespeichert werden und von jedem Teilnehmer des Netzwerkes angesehen werden können (analog: Stored Procedures in einem relationalen Datenbanksystem
             \item haben eine einzigartige Adresse, werden über Transaktion mit deren Adresse getriggert \textrightarrow\ wird unabhängig ausgeführt
+            \item können permissioned sein (z.B. nur Bob kann Contract ,,withdraw`` auf seine Adresse ausführen)
+            \item hat eigenen Zustand und kann Assets auf der BC bei sich aufbewahren, in dem Tabellenmodel wäre ein SC also eine eigene Entität, die Zeilen löschen und hinzufügen kann
+            \item BC untersützt das ,,kontobasierte`` Modell
+            \item erlaubt es Geschäftslogik als Code auszudrücken
+            \item ordentlicher SC sollte alle möglichen Endergebnisse des Contracts beschreiben
+            \item Eine Trnsaktion ist eine ,,signierte Datenstruktur, die die Übertragung eines Wertes bezeichnet``\cite{Christidis2016}
+            \item Bob sagt deutet mit einem SC z.B. an: wenn jemand mir 5 von X sendet, sende ich 10 von Y zurück
+            \item SC sind deterministisch (gleicher Input \textrightarrow\ gleicher Output. Fall nichtdeterministisch, kein Konsens über das Ergebnis des SC im Netztwerk \textrightarrow\ idealerweise nichtdeterministische SC ablehen oder Sprache verwenden, die keine nichtdeterministischen SC erlaubt
+            \item Da alle Interaktionen mit einem SC über signierte Nachrichten auf der BC verlaufen bekommen alle Teilehmer des Netzwerks eine kryptographisch verifizierbare Spur/Historie aller vom SC ausgeführter Operationen
         \end{itemize}
         
+    \subsubsection*{Blockchain und \gls{iot}}
+        \begin{itemize}
+            \item zentralisiertes Modell hat hohe Instandhaltungskosten (Update Distribution) aus Sicht der Hersteller
+            \item aus Verbrauchersicht: wenig Vertrauen, Geräte ,,reden mit zu Hause`` und den Ansatz von Sicherheit durch Transparenz
+            \item Probleme können durch das skalierbarere, vertrauenslose P2P-Modell, das transparent funktionieren und Daten sicher verteilt kann, gelöst werden \textrightarrow\ BC
+            \item Bsp: alle \gls{iot}-Geräte eines Herstellers laufen auf dem selben BC-Netzwerk. Hersteller nutzt einen Smart Contract, der es allen geräten erlaubt einen Hash des neusten Firmware-Updates auf dem Netzwerk zu speichern (entweder wird die Adresse des SC eingebacken oder finden es durch einen Discovery Service). Können den SC anfragen und so herausfinden, ob es ein neues Update gibt.
+        \end{itemize}
+
+\subsection{MITM bei BLE ausmerzen via Kryptographie und Stenographie}\cite{Bapat2017}
+    \subsubsection{BLE}
+        \begin{itemize}
+            \item Link Layer Security via CBC-MAC und 128-Bit AES, 4byte Message Integrity Check appended to PDU, Counter gegen Replayangriffe, DOA - Empfänger verifiziert Signatur, weitere Keys blabla
+            \item Vulns
+                \begin{itemize}
+                    \item Eavesdropping
+                    \item MITM: Angreifer bekommt die gepairten Geräte dazu zu denken, dass sie getrennt seien -> zwei BT-Module (Master/Slave) -> Packet injection und authentication Attacks + Erlärung
+                    \item DOS: v.a. Batterie aufbrauchen
+                \end{itemize}
+            \item Stenographie: Struktur der Nachricht wird nicht verändert (im Ggt. zu Kryptographie), sondern versteck die Nachricht so, dass ihre Existenz unbemerkt bleibt. Je nach Typ unterschiedliche Techniken wie man die Daten versteckt (Technisch, in Bildern, Audio, Video und linguistisch, in einem größeren Block Text- bspw. durch Formatierung, Rechtschreibfehler oder Ändern der Textgröße).
+            \item vorgeschlagene Lösung für Smart Lock mit Android und Raspberry Pi via BLE: erst mit AES verschlüsseln, dann in ein Bild einbetten via BLE verwenden
+        \end{itemize}
+
+\subsection{BC \& SC}\cite{Christidis2016} 
+    \subsubsection{Taxonomy}
+        \begin{itemize}
+            \item public/permission-less: jeder kannn beitreten
+            \item private/permissioned: whitelist
+            \item -> entscheidet, welcher Konsensmechanismus verwendet werden sollte, in public BC teuer und eine ökonomische Anregung wird normalerweise benötigt, private sinnvoll: kontrolliert, regulierte Umgebung oder höherer Durchsatz wie in einem öffentlichen
+            \item wer Transaktionen durchführen oder minen kann: es müssen nicht alle TN Transaktionen durchführen, SC aufsetzen oder am Miningprozess teilnehmen können -> macht Sinn, wenn die Mitglieder des Netzwerks identifizierbar sind
+            \item Bitcoin-Style Transaktionen oder SC (accountbasiert): BC nur für Transfer und Verfolgung digitaler Güter in Form von Tokens geeignet - accountbasiert kann beliebige Logik und verifizierbare Prozesse mit mehreren Schritten ausführen -> Kosten für Nebenläufigkeit und Durchsatz von Transaktionen, da keine Vorhersehbarkeit für spätere Zustände eines SC und evtl. weitere Trigger
+        \end{itemize}
         
+    \subsubsection{BC und IoT}
+        \begin{itemize}
+            \item bietet geschickte Zahlungsmöglichkeit via Kryptowährung für z.B. Dienste -> Marketplace of Services between Devices
+            \item Bsp: Gerät speichert Binary und verlangt Geld, um diese bereitzustellen, weitere Beispiele
+            \item Jedes Gerät ein eigenes Bankkonto
+            \item Slock.it: Smart Lock, Unlock via Device mit bestimmten Token, der via Ethereum eingekauft werden kann (Whisper P2P Protocol)
+            \item Supply Chain Beispiel mit Container Tracking - entweder mit SC via signierten Nachrichten oder als Container-Token. Umsetzung z.B. via Tracker bei Stakeholder und Container, senden der Daten via IoT, useful: Mesh-Netzworks, deren Mitglieder jeweils einen Gateway für Internetzugang anbieten können -> low deployment costs
+        \end{itemize}
+        
+    \subsubsection{Deployment Considerations - Issues}
+        \begin{itemize}
+            \item lower transaction processing throughput \& higher latencies, v.a. bei öffentlichen Netzwerken mit POW
+            \item kein Sharding, da jeder Knoten in Netzwerk die gleiche Aufgabe ausführt, v.a. bei Neztwerken mit SCs
+            \item Privatsphäre: TN muss nicht alle Keys kennen, nur den der Partei auf der anderen Seite der Transaktion(bei privateneher doof, da sonst keine Zugriffskontrolle möglich ist)... jedoch sind alle Transaktionen öffentlich -> Analyse nach Identifikationsmerkmalen möglich. -> Mitigation Possibilities: Jedes Mal einen neuen Key für die Trx benutzen oder zumindest einen anderen Schlüssel pro Transaktionspartner
+            \item bei privaten Netzwerken: ratsam nicht die gleich BC für alle Trx benutzen, falls ein anderer TN die Mehrheit erlangen könnte, in dem dessen Aktivität verfolgt wird -> exposure von Geräten minimal halten. BC nur mit den Entitäten aufsetzen, mit denen das Gerät zusammenarbeiten soll -> höhere Kosten für die Koordination, aber bessere Privatsphäre
+            \item Transactional privacy (confidentiality): homomohpic Encryption, Zero-Knowledge Proofs -> ressourcenintensiv, Workaround: BC für einen bestimmten Prozess aufsetzen und danach wieder verwerfen
+            \item Miner set betrachten oder festlegen: obwohl ein Miner keine Transaktion fälschen oder die Historie manipulieren kann, kann er neue gültige Transaktionen daran hindern in die BC eingefügt zu werden (Zensur). Byzantinische Knoten dürfen nur bis zu einem bestimmen maximalen Anteil auftauchen, bei mehr als de Schwellwert ist das Risiko der Zensur groß -> Miner-Knoten müssen sorfältig ausgesucht werden, sodass die Chancen geheimer Absprachen zwischen den Knoten möglichst gering sind - in privaten BC sollten Verträge unterschrieben werden
+            \item legale Durchsetzbarkeit von SC sind im Moment limitiert. Sinnvoll, wenn im SC Referenzen auf einen Vertrag in RL sind (dual Integration): 
+                \begin{enumerate}
+                    \item SC einsetzen, dessen Adresse speichern und diese dann im echten Vertrag angeben
+                    \item den korrespondierenden RL Vertrag Hashen, dessen Digest speichern und den RL Vertrag sicher ablegen
+                    \item Trx an den SC senden. Der SC enthält den RL Vertrag in dessen Metadaten
+                \end{enumerate}
+            \item erwarteter Wert von tokenisierten Gütern. Problematisch bspw. wenn jemand einen Token gegen ein Gut im RL umtauschen will.
+            \item Totale Autonomie ist ein doppelseitiges Schwert: Logik vorher inspizieren - Failsafe Mechanismen im Code, um Sackgassen vorzubeugen - Immutable System oder priviligierter Nutzer, der z.B, SC löschen/modifizieren kann?
+            \item weitere Mechanismen, die die Funktionalität komplementieren: DNS, sichere Kommunikation(z.B. via telehash oder Whisper) und Dateiaustausch(P2P File System, IPFS)
+        \end{itemize}

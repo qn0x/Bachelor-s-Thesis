@@ -1,4 +1,5 @@
-\documentclass[toc=sectionentrywithdots,a4paper,11pt,oneside, openright]{scrartcl}
+\documentclass[toc=sectionentrywithdots,a4paper,11pt,oneside]{scrartcl}
+%\documentclass[toc=sectionentrywithdots,a4paper,11pt,oneside,openright]{scrartcl}
 
 % Stilistische Vorgaben nach Standard der HS
 %--------------------------------------------------------------------------
@@ -61,6 +62,9 @@
 \usepackage{enumitem}
 \usepackage{csquotes}
 \usepackage[breaklinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{todonotes}
+\reversemarginpar
 
 %---------------------------------------------------
 % PLATZHALTER FÜLLEN MIT NAMEN, THEMA, ETC.
@@ -163,6 +167,7 @@
 	%########################################################################################################
 	%!!!!!!!!!!!!!!!!!!!!!!!!AB HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
 
+    \listoftodos
     \include{99_fragen}
     \include{01_einleitung}
     \include{020_state_of_the_art}
