@@ -1,8 +1,31 @@
 \section{Analyse}
 \label{sec:analysis}
-\subsection{Ableiten der Anforderungen an den Prototypen}
-\label{sec:requirements_prototype}
-    \begin{itemize}
-        \item Self-Sovereign Identitiy
-        \item Decentralized Identifiers
-    \end{itemize}
+
+	August Smart Lock nach \cite{Ye2017}
+	\begin{itemize}
+		\item August smart lock (earlier Version) has hard-coded secret key in the application source code \cite{Rose2016}
+		\item August: does not perform the 2-factor authentication properly, and the hackers compromising the user email and text message could illegally control the lock
+		\item does not perform the password reset process properly, and the	attackers can easily figure out the true verification code for resetting any passwords
+		\item Physically-present Attack: Physically performing the attack for the user	who forgets to lock the smart lock
+		\item Revoking Attack: Performing the attack from the user who had the legal accessing before, such as the Airbnb tenant, or the household worker
+		\item Stealing Attack: Performing the attack as the thief, and stealing the user device to control the smart lock
+		\item Relaying Attack: Performing the attack by two attackers to relay the data for interfering with the smart lock control
+		\item Bluetooth Jammer \textrightarrow DOS
+		\item Mobile Device: Offizielle App fälschen oder bösartige App verwenden \textrightarrow Informationen des Nutzers stehlen \textrightarrow 
+		
+	\end{itemize}
+
+	Andere
+	\begin{itemize}
+		\item Kwikset Kevo smart lock but the physical lock contains serious vulnerabilities making it easily compromised, which only takes 10 seconds\cite{Ye2017}
+		\item QuickLock Smart Lock does not encrypt the passwords and sends the password to the user who forgets the password in plaintext\cite{Ye2017}
+		\item iBluLock Smart Lock 6-character password, which is vulnerable against the brute forcing attack\cite{Ye2017}
+	\end{itemize}
+	
+	
+	\subsection{Ableiten der Anforderungen an den Prototypen}
+	\label{sec:requirements_prototype}
+	    \begin{itemize}
+	        \item Self-Sovereign Identitiy
+	        \item Decentralized Identifiers
+	    \end{itemize}
