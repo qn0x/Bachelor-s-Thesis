@@ -1,5 +1,11 @@
 \section{Analyse}
 \label{sec:analysis}
+	
+	Um die spezifischen Anforderungen für den Prototypen festlegen zu können, werden zunächst bekannte Sicherheitslücken von bestehenden Produkten analysiert. 
+	Für die Vergleichbarkeit der Evaluation am Ende werden die Lücken kategorisiert und nach dem \gls{cvss} bewertet.
+	Die Bewertung wird mittels des bereitgestellten Rechners durchgeführt \url{https://www.first.org/cvss/calculator/3.0}.
+	\todo[color=cyan]{Kategorisierung erklären, nur Base Score verwendet}
+
 
 	August Smart Lock nach \cite{Ye2017}
 	\begin{itemize}
@@ -12,7 +18,10 @@
 		\item Relaying Attack: Performing the attack by two attackers to relay the data for interfering with the smart lock control
 		\item Bluetooth Jammer \textrightarrow DOS
 		\item Mobile Device: Offizielle App fälschen oder bösartige App verwenden \textrightarrow Informationen des Nutzers stehlen \textrightarrow 
-		
+		\item Handshake Key Leakage Attack: in which the attacker is able to steal the handshake key from the smart lock, and	illegally and covertly control the lock using a third-party	device
+		\item Owner Account Leakage Attack: in which the attacker is able to disguise himself/herself to be the owner, by logging into the lock owner’s account in the third-party device to control the smart lock without being discovered
+		\item Personal Information Leakage Attack: in which the attacker is able to obtain the lock user information, which seriously threatens the user privacy; and
+		\item Denial-of-service (DoS) Attack: in which the attacker disrupts the regular usage of smart lock, which dramatically	brings down the user experience
 	\end{itemize}
 
 	Andere
@@ -21,11 +30,10 @@
 		\item QuickLock Smart Lock does not encrypt the passwords and sends the password to the user who forgets the password in plaintext\cite{Ye2017}
 		\item iBluLock Smart Lock 6-character password, which is vulnerable against the brute forcing attack\cite{Ye2017}
 	\end{itemize}
+
+	Tabelle mit den Angriffen, kategorisiert, ähnliche Angriffe zusammengefasst.
 	
 	
 	\subsection{Ableiten der Anforderungen an den Prototypen}
 	\label{sec:requirements_prototype}
-	    \begin{itemize}
-	        \item Self-Sovereign Identitiy
-	        \item Decentralized Identifiers
-	    \end{itemize}
+		

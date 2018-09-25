@@ -29,19 +29,21 @@
     Durch das oben erwähnte dezentrale Konzept der Blockchain\cite{Nakamoto2008} lohnt es sich diese Technologie im Kontext des \gls{iot}, am Beispiel von Smart Locks zu untersuchen.
     Zudem verspricht man sich auch im Bereich des Identitäts- und Zugriffsmanagements von dem Konzept Blockchain Angriffe wie Device-Spoofing durch das Speichern von Gerätesignaturen zu unterbinden\cite{Kshetri2017}.
     \newline
-    \noindent Als Ziel der Arbeit soll die Frage erörtern ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks (und erweitert im Bereich Smart Home) eingesetzt zu werden.
-    Dies soll mit Hilfe eines Prototypen eines Smart Locks untersucht werden.
+    \noindent Als Ziel der Arbeit soll die Frage erörtern ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks (und erweitert im Bereich Smart Home und \gls{iot}) eingesetzt zu werden.
+    Dies soll mit Hilfe eines Prototypen eines Smart Locks untersucht werden, dessen Anforderungen aus bekannten Sicherheitslücken abgeleitet werden.
     
-    Der Fokus des Prototypen soll dabei aber nicht auf der Umsetzung der Hardware liegen, sondern auf der Nutzung eines aktuell vorhandenen Frameworks, also auf aktuell plausiblen Implementierungen. 
-    Primär sollen bereits publizierte Schwachstellen bei Smart Locks analysiert werden und bei der Umsetzung des Prototypen vermieden werden. 
-    Dies wird nach fertigstellung des Prototypen untersucht.
-    Je nach Ergebnis lässt sich dann auf die Kernfrage schließen.
+    \todo[color=cyan]{Teil aus überblick hier hin?}
     
     \subsection{Abgrenzung}
+    	\begin{itemize}
+    		\item Fokussierung rein auf Implementierung und Software, mit Ausnahme der Bluetooth-Kommunikation
+    		\item Der Fokus des Prototypen soll dabei aber nicht auf der Umsetzung der Hardware liegen, sondern auf der Nutzung eines aktuell vorhandenen Frameworks, also auf aktuell plausiblen Implementierungen. 
+    		\item Beispiel für Smart Locks: August Smart Lock
+    	\end{itemize}
 
     \subsection{Methodik}
         Zunächst sollen bekannte Schwachstellen aktueller Produkte analysiert werden.
-        Als roter Faden der Analyse werden die \gls{owasp}-Top10 für das \gls{iot}\cite{Miessler2015a} verwendet.
+        Als roter Faden der Analyse werden; die \gls{owasp}-Top10 für das \gls{iot}\cite{Miessler2015a} verwendet.
         Im Anschluss wird als erstes ein passendes Framework ausgewählt, welches theoretisch die in der Analyse gefundenen Lücken schließen könnte.
         Auf Basis dieses Frameworks wird dann der Prototyp entworfen und umgesetzt.
         Der Prototyp soll ebenfalls anhand der \gls{owasp}-Top10 evaluiert werden.
