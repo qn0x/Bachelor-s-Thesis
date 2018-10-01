@@ -6,11 +6,35 @@
 	Die Bewertung wird mittels des bereitgestellten Rechners durchgeführt \url{https://www.first.org/cvss/calculator/3.0}.
 	\todo[color=cyan]{Kategorisierung erklären, nur Base Score verwendet}
 
+\subsection{Bekannte Sicherheitslücken und Angriffe}
+\label{sec:analysis_weaknesses}
 
-	Schwachstellen und Sicherheitslücken in August Smart Lock nach \cite{Ye2017}.
-	Setzt u.U. voraus, dass der Angreifer Zugriff auf den mobilen Client des Benutzers hat und evtl. Jailbroken/rooted.
+	Schwachstellen und Sicherheitslücken in August Smart Lock nach \citeauthor{Ye2017}.
+	Setzt u.U. voraus, dass der Angreifer Zugriff auf den mobilen Client des Benutzers hat und evtl. Jailbroken/rooted ist.
+	In der Applikation werden nach den Untersuchungen von \citeauthor{Ye2017} ein Handshake-Key, Benutzeraccount und persönliche Informationen als Klartext innerhalb einer XML-Datei abgelegt.
 	\begin{itemize}
-		\item August smart lock (earlier Version) has hard-coded secret key in the application source code \cite{Rose2016}
+		\item nutzt direktes Bluetooth-Pairing, welches nur auf dem konstanten/statischen Handshake-Key basiert
+		\item keine Authentifizierung der Pairing-Partner zwischen Mobile Client und Lock
+		\item Kopieren von der Einstellungen aus dem System von Alice.
+		    Eve legt sich einen neuen Account an und kopiert die Einstellungen von Alice, sodass von ihrem Nutzerkonto auf diese zugegriffen wird. \textrightarrow Mandatory Access Control
+		\item Personenbezogene Daten des Nutzers liegen in Klartext auf dem Dateisystem
+		\item DOS: Wenn mehrere Nutzer gleichzeitig versuchen sich mit dem Smart Lock zu verbinden wird bei einem die App suspendiert, sodass niemand gleichzig Öffnen/Schließen-Befehle senden kann.
+		    Somit kann ein Angreifer kontinuierlich wechseln Öffnen/Schließen-Befehle senden und der legitime Nutzer kann die Smart Lock nicht kontrollieren.
+	   \item Angreifer repliziert die App und bringt den Nutzer dazu die bösartige App zu verwenden, da keine Authentifizierung zwischen App und Nutzer
+	   \item Bluetooth interfering
+	   \item OS Level flaws
+	\end{itemize}
+
+	Andere Locks
+	\begin{itemize}
+		\item Kwikset Kevo smart lock but the physical lock contains serious vulnerabilities making it easily compromised, which only takes 10 seconds\cite{Ye2017}
+		\item QuickLock Smart Lock does not encrypt the passwords and sends the password to the user who forgets the password in plaintext\cite{Ye2017}
+		\item iBluLock Smart Lock 6-character password, which is vulnerable against the brute forcing attack\cite{Ye2017}
+	\end{itemize}
+	
+	Weitere im Paper von \citeauthor{Ye2017} aufgelistete Angriffe\todo[color=cyan]{sortieren und filtern}
+	\begin{itemize}
+	    \item August smart lock (earlier Version) has hard-coded secret key in the application source code \cite{Rose2016}
 		\item August: does not perform the 2-factor authentication properly, and the hackers compromising the user email and text message could illegally control the lock
 		\item does not perform the password reset process properly, and the	attackers can easily figure out the true verification code for resetting any passwords
 		\item Physically-present Attack: Physically performing the attack for the user	who forgets to lock the smart lock
@@ -19,22 +43,31 @@
 		\item Relaying Attack: Performing the attack by two attackers to relay the data for interfering with the smart lock control
 		\item Bluetooth Jammer \textrightarrow DOS
 		\item Mobile Device: Offizielle App fälschen oder bösartige App verwenden \textrightarrow Informationen des Nutzers stehlen \textrightarrow 
-		\item Handshake Key Leakage Attack: in which the attacker is able to steal the handshake key from the smart lock, and	illegally and covertly control the lock using a third-party	device
+		\item Handshake Key Leakage Attack: in which the attacker is able to steal the handshake key from the smart lock, and	illegally and covertly control the lock using a third-party	device\\
+		    Kann einfach durch ein vom Hersteller öffentliches Open Source Programm ausgenutzt werden ohne für den Besitzer sichtbare Spuren zu hinterlassen (und ohne die offizielle App zu benutzen)
 		\item Owner Account Leakage Attack: in which the attacker is able to disguise himself/herself to be the owner, by logging into the lock owner’s account in the third-party device to control the smart lock without being discovered
 		\item Personal Information Leakage Attack: in which the attacker is able to obtain the lock user information, which seriously threatens the user privacy; and
 		\item Denial-of-service (DoS) Attack: in which the attacker disrupts the regular usage of smart lock, which dramatically	brings down the user experience
 	\end{itemize}
 
-	Andere
-	\begin{itemize}
-		\item Kwikset Kevo smart lock but the physical lock contains serious vulnerabilities making it easily compromised, which only takes 10 seconds\cite{Ye2017}
-		\item QuickLock Smart Lock does not encrypt the passwords and sends the password to the user who forgets the password in plaintext\cite{Ye2017}
-		\item iBluLock Smart Lock 6-character password, which is vulnerable against the brute forcing attack\cite{Ye2017}
-	\end{itemize}
-
+\subsection{Bewertung nach CVSS}
+\label{sec:analysis_cvss}
 	Tabelle mit den Angriffen, kategorisiert, ähnliche Angriffe zusammengefasst.
 	
 	
-	\subsection{Ableiten der Anforderungen an den Prototypen}
-	\label{sec:requirements_prototype}
-		
+\subsection{Ableiten der Anforderungen an den Prototypen}
+\label{sec:analysis_requirements}
+    Aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken lassen sich direkt folgende Anforderungen ableiten, die diese vermeiden:
+    \begin{itemize}
+        \item Sicherung der (relevanten) Daten, bevor diese auf dem Mobilgerät gespeichert werden\cite{Ye2017}
+        \item sicheres Kommunikationsprotokoll für die Dateiübertragung via Bluetooth\cite{Ye2017}
+        \item Authentifizierung des Nutzers und des Smart Locks, um sicherzustellen, dass niemand anderes den zwischen beiden Parteien steht (Man-In-The-Middle)\cite{Ye2017}
+        \item Mandatory Access Control für die Systeme, Daten auf den Systemen und Funktionen innerhalb eines Systems.\cite{Ye2017}
+        \item Priorisierung der Befehle\cite{Ye2017} je nach Rolle.
+        \item evtl: Authentifizierung des Clients gegeüber dem Nutzer und umgekehrt.
+    \end{itemize}
+	
+	Weiterhin lassen sich mittels den Ressourcen des \gls{owasp}-Projekts\cite{Miessler2015}\cite{Miessler2015a} weitere Anforderungen aufstellen\todo[color=orange]{besser ausdrücken}:
+	\begin{itemize}
+	    \item 
+	\end{itemize}

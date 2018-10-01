@@ -1,5 +1,5 @@
 \subsection{Double-Spending Problem}
-\label{sec:doublespend}
+\label{sec:sota_doublespend}
 	Das Double Spending Problem beschreibt die Möglichkeit den selben digitalen Token als Käufer eines Guts mehrmals auszugeben\cite{Chohan2017}.
 	Die Gefahr kommt daher, da ein Token, der häufig aus einer Datei besteht, die dupliziert und gefälscht werden könnte\cite{Chohan2017}.
 	Der Empfänger einer Transaktion kann die Echtheit und eventuell mit dem Token bereits getätigte Transaktionen im Normalfall nicht verifizieren\cite{Nakamoto2008}.
@@ -9,14 +9,14 @@
 	Einzig diesem neuen Token kann vertraut werden, dass er nicht mehrfach genutzt wurde\cite{Nakamoto2008}.
 	
 \subsection{Blockchain}
-\label{sec:blockchain}
+\label{sec:sota_blockchain}
     Eine Blockchain ist eine immer größer werdende Kette von Einträgen, die dezentral gespeichert wird. 
     Erstmals 2008 von Satoshi Nakamoto, ursprünglich als Peer-to-Peer Electronic Cash System ,,Bitcoin`` erfunden, fand die Technologie aufgrund ihren Vorteilen wie des dezentralen, anonymen Konzepts schnell viele <Anhänger>. \todo[color=cyan]{Einleitung schreiben}
     
     \subsubsection{Einführung in das Konzept}
-    \label{sec:blockchain_introduction}
+    \label{sec:sota_blockchain_introduction}
     % Top-down Erklärung... Blockchain -> Block -> Transaktion -> Asset
-    Bitcoin ist die erste digitale Währung, die ursprünglich ohne zentrale Autorität wie beispielsweise einer \gls{ttp} das bereits in \fref{sec:doublespend} vorgestellte Double-Spending Problem lösen sollte\cite{Nakamoto2008}. 
+    Bitcoin ist die erste digitale Währung, die ursprünglich ohne zentrale Autorität wie beispielsweise einer \gls{ttp} das bereits in \fref{sec:sota_doublespend} vorgestellte Double-Spending Problem lösen sollte\cite{Nakamoto2008}. 
     Übertragen auf Bitcoin bedeutet es, dass der Empfänger sichergehen können muss, dass die vorigen Besitzer keine vorherigen Transaktionen signiert hatte \cite{Nakamoto2008}\todo[color=yellow]{Übersetzung okay?}.
     Dies wird mittels kryptographischem Beweis anstatt des laut \citeauthor{Nakamoto2008} vorstellten mangelhaften Modells der \gls{ttp} gelöst\todo[color=orange]{besser ausdrücken}.
     Getätigte Transaktionen sollen nicht rückgängig machbar sein, in dem die Rückrechnung des Beweises rechnerisch zu aufwändig sein soll\cite{Nakamoto2008}.
@@ -38,6 +38,7 @@
     Das System ist so lange sicher, wie ,,ehrliche'` Knoten gemeinsam mehr Rechenleistung als eventuell zusammenarbeitende Angreifer haben\cite{Nakamoto2008}.
     
     \subsubsection{Transaktionen}
+    \label{sec:sota_blockchain_trx}
 	    Zunächst wurde mit digitalen Coins gehandelt, welche einer in Form einer Kette digitaler Signaturen modelliert wurden\cite{Nakamoto2008}.
 	    In anderen Anwendungsbereichen außerhalb des Bereiches der Kryptowährungen wird von generalisierten Assets gesprochen.\todo[color=yellow]{richtig?}
 	    \begin{figure}[H]
@@ -57,21 +58,13 @@
     \end{figure}
     
     \subsubsection{Sicherheit}
-    \label{sec:blockchain_security}
+    \label{sec:sota_blockchain_security}
     Byzantine Fault Tolerance
     
     \subsubsection{Identity Management}
-    \label{sec:blockchain_identitymgmnt}
+    \label{sec:sota_blockchain_identitymgmnt}
     \subsubsection{Self-Sovereign Identitity}
-    \label{sec:blockchain_sovreign}
-
-\subsection{Internet of Things}
-    \subsubsection{Sicherheit}
-    \subsubsection{Protokolle (BLE, Z-WAVE)}
-    \subsubsection{Smart Homes}
-
-\subsection{Smart Locks}
-    \subsubsection{Häufig vorgefundene Gemeinsamkeiten}
+    \label{sec:sota_blockchain_sovreign}
 
 
 

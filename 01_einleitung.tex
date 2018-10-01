@@ -1,4 +1,5 @@
 \section{Einleitung}\todo[color=cyan]{Vorwort und Abstract schreiben}
+\label{sec:intro}
     Mit stetig zunehmender Vernetzung des Lebens ist davon auch häufig der eigene Wohnraum betroffen. 
     Der Trend zu sogenannten Smart Homes ist klar erkennbar. 
     Von Küchengeräten über Beleuchtung, Sprinkleranlagen im Garten und Ga\-ra\-gen\-tü\-ren - immer mehr Geräte werden mit einem Netzwerk und gar mit dem Internet zu einem sogenannten \gls{iot} verbunden. 
@@ -24,6 +25,7 @@
     \newline\smallskip
     
 \section{Problemstellung}
+\label{sec:problem}
     %Anhand welcher Theorien, Methoden und Vorgehensweisen erledigt die Bachelorarbeit diese Aufgabe?
     Gerade bei Smart Locks ist es unbedingt nötig diese Schwachstellen zu unterbinden.
     Durch das oben erwähnte dezentrale Konzept der Blockchain\cite{Nakamoto2008} lohnt es sich diese Technologie im Kontext des \gls{iot}, am Beispiel von Smart Locks zu untersuchen.
@@ -35,6 +37,7 @@
     \todo[color=cyan]{Teil aus überblick hier hin?}
     
     \subsection{Abgrenzung}
+    \label{sec:problem_limit}
     	\begin{itemize}
     		\item Fokussierung rein auf Implementierung und Software, mit Ausnahme der Bluetooth-Kommunikation
     		\item Der Fokus des Prototypen soll dabei aber nicht auf der Umsetzung der Hardware liegen, sondern auf der Nutzung eines aktuell vorhandenen Frameworks, also auf aktuell plausiblen Implementierungen. 
@@ -42,6 +45,7 @@
     	\end{itemize}
 
     \subsection{Methodik}
+    \label{sec:problem_methods}
         Zunächst sollen bekannte Schwachstellen aktueller Produkte analysiert werden.
         Als roter Faden der Analyse werden; die \gls{owasp}-Top10 für das \gls{iot}\cite{Miessler2015a} verwendet.
         Im Anschluss wird als erstes ein passendes Framework ausgewählt, welches theoretisch die in der Analyse gefundenen Lücken schließen könnte.
@@ -52,10 +56,11 @@
         Abschließend wird die Problemstellung mittels des Vergleichs erörtert.
     
     \subsection{Vorhandene Arbeiten}
+    \label{sec:problem_relatedWork}
 
 	\vspace{3em}    
-	\noindent In \fref{sec:sota} werden zunächst die Grundlagen für diese Arbeit vorgestellt, darunter das Konzept einer Blockchain in \fref{sec:blockchain_introduction}, das Double-Spending Problem in \fref{sec:blockchain_doublespend} und einige Sicherheitsaspekte in \fref{sec:blockchain_security}.
-	Weiterhin werden \gls{iot}(\fref{sec:iot}), Smart Home(\fref{sec:smart_home}) und Smart Locks(\fref{sec:smart_locks}) erklärt\todo[color=orange]{wdh}.
+	\noindent In \fref{sec:sota} werden zunächst die Grundlagen für diese Arbeit vorgestellt, darunter das Konzept einer Blockchain in \fref{sec:sota_blockchain_introduction}, das Double-Spending Problem in \fref{sec:sota_doublespend} und einige Sicherheitsaspekte in \fref{sec:sota_blockchain_security}.
+	Weiterhin werden \gls{iot}(\fref{sec:sota_iot}), Smart Home(\fref{sec:sota_iot_smart_home}) und Smart Locks(\fref{sec:sota_smart_locks}) erklärt\todo[color=orange]{wdh}.
 	Auf Sichereitsanalysen im \gls{iot} wird ausführlicher eingegangen.
 	\todo[color=yellow]{kurzen Überblick über die Arbeit schreiben}
 
