@@ -1,11 +1,3 @@
-\section{Analyse}
-\label{sec:analysis}
-	
-	Um die spezifischen Anforderungen für den Prototypen festlegen zu können, werden zunächst bekannte Sicherheitslücken von bestehenden Produkten analysiert. 
-	Für die Vergleichbarkeit der Evaluation am Ende werden die Lücken kategorisiert und nach dem \gls{cvss} bewertet.
-	Die Bewertung wird mittels des bereitgestellten Rechners durchgeführt \url{https://www.first.org/cvss/calculator/3.0}.
-	\todo[color=cyan]{Kategorisierung erklären, nur Base Score verwendet}
-
 \subsection{Bekannte Sicherheitslücken und Angriffe}
 \label{sec:analysis_weaknesses}
 
@@ -32,6 +24,13 @@
 		\item iBluLock Smart Lock 6-character password, which is vulnerable against the brute forcing attack\cite{Ye2017}
 	\end{itemize}
 	
+	Paper von \citeauthor{Ho2016}:
+	Zwei Angriffe werden vorgestellt und an fünf verschiedenen Modellen getestet.
+	An private Informationen kommen und unauthorisierten Zugang bekommen.
+	\begin{itemize}
+	    \item 
+	\end{itemize}
+	
 	Weitere im Paper von \citeauthor{Ye2017} aufgelistete Angriffe\todo[color=cyan]{sortieren und filtern}
 	\begin{itemize}
 	    \item August smart lock (earlier Version) has hard-coded secret key in the application source code \cite{Rose2016}
@@ -48,26 +47,4 @@
 		\item Owner Account Leakage Attack: in which the attacker is able to disguise himself/herself to be the owner, by logging into the lock owner’s account in the third-party device to control the smart lock without being discovered
 		\item Personal Information Leakage Attack: in which the attacker is able to obtain the lock user information, which seriously threatens the user privacy; and
 		\item Denial-of-service (DoS) Attack: in which the attacker disrupts the regular usage of smart lock, which dramatically	brings down the user experience
-	\end{itemize}
-
-\subsection{Bewertung nach CVSS}
-\label{sec:analysis_cvss}
-	Tabelle mit den Angriffen, kategorisiert, ähnliche Angriffe zusammengefasst.
-	
-	
-\subsection{Ableiten der Anforderungen an den Prototypen}
-\label{sec:analysis_requirements}
-    Aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken lassen sich direkt folgende Anforderungen ableiten, die diese vermeiden:
-    \begin{itemize}
-        \item Sicherung der (relevanten) Daten, bevor diese auf dem Mobilgerät gespeichert werden\cite{Ye2017}
-        \item sicheres Kommunikationsprotokoll für die Dateiübertragung via Bluetooth\cite{Ye2017}
-        \item Authentifizierung des Nutzers und des Smart Locks, um sicherzustellen, dass niemand anderes den zwischen beiden Parteien steht (Man-In-The-Middle)\cite{Ye2017}
-        \item Mandatory Access Control für die Systeme, Daten auf den Systemen und Funktionen innerhalb eines Systems.\cite{Ye2017}
-        \item Priorisierung der Befehle\cite{Ye2017} je nach Rolle.
-        \item evtl: Authentifizierung des Clients gegeüber dem Nutzer und umgekehrt.
-    \end{itemize}
-	
-	Weiterhin lassen sich mittels den Ressourcen des \gls{owasp}-Projekts\cite{Miessler2015}\cite{Miessler2015a} weitere Anforderungen aufstellen\todo[color=orange]{besser ausdrücken}:
-	\begin{itemize}
-	    \item 
 	\end{itemize}
