@@ -7,7 +7,14 @@
         \item Authentifizierung des Nutzers und des Smart Locks, um sicherzustellen, dass niemand anderes den zwischen beiden Parteien steht (Man-In-The-Middle)\cite{Ye2017}
         \item Mandatory Access Control für die Systeme, Daten auf den Systemen und Funktionen innerhalb eines Systems.\cite{Ye2017}
         \item Priorisierung der Befehle\cite{Ye2017} je nach Rolle.
-        \item evtl: Authentifizierung des Clients gegeüber dem Nutzer und umgekehrt.
+        \item evtl: Authentifizierung des Clients gegeüber dem Nutzer und umgekehrt.\cite{Ye2017}
+        \item "eventual consistency" design \textrightarrow robuste revocation und logging Mechanismen und gleicheitige Unabhängigkeit des Systems von externen Entitäten\cite{Ho2016} \textrightarrow availability, weniger anfällig gegenüber remote Angriffen, indem den Geräten kein Zugriff zum Internet gewährt wird.
+    \end{itemize}
+    
+    Sicherheitsziele von Smart Locks\cite{Ho2016}
+    \begin{itemize}
+        \item nicht-authorisierten Zugriff verhindern bzw. nur dann öffnen/schließen, wenn der Nutzer, der den Befehl gibt, authorisiert ist(Whitelisting)
+        \item Access Log Integrität
     \end{itemize}
 	
 	Weiterhin lassen sich mittels den Ressourcen des \gls{owasp}-Projekts\cite{Miessler2015}\cite{Miessler2015a} weitere Anforderungen aufstellen\todo[color=orange]{besser ausdrücken}:

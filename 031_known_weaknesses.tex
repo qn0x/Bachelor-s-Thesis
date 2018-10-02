@@ -13,7 +13,7 @@
 		\item DOS: Wenn mehrere Nutzer gleichzeitig versuchen sich mit dem Smart Lock zu verbinden wird bei einem die App suspendiert, sodass niemand gleichzig Öffnen/Schließen-Befehle senden kann.
 		    Somit kann ein Angreifer kontinuierlich wechseln Öffnen/Schließen-Befehle senden und der legitime Nutzer kann die Smart Lock nicht kontrollieren.
 	   \item Angreifer repliziert die App und bringt den Nutzer dazu die bösartige App zu verwenden, da keine Authentifizierung zwischen App und Nutzer
-	   \item Bluetooth interfering
+	   \item Bluetooth interference
 	   \item OS Level flaws
 	\end{itemize}
 
@@ -25,10 +25,26 @@
 	\end{itemize}
 	
 	Paper von \citeauthor{Ho2016}:
-	Zwei Angriffe werden vorgestellt und an fünf verschiedenen Modellen getestet.
+	Zwei Angriffe werden vorgestellt und an fünf verschiedenen Modellen(August, Danalocl, Kevo, Okidokeys, Lockitron) getestet.
 	An private Informationen kommen und unauthorisierten Zugang bekommen.
 	\begin{itemize}
-	    \item 
+	    \item Systemdesign und Access Control Policies: Angreifer kann Mechanismen für den Entzug von Rechten und Zugriffsprotokollierungen umgehen, die von den meisten Geräten genutzt werden.
+	    \item automatisches öffnen: wird oft ungewollt im beisein eines Angreifers geöffnet. 
+	        Alle Systeme nutzen unsichere Mechanismen, um die vom Nutzer beabsichtigten Aktionen zu erfassen.
+        \item Availability: Dadurch, dass das Smart Lock mit dem in \fref{fig:gateway} vorgestellen Kommunikationsmodell volkommen davon abängig ist, dass das Gerät des Owners die Nachrichten unangerührt weiterleitet, ist dieses Vertrauensmodell im Falle eines Entzugs von Rechten eines anderen Nutzers unpassend.
+            Indem ein Angreifer, dessen Rechte entzogen werden soll jegliche Kommunikation zwischen Alice und dem remote Server des Herstellers verhindert.
+            Dies kann beispielsweise am einfachsten mittels des Flugmodus erreicht werden.
+            Gleichzeitig entgeht der Angreifer auch dem Access Logging.
+            \todo[color=red]{Ho206, p.4, 3.3.3}
+
+	\end{itemize}
+	
+	Threat Models
+	\begin{itemize}
+	    \item Physically-present Attacker: Angreifer beobachtet einen Nutzer bei der Interaktion mit dem Smart Lock und kann jederzeit damit interagieren, besitzt aber kein authorisiertes Gerät.
+		\item Revoked Attacker: Besitzt legitimen Zugriff, der welcher aber zu einem spätereen Zeitpunkt wieder entzogen wird.
+		\item Dieb: Der Angreifer stiehlt das authorisierte Gerät des Nutzers
+		\item Relaying Attacker: Angreifer besitzt ein Bluetoothgerät, das mit anderen Bluetoothgeräten kommmunizieren kann, aber nicht für authorisiert ist.
 	\end{itemize}
 	
 	Weitere im Paper von \citeauthor{Ye2017} aufgelistete Angriffe\todo[color=cyan]{sortieren und filtern}
@@ -36,10 +52,6 @@
 	    \item August smart lock (earlier Version) has hard-coded secret key in the application source code \cite{Rose2016}
 		\item August: does not perform the 2-factor authentication properly, and the hackers compromising the user email and text message could illegally control the lock
 		\item does not perform the password reset process properly, and the	attackers can easily figure out the true verification code for resetting any passwords
-		\item Physically-present Attack: Physically performing the attack for the user	who forgets to lock the smart lock
-		\item Revoking Attack: Performing the attack from the user who had the legal accessing before, such as the Airbnb tenant, or the household worker
-		\item Stealing Attack: Performing the attack as the thief, and stealing the user device to control the smart lock
-		\item Relaying Attack: Performing the attack by two attackers to relay the data for interfering with the smart lock control
 		\item Bluetooth Jammer \textrightarrow DOS
 		\item Mobile Device: Offizielle App fälschen oder bösartige App verwenden \textrightarrow Informationen des Nutzers stehlen \textrightarrow 
 		\item Handshake Key Leakage Attack: in which the attacker is able to steal the handshake key from the smart lock, and	illegally and covertly control the lock using a third-party	device\\
