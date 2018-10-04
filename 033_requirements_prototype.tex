@@ -9,6 +9,8 @@
         \item Priorisierung der Befehle\cite{Ye2017} je nach Rolle.
         \item evtl: Authentifizierung des Clients gegeüber dem Nutzer und umgekehrt.\cite{Ye2017}
         \item "eventual consistency" design \textrightarrow robuste revocation und logging Mechanismen und gleicheitige Unabhängigkeit des Systems von externen Entitäten\cite{Ho2016} \textrightarrow availability, weniger anfällig gegenüber remote Angriffen, indem den Geräten kein Zugriff zum Internet gewährt wird.
+        \item For smart locks that follow a DGC architecture, state consistency attacks fundamentally arise because they are distributed systems, and their design does not provide consistency in the face of network partitions. Recall the CAP Theorem for distributed systems: it states that if network partitions can occur, it is impossible to provide full availability for the system's service, while simultaneously maintaining the latest, consistent state across all nodes in the system. 
+    Thus, no distributed system can provide perfect consistency and availability in the face of partitions.\cite{Ho2016}
     \end{itemize}
     
     Sicherheitsziele von Smart Locks\cite{Ho2016}

@@ -1,7 +1,6 @@
 \subsection{Bekannte Sicherheitslücken und Angriffe}
 \label{sec:analysis_weaknesses}
-
-	Schwachstellen und Sicherheitslücken in August Smart Lock nach \citeauthor{Ye2017}.
+    Schwachstellen und Sicherheitslücken in August Smart Lock nach \citeauthor{Ye2017}.
 	Setzt u.U. voraus, dass der Angreifer Zugriff auf den mobilen Client des Benutzers hat und evtl. Jailbroken/rooted ist.
 	In der Applikation werden nach den Untersuchungen von \citeauthor{Ye2017} ein Handshake-Key, Benutzeraccount und persönliche Informationen als Klartext innerhalb einer XML-Datei abgelegt.
 	\begin{itemize}
@@ -22,21 +21,47 @@
 		\item Kwikset Kevo smart lock but the physical lock contains serious vulnerabilities making it easily compromised, which only takes 10 seconds\cite{Ye2017}
 		\item QuickLock Smart Lock does not encrypt the passwords and sends the password to the user who forgets the password in plaintext\cite{Ye2017}
 		\item iBluLock Smart Lock 6-character password, which is vulnerable against the brute forcing attack\cite{Ye2017}
+		\item Lockitron: direkte Verbindung des Schlosses mit den Servern des Herstellers \textrightarrow legitime Nutzer könnten ausgeschlossen werden, wenn dessen Server nicht erreichbar sind
 	\end{itemize}
 	
 	Paper von \citeauthor{Ho2016}:
-	Zwei Angriffe werden vorgestellt und an fünf verschiedenen Modellen(August, Danalocl, Kevo, Okidokeys, Lockitron) getestet.
+	Zwei Angriffe werden vorgestellt und an fünf verschiedenen Modellen(August, Danalock, Kevo, Okidokeys, Lockitron) getestet.
 	An private Informationen kommen und unauthorisierten Zugang bekommen.
 	\begin{itemize}
 	    \item Systemdesign und Access Control Policies: Angreifer kann Mechanismen für den Entzug von Rechten und Zugriffsprotokollierungen umgehen, die von den meisten Geräten genutzt werden.
 	    \item automatisches öffnen: wird oft ungewollt im beisein eines Angreifers geöffnet. 
 	        Alle Systeme nutzen unsichere Mechanismen, um die vom Nutzer beabsichtigten Aktionen zu erfassen.
-        \item Availability: Dadurch, dass das Smart Lock mit dem in \fref{fig:gateway} vorgestellen Kommunikationsmodell volkommen davon abängig ist, dass das Gerät des Owners die Nachrichten unangerührt weiterleitet, ist dieses Vertrauensmodell im Falle eines Entzugs von Rechten eines anderen Nutzers unpassend.
-            Indem ein Angreifer, dessen Rechte entzogen werden soll jegliche Kommunikation zwischen Alice und dem remote Server des Herstellers verhindert.
-            Dies kann beispielsweise am einfachsten mittels des Flugmodus erreicht werden.
-            Gleichzeitig entgeht der Angreifer auch dem Access Logging.
-            \todo[color=red]{Ho206, p.4, 3.3.3}
-
+        \item State-Consistency Attacks: Dadurch, dass das Smart Lock mit dem in \fref{fig:gateway} vorgestellen Kommunikationsmodell volkommen davon abängig ist, dass das Gerät des Owners die Nachrichten unangerührt weiterleitet, ist dieses Vertrauensmodell im Falle eines Entzugs von Rechten eines anderen Nutzers unpassend.
+        
+        \item Revocation Evasion: Indem ein Angreifer, dessen Rechte entzogen werden soll jegliche Kommunikation zwischen Alice und dem remote Server des Herstellers verhindert.
+        Dies kann beispielsweise am einfachsten mittels des Flugmodus erreicht werden.
+        Gleichzeitig entgeht der Angreifer auch dem Access Logging.
+        Szenario mit Danalock: Alice möchte Mallory, einem Nutzer mit temprärem Zugang die Rechte entziehen. 
+        Dazu nutzt sie die App, welche diese Information an den Server des Herstellers sendet und ihr sofort bestätigt, dass sie Rechte von Mallory nun entzogen wurden. 
+        Dieser sendet eine Benachrichtigung darüber an Mallorys Gerät. 
+        Befindet sich Mallorys Gerät zu diesem Zeitpunkt im Flugmodus, erreicht diese Benachrichtigung ihr Ziel nicht und das Schloss selbst bleibt unwissend über dieses Ereignis. 
+        Selbst, wenn ein legitimes Gerät mit dem Schloss interagiert, wird die Benachrichtung über Mallorys Entzug der Recht nicht vom Server über jenes übertragen.
+        Somit behält Mallory Zugang für das Schloss.
+        \item Access Log Evasion: ist möglich, da, wie in dem oben beschriebenen Szenario davon ausgegangen wird, dass alle Geräte alle Aktionen an den remote Server senden.
+        Szenario mit Danalock: Alice, Bob und Mallory haben einen legitimen Zugang.
+        Bob ist Owner und kann die Access Logs einsehen.
+        Mallory blockiert alle Pakete, die von der App an den remote Server gesendet werden während er mit dem Schloss via ÖFFNEN/SCHLIEßEN- Befehl interagiert.
+        Somit werden seine Aktionen nicht mitgeschrieben, da das Schloss selbst diese Aktionen von Schloss selbst nicht zwischengespeichert und über einen anderen Client an den remote Server gesendet werden.
+        Da diese Informationen auch nachdem Alice mit dem Schloss interagiert nicht über ihr Gerät an den Server weitergeleitet werden, kann Bob als Owner nicht sehen, dass Mallory das Schloss geöffenet oder geschlossen hat.
+        \item Unwanted Unlocking (August und Danalock): Apps nutzen Location Services mittels Geofencing (50m Radius) auf dem Mobilgerät, über welche das Schloss, wenn in Reichweite von \gls{ble} und autorisiert, automatisch entriegelt wird.
+        Ist Alice einmal innerhalb des Radiuses, wird das Schloss nicht automatisch wieder verschlossen so lange sie sich noch innerhalb der Reichweite des \gls{ble}-Moduls befindet - erst bei Austritt aus dem Radius wird das Schloss wieder verriegelt.
+        Szenario: Das Schloss ist an Alices Haustür angebracht.
+        Zusätzlich hat das Haus von Alice eine weitere Tür durch die ihr Haus betreten werden kann.
+        Geht Alice nicht durch die Haustür, sondern durch die andere, bleibt die Haustür durch die oben Beschriebene Funktion entriegelt.
+        Gleiches Problem entsteht, wenn Alice beispielsweise an beiden Türen Smart Locks angebracht hat.
+        Bewegt sie sich mit ihrem Smartphone durch ihr Haus werden die Schlösser, sobald sie in \gls{ble}-Reichweite ist, automatisch entriegelt und nicht wieder automatisch verriegelt, da sie sich weiterhin innerhalb des Geofencing-Radius befindet.\\
+        Kevo: Da dieses Schloss über einen Touch-To-Unlock-Mechanismus verfügt, funktioniert das oben Beschriebene Szenario nicht.
+        Dieser Mechanismus erlaubt es Alice, wenn autorisiert und in \gls{ble}-Reichweite das Schloss mittels eines Fingertippens zu entriegeln.
+        Jedoch ist es bei diesem Modell möglich, dass Alice sich innerhalb des Hauses befindet und ein Angreifer von außen mittels eines Fingertippens die Tür öffnen kann, da alle Bedingungen für ein legitimes Öffnen - minus der physischen Person - erfüllt sind.
+        Allerdings ist dieser Angriff nur bei bestimmten Grundrissen möglich, da der Hersteller einen Algorithmus verwendet, der die Richtung, aus der das Bluetooth-Signal kommt, bestimmt und lediglich Signale entgegennimmt, die im 180$^{\circ}$-Winkel vor dem Schloss befinden.
+        \item Relay Attacks (Kevo, Danalock, August): Ein Angreifer folgt Alice (außerhalb des Bluetooth- und Geofencingradius, aber in Bluetooth-Reichweite zu Alices Gerät) und überträgt das Signal an einen anderen Angreifer, der vor Alices Haus mit einem bluetoothfähigen Gerät wartet und mittels des übertragenen Signals nun alle Bedingungen erfüllt und das Schloss entriegeln kann.
+        Bei Systemen mit Geofencing muss zusätzlich Alices Standort gespooft werden.
+        
 	\end{itemize}
 	
 	Threat Models
@@ -58,5 +83,5 @@
 		    Kann einfach durch ein vom Hersteller öffentliches Open Source Programm ausgenutzt werden ohne für den Besitzer sichtbare Spuren zu hinterlassen (und ohne die offizielle App zu benutzen)
 		\item Owner Account Leakage Attack: in which the attacker is able to disguise himself/herself to be the owner, by logging into the lock owner’s account in the third-party device to control the smart lock without being discovered
 		\item Personal Information Leakage Attack: in which the attacker is able to obtain the lock user information, which seriously threatens the user privacy; and
-		\item Denial-of-service (DoS) Attack: in which the attacker disrupts the regular usage of smart lock, which dramatically	brings down the user experience
+		\item Denial-of-service (DoS) Attack: in which the attacker disrupts the regular usage of smart lock, which dramatically brings down the user experience
 	\end{itemize}
