@@ -10,11 +10,12 @@
 	\end{itemize}
 	
 	\subsubsection{Typische Architekturen und Gemeinsamkeiten}
-	    Nach \citeauthor{Ye2017}:
+	    Nach \citeauthor{Ye2017} und \citeauthor{Fuller2017}:
 		\begin{itemize}
-			\item Türschloss, häufig elektromagnetisch. Das Öffnen erfolgt primär elektronisch. Alternativ lässt sich das Schluss entweder mit einem Keyfob (einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet) oder einem physischen Schüssel öffnen.
+			\item Türschloss, häufig elektromagnetisch. Das Öffnen erfolgt primär elektronisch. Alternativ lässt sich das Schloss entweder mit einem Keyfob (einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet) oder einem physischen Schüssel öffnen.
 			\item Mobile Applikation auf einem Smartphone
 			\item Herstellereigener Remote Server, auf dem sich in den meisten Fällen eine authoritative Liste aller Nutzer, sowie deren Rechte befindet
+			\item Zubehörgät, das es ermöglicht das Schloss über den Webserver fernzusteuern.
 		\end{itemize}
 
 		Bestandteile nach \citeauthor{Ho2016}:
@@ -29,14 +30,23 @@
 
 		Funktion nach \citeauthor{Ho2016}
 		\begin{itemize}
-		    \item Um das Schloss zu kontrollieren installiert der Nutzer eine App, häufig herstellerspezifisch, je nach Schloss auf ihrem Mobilgerät.
+		    \item Um das Schloss zu kontrollieren installiert der Nutzer eine App, welche häufig herstellerspezifisch ist, je nach Schloss auf ihrem Mobilgerät.
 		    \item Der Nutzer erstellt ein Nutzerkonto auf dem Server des Herstellers
 		    \item Nutzer pairt sein Geräte mit dem Schloss mittels eines lokalen kabellosen Kanals, wie \gls{ble}
 		    \item Die Identifikation der verschiedenen Nutzer erfolgt entweder mittels E-Mailadresse oder Telefonnummer.
+		        Bei August werden Nutzer anhand eines einzigartigen Schlüsseln identifiziert, den der Owner nicht kennt\cite{Fuller2017}
 		    \item Die Smart Locks enthalten eine eingebaute Funktion, um jegliche Zugriffe zu protokollieren.
+		        Dazu gehören Aktionen wie (\cite{Fuller2017}):
+		        \begin{itemize}
+		            \item wann das Schloss elektronisch geöffnet/geschlossen wurde und von wem
+		            \item wann das Schloss manuell geöffnet/geschlossen wurde
+		            \item wann, wem und von wem Zugriff gewährt/entzogen wurde
+		            \item gelöschte Account\todo[color=orange]{im Paper unklar}
+		        \end{itemize}
+		        Am beispiel der August Smart Lock werden diese asynchron mit der Smartphone App aktualisiert, sobald sich das Gerät des Nutzers in Reichweite des \gls{ble} befindet.
 		    \item Lediglich der Nutzer mit der Rolle des Owners kann diese Protokolle einsehen.
 		    \item Das elektronische Öffnen und Schließen erfolgt mittels eines Buttons in der App.
-		        Funktion, um das Schloss ohne Interaktion des Nutzers zu öffnen.
+		        Einer Funktion, um das Schloss ohne Interaktion des Nutzers zu öffnen.
 		        Entweder komplett automatisch bei Annäherung oder nach berühren einer Schaltfläche auf dem Schloss.
 		        Dabei wird geprüft, ob der Nutzer authorisiert ist.
 		\end{itemize}
@@ -52,7 +62,7 @@
         
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.5\textwidth]{paperNotes/ho2016_components}
+			\includegraphics[width=0.7\textwidth]{paperNotes/ho2016_components}
 			\caption{Kommunikation zwischen Komponenten des Smart Lock Systems von August}
 			\label{fig:gateway}
 		\end{figure}
@@ -65,5 +75,5 @@
 			    Bei Wechsel des Besitzers muss das Smart Lock zurückgesetzt werden.
 			    Rollen wieder zu entfernen und somit anderen Nutzers wieder die Rechte zu entziehen, muss Owner sein.
 			    Um die Rechte eines Owners bei einem verlorenen oder gestohlenen zu entziehen, wird entweder eine "Lost Phone"-Funktion angeboten oder ein anderer Nutzer mit der Rolle des Owners entzieht dem nicht mehr vorhandenen Gerät die Rolle.
-			\item Permissions: Lock/Unlock, Lock Activity, Guest List, User Invitation (new Users), User Level Control (update User Role), User Permission Control (set time slots for guests)
+			\item Permissions: Lock/Unlock, Lock Activity, Guest List, User Invitation (new Users), User Level Control (update User Role), User Permission Control (e.g. set time slots for guests, revoke permissions from users), Schloss kalibrieren und zurücksetzen\cite{Fuller2017}, Activiy Protokoll ansehen\cite{Fuller2017}, Autolocking/-unlocking akivieren/deaktivieren
 		\end{itemize}
