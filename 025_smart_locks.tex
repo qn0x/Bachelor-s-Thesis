@@ -1,7 +1,9 @@
 \subsection{Smart Locks}
 \label{sec:sota_smart_locks}
 
-	relevant: \cite{Ye2017}\cite{Fuller2017}\cite{Rose2016}\cite{Ho2016}
+    In diesem Unterkapitel werden Grundlagen zu Smart Locks erläutert.
+    Da sich die Architektur und die Funktionsmechanismen in manchen Punkten je nach Hersteller mehr oder weniger unterscheiden, gelten die im Folgenden dargelegten technischen Erklärungen, soweit nicht explizit anders erwähnt, für das Smart Lock von der Firma August.
+    \todo[color=cyan]{\cite{Rose2016}}
 	\missingfigure{Bilder von Smart Lock-Systemen}
 	
 	\begin{itemize}
@@ -15,7 +17,7 @@
 			\item Türschloss, häufig elektromagnetisch. Das Öffnen erfolgt primär elektronisch. Alternativ lässt sich das Schloss entweder mit einem Keyfob (einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet) oder einem physischen Schüssel öffnen.
 			\item Mobile Applikation auf einem Smartphone
 			\item Herstellereigener Remote Server, auf dem sich in den meisten Fällen eine authoritative Liste aller Nutzer, sowie deren Rechte befindet
-			\item Zubehörgät, das es ermöglicht das Schloss über den Webserver fernzusteuern.
+			\item August Connect: als Relay, welches sich mit dem Internet verbindet und sich in \gls{ble}-Reichweite des Schlosses befindet, um nicht in \gls{ble}-Reichweite sein zu müssen, um Befehle an das Schloss zu senden
 		\end{itemize}
 
 		Bestandteile nach \citeauthor{Ho2016}:
@@ -28,6 +30,7 @@
 		    \item Weboberfläche zur Administration
 		\end{itemize}
 
+    \subsubsection{Typische Funktionen}
 		Funktion nach \citeauthor{Ho2016}
 		\begin{itemize}
 		    \item Um das Schloss zu kontrollieren installiert der Nutzer eine App, welche häufig herstellerspezifisch ist, je nach Schloss auf ihrem Mobilgerät.
@@ -41,7 +44,6 @@
 		            \item wann das Schloss elektronisch geöffnet/geschlossen wurde und von wem
 		            \item wann das Schloss manuell geöffnet/geschlossen wurde
 		            \item wann, wem und von wem Zugriff gewährt/entzogen wurde
-		            \item gelöschte Account\todo[color=orange]{im Paper unklar}
 		        \end{itemize}
 		        Am beispiel der August Smart Lock werden diese asynchron mit der Smartphone App aktualisiert, sobald sich das Gerät des Nutzers in Reichweite des \gls{ble} befindet.
 		    \item Lediglich der Nutzer mit der Rolle des Owners kann diese Protokolle einsehen.
@@ -58,6 +60,12 @@
                 Dies setzt voraus, dass sich das Endgerät in Kommunikationsreichweite für das jeweilige Protokoll (bspw. \gls{ble}) befindet.
             \item Direkte Internetverbindung des Smart Locks zur Kommunikation mit dem Server des Herstellers mittels eingebautem Wifi-Modem, welches sich mit dem Netzwerk des Nutzers verbindet.
                 Die Informationen über Rechtevergaben und Gerätezustand etc. werden hier allerdings über das Internet und nicht über lokale Kommunikation (wie \gls{ble}) übertragen.
+            \item \gls{ble} zwischen Smartphone und Smart Lock wird verwendet für:
+                \begin{itemize}
+                    \item Athentifizierung des Smartphones des Nutzers 
+                    \item Nachrichten mit Informationen über gewährten und entzogenen Nutzerrechten
+                    \item die Smartphone-App bzw. die Logs über Aktivitäten (lock/unlock) informieren
+                \end{itemize}
         \end{enumerate}
         
 		\begin{figure}[H]
@@ -67,7 +75,9 @@
 			\label{fig:gateway}
 		\end{figure}
 
-        Rollen und Rechteverteilungen\cite{Ye2017}\cite{Ho2016}:
+    \subsubsection{Sichereit}
+        \paragraph{Rollen und Rechteverteilungen:}
+        Relevant: \cite{Ye2017}\cite{Ho2016}
 		\begin{itemize}
 			\item Rollen: Owner(Grant, Revoke, Lock/Unlock, Admin Features wie Zugriffshistorie), Resident(Lock/Unlock), wiederkehrender Gast (nur Lock/Unlock zu bestimmten Zeitfenstern), temporärer Gast(Lock/Unlock für eine bestimmte Zeit wie 24 Stunden)
 			    Die Rolle des Owners wird jenem Gerät vergeben, das sich nach Installation des Smart Locks als erstes mittels \gls{ble} (oder bei einigen Modellen über W-LAN) verbindet.
@@ -75,5 +85,34 @@
 			    Bei Wechsel des Besitzers muss das Smart Lock zurückgesetzt werden.
 			    Rollen wieder zu entfernen und somit anderen Nutzers wieder die Rechte zu entziehen, muss Owner sein.
 			    Um die Rechte eines Owners bei einem verlorenen oder gestohlenen zu entziehen, wird entweder eine "Lost Phone"-Funktion angeboten oder ein anderer Nutzer mit der Rolle des Owners entzieht dem nicht mehr vorhandenen Gerät die Rolle.
-			\item Permissions: Lock/Unlock, Lock Activity, Guest List, User Invitation (new Users), User Level Control (update User Role), User Permission Control (e.g. set time slots for guests, revoke permissions from users), Schloss kalibrieren und zurücksetzen\cite{Fuller2017}, Activiy Protokoll ansehen\cite{Fuller2017}, Autolocking/-unlocking akivieren/deaktivieren
+			    Der Owner kann das Schloss auch ohne Internetverbindung öffnen/schließen.
+			    Gäste hingegen müssen sich vor der Kommunikation mit dem Schloss gegenüber der dem Server des Herstellers autorisieren lassen.
+			\item Permissions: Lock/Unlock, Lock Activity, Guest List, User Invitation (new Users), User Level Control (update User Role), User Permission Control (e.g. set time slots for guests, revoke permissions from users), Schloss kalibrieren und zurücksetzen\cite{Fuller2017}, Activiy Protokoll ansehen\cite{Fuller2017}, Autolocking/-unlocking akivieren/deaktivieren, eigenen Account löschen
 		\end{itemize}
+		über Secret Keys\cite{Fuller2017}
+		\begin{itemize}
+		    \item jede Bluetooth-Verbindungssession bekommmt einen eigenen einzigartigen Session-Key (weiter SK genannt), welcher für Owner wie folgt entsteht:
+		    \missingfigure{Wie der Session Key für Owner entsteht}
+		        \begin{enumerate}
+		            \item Das Smartphone sendet zufällige 64 Bit an das Schloss, welche mit dem offline Keys des Smartphones verschlüsselt werden, an das Schloss
+		            \item Das Schloss sendet 64 zufällige Bits, die mit dem offline Key des Smartphones verschlüsselt sind, an das Smartphone zurück
+		            \item Das Schloss und das Smartphone entschlüsseln die jeweils erhaltene Nachricht und konkatinieren beide Nachrichten zu einer neuen 128-Bit langen Folge, die im weiteren Verlauf als AES-Key zur Verschlüsselung der Session genutzt wird.
+		        \end{enumerate}
+		        Gäste, welche keinen "offline Key" zugewiesen bekommen, kommunizieren mit dem Webserver:
+		        \missingfigure{Wie der Session Key für Gäste entsteht}
+		        \begin{enumerate}
+		            \item Das Smartphone des Gasts sendet 64 zufällige Bits als Klartext an den Server
+		            \item Der Server verschlüsselt diese 64 Bits mit dem Firmware Key und sendet die verschlüsselten Bits als Nachricht an den Gast zurück
+		            \item Der Gast leitet den Ciphertext, welcher von dem Server empfangen wurde, an das Schloss weiter.
+		            \item Das Schloss sendet 64 Bits mit XY  verschlüsselt an den Gast, welcher diesen Ciphertext an den Server weiterleitet.
+		            \item Der Server entschlüsselt die Nachricht und sendet sie als Klartext per SSL an den Gast.
+		            \item Das Schloss und der Gast konkatenieren beide 64-Bit langen Folgen zu einem 128-Bit Schlüssel, welcher als Session Key verwendet wird.
+		        \end{enumerate}
+		    \item SK wird genutzt, um Nachrichten zwischen dem Schloss und dem Smartphone des Nutzers mit AES zu ver- und entschlüsseln
+		    \item Voraussetzung: für das Protokoll, welches den Session Key erstellt müssen bereits im Voraus das Schloss und entweder die Webserver des Herstellers oder das Smartphone des Nutzers einen Secret Key teilen.
+		    \item in August können insgesamt 256 Schlüssel (von 0-255 nummeriert) gespeichert werden, wobei Nummer 0 besondere Privilegien hat und als "firmware key" angesehen wird (\textrightarrow Hardcoded und somit anfällig, sollte in falsche Hände geraten).
+		        Die Webserver des Herstellers, Nutzer mit der Rolle OWNER und das Schloss selbst kennen den Schlüssel.
+		        anderen Keys sind "offline Keys", die zur Initialisierung einer Bluetooth-Session verwendet werden, sollte der Nutzer nicht mit dem Internet verbunden sein
+		\end{itemize}
+		
+		

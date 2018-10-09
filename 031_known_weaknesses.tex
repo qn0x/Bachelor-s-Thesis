@@ -86,7 +86,17 @@
 		\item Denial-of-service (DoS) Attack: in which the attacker disrupts the regular usage of smart lock, which dramatically brings down the user experience
 	\end{itemize}
 	
-	Paper von \cite{Fuller2017}>
+	Das in \fref{sec:sota_smart_locks} vorgestellte Schlüsselaustauschprotokoll lässt auf den ersten Blick folgende potentielle Angriffe zu\cite{Fuller2017}: 
 	\begin{itemize}
-	    \item 
+	    \item Wenn der Angreifer an den Firmware Key gelangt, könnte dieser mit einer Chosen Plaintext-Attacke fabrizierte Nachrichten anstatt 64 random Bits den Server schicken  
+	    \item der Session Key wird als Klartext vom Server an den Gast geschickt, sodass ein Mithörer an diesen gelangen könnte.
+	        Er wird jedoch unverzüglich für die Kommunikation zwischen Schloss und Gast genutzt und direkt nach Nutzung wieder verworfen, sodass das Kennen des Session Keys für einen Angreifer laut \citeauthor{Fuller2017} eher unwahrscheinlich einen Nutzen hervorbringt.
 	\end{itemize}
+	
+	Die in \fref{sec:sota_smart_locks} vorgestellte Kommunikation via Wifi zwischen dem Webserver und dem der Smartphone-App lässt auf den ersten Blick folgende potentielle Angriffe zu\cite{Fuller2017}: 
+	\begin{itemize}
+	    \item wenn sich ein Nutzer das erste Mal in der App anmeldet, wird eine zufällige ID generiert (installID), welche an den Webserver gesendet wird und für viele API-Aufrufe als Teil des API-Keys verwendet wird.
+	\end{itemize}
+	
+	\LARGE{\citeauthor{Fuller2017} S. 8, 3.1.3}
+	
