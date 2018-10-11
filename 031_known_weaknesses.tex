@@ -61,7 +61,6 @@
         Allerdings ist dieser Angriff nur bei bestimmten Grundrissen möglich, da der Hersteller einen Algorithmus verwendet, der die Richtung, aus der das Bluetooth-Signal kommt, bestimmt und lediglich Signale entgegennimmt, die im 180$^{\circ}$-Winkel vor dem Schloss befinden.
         \item Relay Attacks (Kevo, Danalock, August): Ein Angreifer folgt Alice (außerhalb des Bluetooth- und Geofencingradius, aber in Bluetooth-Reichweite zu Alices Gerät) und überträgt das Signal an einen anderen Angreifer, der vor Alices Haus mit einem bluetoothfähigen Gerät wartet und mittels des übertragenen Signals nun alle Bedingungen erfüllt und das Schloss entriegeln kann.
         Bei Systemen mit Geofencing muss zusätzlich Alices Standort gespooft werden.
-        
 	\end{itemize}
 	
 	Threat Models
@@ -93,10 +92,56 @@
 	        Er wird jedoch unverzüglich für die Kommunikation zwischen Schloss und Gast genutzt und direkt nach Nutzung wieder verworfen, sodass das Kennen des Session Keys für einen Angreifer laut \citeauthor{Fuller2017} eher unwahrscheinlich einen Nutzen hervorbringt.
 	\end{itemize}
 	
-	Die in \fref{sec:sota_smart_locks} vorgestellte Kommunikation via Wifi zwischen dem Webserver und dem der Smartphone-App lässt auf den ersten Blick folgende potentielle Angriffe zu\cite{Fuller2017}: 
+	Die in \fref{sec:sota_smart_locks} vorgestellte Kommunikation via Wifi zwischen dem Webserver und dem der Smartphone-App lässt auf den ersten Blick folgende potentielle Angriffe zu\cite{Fuller2017}\cite{Lariviere2015}: 
 	\begin{itemize}
-	    \item wenn sich ein Nutzer das erste Mal in der App anmeldet, wird eine zufällige ID generiert (installID), welche an den Webserver gesendet wird und für viele API-Aufrufe als Teil des API-Keys verwendet wird.
+	    \item wenn sich ein Nutzer das erste Mal in der App anmeldet, wird eine zufällige ID generiert (installID), welche an den Webserver gesendet wird und für viele API-Aufrufe entweder als Teil des API-Keys oder zusätzlich zu diesem verwendet wird.
+	    \item eine Zeit lang API Endpunkte authentifizieren den Nutzer nicht richtig und erlauben es einem Angreifer einen Gästezugang anzulegen, wenn dieser die \gls{uuid} kennt, welche, sollte man sich in der Reichweite des \gls{ble} befinden.
+	    \item Ebenfalls möglich war eine Privilege Escalation, in dem ein String von 'user' auf 'superuser' geändert wurde.
 	\end{itemize}
 	
-	\LARGE{\citeauthor{Fuller2017} S. 8, 3.1.3}
+	Im Paper von \cite{Fuller2017} vorgestellte Angriffe:
+	\begin{itemize}
+	    \item ein Angreifer kappt die Internetverbindung, um einem Entzug der Rechte zu entgehen
+	        \begin{itemize}
+	            \item ein ein ehemaliger Nutzer mit der Rolle Owner kann seinen Zugriff behalten, indem er die Internetverbindung kappt, wie bei \cite{Ho2016}
+	            \item ein Dieb umgeht das remote Logout-System
+	                Wenn Auto-Unlock aktiviert ist, er aber Das Gerät nicht entsperren kann - es ist aber möglich via August "Lost device", kann aber umgangen werden, indem der Flugmodus aktiviert wird
+	                Ist aber weniger schlimm, ähnlich einem verlorenen Schlüssel
+	        \end{itemize}
+	    \item ein Angreifer mit einem in der Zukunft auf Zeit limitierten Gastzugang ändert die Zeiteinstellung auf seinem Gerät, um zu einem anderen Zeitpunkt Zugriff zu erhalten
+	    \item Bluetooth-Verkehr zwischen dem Smartphone und dem Schloss mitlesen
+	    \item andere Möglichkeiten
+	\end{itemize}
+	
+	Von \cite{Rose2016} vorgestellt:
+	\begin{itemize}
+	    \item Plaint Text Password (Quicklock, iBluLock, Pantraco Phantomlock): 
+	        z.B. einfach Opcode (Herstellserspezifisch), aktuelles Passwort, neues Passwort konkatiniert und gesendet. 
+	        Wird dies gesendet, dann wird der Owner mit einem neuen Passwort ausgesperrt und ein hard Reset ist nötig. 
+	        Jedoch ist diser Angriff nur möglich, wenn das Schloss in dem Moment, in dem die Nachricht gesendet wird, entriegelt ist.
+	    \item Replay-Angriff (Ceomate Bluetooth, Elecycle Smart Padlack, Vians Bluetooth Smart Doorlock, Lagute Sciener Smart Doorlock)
+	    \item Fuzzing (Okidokey Smart Doorlock): 
+	        Indem man einige Bytes eines gültigen Befehls ändert und versucht das Schloss in einen Fehlerzustand zu bringen. 
+	        Okidokey:
+	        \begin{itemize}
+	            \item über Sniffing an einen gültigen Befehl kommen, bei dem ein scheinbar einzigartiger Schlüssel gesendet wird
+	            \item indem man das dritte Byte zu 0x00 ändert, bringt man das Schloss in einen Fehlerzustand, in welchem sich das Schloss automatisch entriegelt
+	            9348(Opcode?)|b6cad7299ec1481791303d7c90d549352398(Key)
+	            \item während dieses Fehlerzustands ist das Schloss für den Nutzer unbrauchbar
+	        \end{itemize}
+	    \item Decompiling APKs (Poly-Control Danalock Doorlock): 
+	        \begin{itemize}
+	            \item APKs vom Android-Gerät holen
+	            \item .dex zu .jar konvertieren
+	            \item .jar dekompilieren
+	            \item zeigt Verschlüsselungsmethode und hardcoded Secret (Kerckoff's Prinzip)
+	            \item XOR(passwort, secret) \textrightarrow es ist also einfach an das Passwort zu kommen \textrightarrow Entschlüsseln der Kommunikation ist möglich
+	        \end{itemize}
+	    \item Device Spoofing (Mesh Motion Bitlock Padlock): 
+	        \begin{itemize}
+	            \item Angreifer gibt sich als Schloss aus, um das Passwort des Nutzers zu stehlen
+	            \item möglich, da ein vorhersehbarer Nonce geschickt wird und die App beim Nutzer im Hintergrund läuft und Befehle ohne Nutzerinteraktion sendet.
+	        \end{itemize}
+	    \item Brute-Forcing: bei Quicklock möglich mit 8-Ziffern PIN (100.000.000 Kombinationen)
+	\end{itemize}
 	

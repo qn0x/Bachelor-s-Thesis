@@ -17,13 +17,28 @@
         Demnach muss sich das Gerät entscheiden, ob es alle Zugriffe zulässt(um die Verfügbarkeit zu gewährleisten) oder alle Zugriffe blockiert, bis wieder eine Verbindung hergestellt werden kann.
         In der Zwischenzeit könnte sich die Liste ja wieder geändert und er Nutzer keine Autorisierung mehr haben (Konsistenz ist nicht mehr gegeben).
         \item \textrightarrow "eventual consistency" design \textrightarrow robuste revocation und logging Mechanismen und gleicheitige Unabhängigkeit des Systems von externen Entitäten\cite{Ho2016} \textrightarrow availability, weniger anfällig gegenüber remote Angriffen, indem den Geräten kein Zugriff zum Internet gewährt wird.
-        \item gegen Relay-Attacken: Distance-boudning Protocols, die via RTT die Distany des Nutzers zum Schloss bestimmen, leider aber noch nicht verfügbar\cite{Ho2016}   
+        \item gegen Relay-Attacken: Distance-boudning Protocols, die via RTT die Distany des Nutzers zum Schloss bestimmen, leider aber noch nicht verfügbar\cite{Ho2016} \item ein Angreifer ändert das Passwort der August Smartphone App auf einem temporär komprommittierten Gerät.
+	        Szenario: Alice ist in der App angemeldet und der Angreifer erhält Zugriff auf dessen Smartphone.
+	        Der Angreifer kann problemlos das Passwort von Alice ändern, da bei einer Änderung nicht mit dem alten Passwort verfiziert wird.
+	        Somit kann ein Angreifer sich auf dem Gerät von Alice nach Belieben anmelden und in ihrem Namen Aktionen ausführen.
+	        Jedoch kann der Angreifer sich nicht mit den Nutzerdaten von Alice auf einem anderen Gerät anmelden, da die App beim Anmelden auf einem neuen Gerät eine einmal gültige Verifikation über E-Mail oder SMS erfordert.\todo[color=yellow]{besser ausdrücken}
+	        Hat nicht funktioniert \textrightarrow Server gibt die Zeit vor \cite{Fuller2017}
+        \item 
     \end{itemize}
     
     Sicherheitsziele von Smart Locks\cite{Ho2016}
     \begin{itemize}
         \item nicht-authorisierten Zugriff verhindern bzw. nur dann öffnen/schließen, wenn der Nutzer, der den Befehl gibt, authorisiert ist(Whitelisting)
         \item Access Log Integrität
+    \end{itemize}
+    
+    In \cite{Rose2016} vorgestellte Features von "uncrackable" Locks:
+    \begin{itemize}
+        \item ordentlich implementierte AES-Verschlüsselung
+        \item echt zufälliger Nonce-Wert mit 8-16 Bytes
+        \item 2-Factor Authentication
+        \item keine Hardcoded Pwasswörter
+        \item lange Passwörter sind erlaubt (16-20 Zeichen)
     \end{itemize}
 	
 	Weiterhin lassen sich mittels den Ressourcen des \gls{owasp}-Projekts\cite{Miessler2015}\cite{Miessler2015a} weitere Anforderungen aufstellen\todo[color=orange]{besser ausdrücken}:
