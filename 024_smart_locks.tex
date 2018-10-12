@@ -1,28 +1,36 @@
 \subsection{Smart Locks}
 \label{sec:sota_smart_locks}
 
-    In diesem Unterkapitel werden Grundlagen zu Smart Locks erläutert.
-    Da sich die Architektur und die Funktionsmechanismen in manchen Punkten je nach Hersteller mehr oder weniger unterscheiden, gelten die im Folgenden dargelegten technischen Erklärungen, soweit nicht explizit anders erwähnt, für das Smart Lock von der Firma August.
-    \todo[color=cyan]{\cite{Rose2016}}
+    Da sich Architektur und Funktionsmechanismen in manchen Punkten je nach Hersteller unterscheiden, gelten die im Folgenden dargelegten technischen Erklärungen, soweit nicht explizit erwähnt, für das Smart Lock von der Firma August.
+    
+    Smart Locks sind ,,elekromechanische Türschlösser``, die sich dadurch auszeichnen, dass sie für einen Nutzer mit einer Smartphone-App steuerbar sind und mittels eines kabellosen Standards wie Bluetooth (siehe \fref{sec:sota_iot_protocols}) für kurze Distanzen kommunizieren.
+    \medskip
 	\missingfigure{Bilder von Smart Lock-Systemen}
-	
-	\begin{itemize}
-	    \item keine Smart Locks, die einfach ein Türschloss mit einem Ziffernblock ersetzen oder nicht mit anderen Geräten in irgendeiner Weise verbinden, da sie sich fundamental von herkömmlichen \gls{iot}-Geräten unterscheiden\cite{Ho2016}
-	    \item keine Smart Locks, die sich nicht direkt oder über ein Gateway mit dem Internet verbinden können\cite{Ho2016}
-	\end{itemize}
+	Als ,,Smart Lock`` werden keine Schlösser bezeichnet, bei denen ein physisches Schloss \footnote{beispielweise ein Stiftschloss, welches mit einem herkömmlichen Schlüssel geöffnet werden kann} mit einem Ziffernblock ersetzt wurde oder sich nicht mit anderen Geräten in irgendeiner Weise verbinden. \todo[color=yellow]{vereinfachen}
+	Ebenso werden ,,Smart Locks`` nicht als solche bezeichnet, wenn sie sich nicht direkt oder über ein Gateway mit dem Internet verbinden können.\cite{Ho2016}
 	
 	\subsubsection{Typische Architekturen und Gemeinsamkeiten}
-	    Nach \citeauthor{Ye2017} und \citeauthor{Fuller2017}:
+	    Trotzdem lassen sich in den den doch sehr unterschiedlichen Produkten, die momentan auf dem freien Markt verfügbar sind oder verfübar waren einige Gemeinsamkeiten erkennen\cite{Ye2017,Fuller2017}: 
 		\begin{itemize}
-			\item Türschloss, häufig elektromagnetisch. Das Öffnen erfolgt primär elektronisch. Alternativ lässt sich das Schloss entweder mit einem Keyfob (einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet) oder einem physischen Schüssel öffnen.
-			\item Mobile Applikation auf einem Smartphone
+			\item Das Schloss ist häufig elektromagnetisch. 
+			Das Öffnen erfolgt primär elektronisch. 
+			Alternativ lässt sich das Schloss entweder mit einem sogenannten ,,Keyfob`` \footnote{einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet} oder einem physischen Schüssel öffnen.
+			\item Zum gesamten Produkt gehört in den meisten Fällen eine mobile Applikation für ein Smartphone zum Öffenen und Schließen des Schlosses, sowie zur Administration. 
+			Eher seltener beinhaltet das Produkt auch eine Weboberfläche, welche ebenfalls für administrative Aufgaben genutzt werden kann.
 			\item Herstellereigener Remote Server, auf dem sich in den meisten Fällen eine authoritative Liste aller Nutzer, sowie deren Rechte befindet
 			\item August Connect: als Relay, welches sich mit dem Internet verbindet und sich in \gls{ble}-Reichweite des Schlosses befindet, um nicht in \gls{ble}-Reichweite sein zu müssen, um Befehle an das Schloss zu senden
 		\end{itemize}
+		
+		\begin{figure}[H]
+	    	\centering
+	    	\includegraphics[width=\textwidth]{graphics/sl_arch.png}
+	    	\caption{Beispiel eines Smart Lock-Systems}
+	    	\label{fig:sl_arch}
+	    \end{figure}
 
 		Bestandteile nach \citeauthor{Ho2016}:
 		\begin{itemize}
-		    \item elektronisch erweitertes Schloss, welches an der Außenseite einer Tür\todo[color=orange]{besser formulieren} angebracht ist
+		    \item Das Schloss selbst ist elektronisch erweitert und  an der Außenseite einer Tür\todo[color=orange]{besser formulieren} angebracht ist
 		    \item als Rückfalllösung ist bei allen ein Smart Locks traditionelles Schlüsselloch, welches sich mit einem physischen Schlüssel öffnen lässt.
 		    \item das Schloss lässt sich von innen manuell bedient werden
 		    \item mobiles Gerät mit entsprechender App, über welche das Schloss elektronisch kontrolliert werden kann, sowie Administration möglich ist
