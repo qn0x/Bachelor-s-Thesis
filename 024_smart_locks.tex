@@ -1,102 +1,102 @@
 \subsection{Smart Locks}
 \label{sec:sota_smart_locks}
-
-    Da sich Architektur und Funktionsmechanismen in manchen Punkten je nach Hersteller unterscheiden, gelten die im Folgenden dargelegten technischen Erklärungen, soweit nicht explizit erwähnt, für das Smart Lock von der Firma August.
-    
-    Smart Locks sind ,,elekromechanische Türschlösser``, die sich dadurch auszeichnen, dass sie für einen Nutzer mit einer Smartphone-App steuerbar sind und mittels eines kabellosen Standards wie Bluetooth (siehe \fref{sec:sota_iot_protocols}) für kurze Distanzen kommunizieren.
-    \medskip
-	\missingfigure{Bilder von Smart Lock-Systemen}
-	Als ,,Smart Lock`` werden keine Schlösser bezeichnet, bei denen ein physisches Schloss \footnote{beispielweise ein Stiftschloss, welches mit einem herkömmlichen Schlüssel geöffnet werden kann} mit einem Ziffernblock ersetzt wurde oder sich nicht mit anderen Geräten in irgendeiner Weise verbinden. \todo[color=yellow]{vereinfachen}
-	Ebenso werden ,,Smart Locks`` nicht als solche bezeichnet, wenn sie sich nicht direkt oder über ein Gateway mit dem Internet verbinden können.\cite{Ho2016}
+	Da sich Architektur und Funktionsmechanismen in manchen Punkten je nach Hersteller unterscheiden, gelten die im Folgenden dargelegten technischen Erklärungen, soweit nicht explizit erwähnt, für das Smart Lock von der Firma August. 
+    \medskip\\
+    \noindent Smart Locks sind ,,elekromechanische Türschlösser``, die sich dadurch auszeichnen, dass sie für einen Nutzer mit einer Smartphone-App steuerbar sind und mittels eines kabellosen Standards wie Bluetooth (siehe \fref{sec:sota_iot_protocols}) für kurze Distanzen kommunizieren.
+	Als ,,Smart Lock`` werden keine Schlösser bezeichnet, bei denen ein physisches Schloss
+	\footnote{beispielweise ein Stiftschloss, welches mit einem herkömmlichen Schlüssel geöffnet werden kann} 
+	mit einem Ziffernblock ersetzt wurde oder sich nicht mit anderen Geräten innerhalb des \gls{iot} in irgendeiner Weise verbinden.\cite{Ho2016}
 	
 	\subsubsection{Typische Architekturen und Gemeinsamkeiten}
-	    Trotzdem lassen sich in den den doch sehr unterschiedlichen Produkten, die momentan auf dem freien Markt verfügbar sind oder verfübar waren einige Gemeinsamkeiten erkennen\cite{Ye2017,Fuller2017}: 
-		\begin{itemize}
-			\item Das Schloss ist häufig elektromagnetisch. 
-			Das Öffnen erfolgt primär elektronisch. 
-			Alternativ lässt sich das Schloss entweder mit einem sogenannten ,,Keyfob`` \footnote{einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet} oder einem physischen Schüssel öffnen.
-			\item Zum gesamten Produkt gehört in den meisten Fällen eine mobile Applikation für ein Smartphone zum Öffenen und Schließen des Schlosses, sowie zur Administration. 
-			Eher seltener beinhaltet das Produkt auch eine Weboberfläche, welche ebenfalls für administrative Aufgaben genutzt werden kann.
-			\item Herstellereigener Remote Server, auf dem sich in den meisten Fällen eine authoritative Liste aller Nutzer, sowie deren Rechte befindet
-			\item August Connect: als Relay, welches sich mit dem Internet verbindet und sich in \gls{ble}-Reichweite des Schlosses befindet, um nicht in \gls{ble}-Reichweite sein zu müssen, um Befehle an das Schloss zu senden
-		\end{itemize}
+	    In den den doch sehr unterschiedlichen Produkten, die momentan auf dem freien Markt verfügbar sind oder bisher verfügbar waren, lassen sich trotz alledem einige Gemeinsamkeiten erkennen\cite{Ye2017,Fuller2017}. 
+    	\noindent Generell besteht ein Smart Lock-System aus folgenden Bestandteilen (vgl. \fref{fig:sl_arch}):
+    	\begin{enumerate}[noitemsep]
+    		\item einem elektrischen Schloss oder einer elektronischen Erweiterung eines vorhandenen Schlosses
+    		\item mindestens einem Nutzer, welcher durch sein Endgerät, meist ein Smartphone, identifiziert wird
+    		\item einem herstellereigenen Server
+    		\item einem Webinterface
+    		\item optional einem Zubehörgerät, welches erlaubt dem Schloss mit dem Internet zu kommunizieren
+    	\end{enumerate}
+    
+    	\begin{figure}[H]
+    		\centering
+    		\includegraphics[width=0.9\textwidth]{graphics/august_2.jpg}
+    		\caption{Bestandteile eines August Smart Lock Pro\cite{August}}
+    		\label{fig:august1}
+    	\end{figure}
+    
+	    \noindent Das Schloss selbst ist an der Außen- und/oder Innenseite einer Tür angebracht (vgl. \fref{fig:august1}) und erweitert ein vorhandenes Schloss elektronisch oder ist selbst in Form eines Vorhängeschlosses\cite{Ho2016}. 
+		Zum System gehört in den meisten Fällen eine mobile Applikation für ein Smartphone zum Öffnen und Schließen des Schlosses, sowie zur Administration\cite{Fuller2017}. 
+        Eher seltener beinhaltet das Produkt auch eine Weboberfläche, welche ebenfalls für administrative Aufgaben genutzt werden kann\cite{Ho2016}. 
+		Es existiert ein herstellereigener (Remote-)Server, auf dem sich eine authoritative Liste aller Nutzer, sowie deren Rechte befindet. 
+        Diese bildet die Grundlage zur Realisierung der Zugriffskontrolle.\cite{Fuller2017} 
+        Das Öffnen und Schließen erfolgt primär elektronisch mittels eines Buttons per App.
+        Alternativ lässt sich das Schloss entweder mit einem sogenannten ,,Keyfob`` 
+        \footnote{einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet} 
+        oder einem physischen Schüssel öffnen\cite{Ho2016}. 
+        Einige Modelle bieten auch eine Funktion, die die Tür automatisch öffnet sobald sich das Smartphone des Nutzers innerhalb eines bestimmten Radius befindet. 
+        Sobald folgende Bedingungen gegeben sind, öffenet sich das Schloss automatisch:
+        \begin{itemize}[noitemsep]
+        	\item automatisches Öffnen wurde vom Nutzer aktiviert
+        	\item der Nutzer hat einen Ort bzw. für Geofencing festgelegt \footnote{Geofencing erklären}\todo[color=cyan]{Geofencing erklären}
+        	\item der Nutzer befindet sich in Reichweite, um über sein Smartphone mit dem Schloss kommunizieren zu können
+        	\item der Nutzer ist berechtigt das Schloss zu öffnen
+        \end{itemize}
+    	Verlässt der Nutzer den Radius des Geofencings wieder, wird das Schloss automatisch verriegelt.
+		Ein optionales Zubehörgerät fungiert als Relay
+		\footnote{leitet Nachrichten von mehreren Entitäten in einem Netzwerk (unverändert) weiter}
+		, welches sich per \gls{ble} mit dem Schloss verbindet und über das W-LAN Heimnetzwerk des Nutzers mit dem Internet verbindet.
 		
-		\begin{figure}[H]
-	    	\centering
-	    	\includegraphics[width=\textwidth]{graphics/sl_arch.png}
-	    	\caption{Beispiel eines Smart Lock-Systems}
-	    	\label{fig:sl_arch}
-	    \end{figure}
-
-		Bestandteile nach \citeauthor{Ho2016}:
-		\begin{itemize}
-		    \item Das Schloss selbst ist elektronisch erweitert und  an der Außenseite einer Tür\todo[color=orange]{besser formulieren} angebracht ist
-		    \item als Rückfalllösung ist bei allen ein Smart Locks traditionelles Schlüsselloch, welches sich mit einem physischen Schlüssel öffnen lässt.
-		    \item das Schloss lässt sich von innen manuell bedient werden
-		    \item mobiles Gerät mit entsprechender App, über welche das Schloss elektronisch kontrolliert werden kann, sowie Administration möglich ist
-		    \item Remote Webserver des Herstellers
-		    \item Weboberfläche zur Administration
-		\end{itemize}
-
     \subsubsection{Typische Funktionen}
-		Funktion nach \citeauthor{Ho2016}
-		\begin{itemize}
-		    \item Um das Schloss zu kontrollieren installiert der Nutzer eine App, welche häufig herstellerspezifisch ist, je nach Schloss auf ihrem Mobilgerät.
-		    \item Der Nutzer erstellt ein Nutzerkonto auf dem Server des Herstellers
-		    \item Nutzer pairt sein Geräte mit dem Schloss mittels eines lokalen kabellosen Kanals, wie \gls{ble}
-		    \item Die Identifikation der verschiedenen Nutzer erfolgt entweder mittels E-Mailadresse oder Telefonnummer.
-		        Bei August werden Nutzer anhand eines einzigartigen Schlüsseln identifiziert, den der Owner nicht kennt\cite{Fuller2017}
-		    \item Die Smart Locks enthalten eine eingebaute Funktion, um jegliche Zugriffe zu protokollieren.
-		        Dazu gehören Aktionen wie (\cite{Fuller2017}):
-		        \begin{itemize}
-		            \item wann das Schloss elektronisch geöffnet/geschlossen wurde und von wem
-		            \item wann das Schloss manuell geöffnet/geschlossen wurde
-		            \item wann, wem und von wem Zugriff gewährt/entzogen wurde
-		        \end{itemize}
-		        Am beispiel der August Smart Lock werden diese asynchron mit der Smartphone App aktualisiert, sobald sich das Gerät des Nutzers in Reichweite des \gls{ble} befindet.
-		    \item Lediglich der Nutzer mit der Rolle des Owners kann diese Protokolle einsehen.
-		    \item Das elektronische Öffnen und Schließen erfolgt mittels eines Buttons in der App.
-		        Einer Funktion, um das Schloss ohne Interaktion des Nutzers zu öffnen.
-		        Entweder komplett automatisch bei Annäherung oder nach berühren einer Schaltfläche auf dem Schloss.
-		        Dabei wird geprüft, ob der Nutzer authorisiert ist.
+		Um das Schloss zu kontrollieren installiert der Nutzer initial eine herstellerspezifische App auf seinem Smartphone und erstellt ein Nutzerkonto auf dem Server des Herstellers. 
+		Danach pairt der Nutzer via \gls{ble} sein Gerät mit dem Schloss.\cite{Ho2016} 
+		Die Identifikation der verschiedenen Nutzer für administrative Zwecke erfolgt entweder mittels E-Mailadresse oder Telefonnummer. 
+		Aus technischer Sicht werden Nutzer anhand eines einzigartiger Schlüssel identifiziert, die der Besitzer des Schlosses nicht kennt.\cite{Fuller2017}\todo[color=orange]{nachlesen} 
+		Die Smart Locks enthalten eine eingebaute Funktion, um Zugriffe zu protokollieren. 
+		Dazu gehören Aktionen wie \cite{Fuller2017}:
+		\begin{itemize}[noitemsep]
+			\item von welchem Nutzer eine Funktion genutzt wurde, 
+			\item der Zeitpunkt, an dem das Schloss elektronisch geöffnet oder geschlossen wurde,
+			\item der Zeitpunkt, an dem das Schloss manuell geöffnet oder geschlossen wurde
+			\item wann, wem und von wem Zugriff gewährt oder entzogen wurde
 		\end{itemize}
-
-        Kommunikation nach \citeauthor{Ho2016}:
-        \begin{enumerate}
-            \item In \fref{fig:gateway} abgebildet: Smart Lock hat keine Internetverbindung.
-                Endgerät des Nutzers übernimmt die Funktion eines Proxy/Gateway, welches Informationen zwischen dem Smart Lock und den Servern des Herstellers überträgt.
-                Dies setzt voraus, dass sich das Endgerät in Kommunikationsreichweite für das jeweilige Protokoll (bspw. \gls{ble}) befindet.
-            \item Direkte Internetverbindung des Smart Locks zur Kommunikation mit dem Server des Herstellers mittels eingebautem Wifi-Modem, welches sich mit dem Netzwerk des Nutzers verbindet.
-                Die Informationen über Rechtevergaben und Gerätezustand etc. werden hier allerdings über das Internet und nicht über lokale Kommunikation (wie \gls{ble}) übertragen.
-            \item \gls{ble} zwischen Smartphone und Smart Lock wird verwendet für:
-                \begin{itemize}
-                    \item Athentifizierung des Smartphones des Nutzers 
-                    \item Nachrichten mit Informationen über gewährten und entzogenen Nutzerrechten
-                    \item die Smartphone-App bzw. die Logs über Aktivitäten (lock/unlock) informieren
-                \end{itemize}
-        \end{enumerate}
-        
+		Die Logs werden asynchron mit der Smartphone App aktualisiert, sobald sich das Gerät des Nutzers in Reichweite des \gls{ble} befindet\citeauthor{Ho2016}.
+	
+	\subsubsection{Kommunikation}
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.7\textwidth]{paperNotes/ho2016_components}
-			\caption{Kommunikation zwischen Komponenten des Smart Lock Systems von August}
-			\label{fig:gateway}
+			\includegraphics[width=\textwidth]{graphics/sl_arch.png}
+			\caption{Beispiel eines Smart Lock-Systems}
+			\label{fig:sl_arch}
 		\end{figure}
+
+        nach \citeauthor{Ho2016}:
+        In \fref{fig:sl_arch} abgebildet: Smart Lock hat keine Internetverbindung. 
+        Endgerät des Nutzers übernimmt die Funktion eines Proxy/Gateway, welches Informationen zwischen dem Smart Lock und den Servern des Herstellers überträgt. 
+        Dies setzt voraus, dass sich das Endgerät in Kommunikationsreichweite für das jeweilige Protokoll (bspw. \gls{ble}) befindet. 
+        Direkte Internetverbindung des Smart Locks zur Kommunikation mit dem Server des Herstellers mittels eingebautem Wifi-Modem, welches sich mit dem Netzwerk des Nutzers verbindet. 
+        Die Informationen über Rechtevergaben und Gerätezustand etc. werden hier allerdings über das Internet und nicht über lokale Kommunikation (wie \gls{ble}) übertragen. 
+        \gls{ble} zwischen Smartphone und Smart Lock wird verwendet für: 
+        \begin{itemize}
+            \item Athentifizierung des Smartphones des Nutzers 
+            \item Nachrichten mit Informationen über gewährten und entzogenen Nutzerrechten
+            \item die Smartphone-App bzw. die Logs über Aktivitäten (lock/unlock) informieren
+        \end{itemize}
 
     \subsubsection{Sichereit}
         \paragraph{Rollen und Rechteverteilungen:}
         Relevant: \cite{Ye2017}\cite{Ho2016}
-		\begin{itemize}
-			\item Rollen: Owner(Grant, Revoke, Lock/Unlock, Admin Features wie Zugriffshistorie), Resident(Lock/Unlock), wiederkehrender Gast (nur Lock/Unlock zu bestimmten Zeitfenstern), temporärer Gast(Lock/Unlock für eine bestimmte Zeit wie 24 Stunden)
-			    Die Rolle des Owners wird jenem Gerät vergeben, das sich nach Installation des Smart Locks als erstes mittels \gls{ble} (oder bei einigen Modellen über W-LAN) verbindet.
-			    Die Owner-Rolle kann auf diesem Wege nur einmal vergeben werden.
-			    Bei Wechsel des Besitzers muss das Smart Lock zurückgesetzt werden.
-			    Rollen wieder zu entfernen und somit anderen Nutzers wieder die Rechte zu entziehen, muss Owner sein.
-			    Um die Rechte eines Owners bei einem verlorenen oder gestohlenen zu entziehen, wird entweder eine "Lost Phone"-Funktion angeboten oder ein anderer Nutzer mit der Rolle des Owners entzieht dem nicht mehr vorhandenen Gerät die Rolle.
-			    Der Owner kann das Schloss auch ohne Internetverbindung öffnen/schließen.
-			    Gäste hingegen müssen sich vor der Kommunikation mit dem Schloss gegenüber der dem Server des Herstellers autorisieren lassen.
-			\item Permissions: Lock/Unlock, Lock Activity, Guest List, User Invitation (new Users), User Level Control (update User Role), User Permission Control (e.g. set time slots for guests, revoke permissions from users), Schloss kalibrieren und zurücksetzen\cite{Fuller2017}, Activiy Protokoll ansehen\cite{Fuller2017}, Autolocking/-unlocking akivieren/deaktivieren, eigenen Account löschen
-		\end{itemize}
+		\subparagraph{Rollen:} Owner(Grant, Revoke, Lock/Unlock, Admin Features wie Zugriffshistorie Lediglich der Nutzer mit der Rolle des Owners kann diese Protokolle einsehen. ), Resident(Lock/Unlock), wiederkehrender Gast (nur Lock/Unlock zu bestimmten Zeitfenstern), temporärer Gast(Lock/Unlock für eine bestimmte Zeit wie 24 Stunden) 
+		Die Rolle des Owners wird jenem Gerät vergeben, das sich nach Installation des Smart Locks als erstes mittels \gls{ble} (oder bei einigen Modellen über W-LAN) verbindet. 
+   		Die Owner-Rolle kann auf diesem Wege nur einmal vergeben werden. 
+   		Bei Wechsel des Besitzers muss das Smart Lock zurückgesetzt werden. 
+   		Rollen wieder zu entfernen und somit anderen Nutzers wieder die Rechte zu entziehen, muss Owner sein. 
+   		Um die Rechte eines Owners bei einem verlorenen oder gestohlenen zu entziehen, wird entweder eine "Lost Phone"-Funktion angeboten oder ein anderer Nutzer mit der Rolle des Owners entzieht dem nicht mehr vorhandenen Gerät die Rolle. 
+   		Der Owner kann das Schloss auch ohne Internetverbindung öffnen/schließen. 
+   		Gäste hingegen müssen sich vor der Kommunikation mit dem Schloss gegenüber der dem Server des Herstellers autorisieren lassen. 
+		\subparagraph{Rechte:} Lock/Unlock, Lock Activity, Guest List, User Invitation (new Users), User Level Control (update User Role), User Permission Control (e.g. set time slots for guests, revoke permissions from users), Schloss kalibrieren und zurücksetzen\cite{Fuller2017}, Activiy Protokoll ansehen\cite{Fuller2017}, Autolocking/-unlocking akivieren/deaktivieren, eigenen Account löschen
+		
+		\paragraph{Secret Keys}
 		über Secret Keys\cite{Fuller2017}
 		\begin{itemize}
 		    \item jede Bluetooth-Verbindungssession bekommmt einen eigenen einzigartigen Session-Key (weiter SK genannt), welcher für Owner wie folgt entsteht:
