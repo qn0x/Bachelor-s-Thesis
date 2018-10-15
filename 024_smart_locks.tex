@@ -32,13 +32,13 @@
         Diese bildet die Grundlage zur Realisierung der Zugriffskontrolle.\cite{Fuller2017} 
         Das Öffnen und Schließen erfolgt primär elektronisch mittels eines Buttons per App.
         Alternativ lässt sich das Schloss entweder mit einem sogenannten ,,Keyfob`` 
-        \footnote{einem Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet} 
+        \footnote{ein Schlüsselanhänger, auf dem sich ein digitaler Schlüssel befindet} 
         oder einem physischen Schüssel öffnen\cite{Ho2016}. 
         Einige Modelle bieten auch eine Funktion, die die Tür automatisch öffnet sobald sich das Smartphone des Nutzers innerhalb eines bestimmten Radius befindet. 
         Sobald folgende Bedingungen gegeben sind, öffenet sich das Schloss automatisch:
         \begin{itemize}[noitemsep]
         	\item automatisches Öffnen wurde vom Nutzer aktiviert
-        	\item der Nutzer hat einen Ort bzw. für Geofencing festgelegt \footnote{Geofencing erklären}\todo[color=cyan]{Geofencing erklären}
+        	\item der Nutzer hat einen Ort bzw. für Geofencing festgelegt (Bei Geofencing wird mittels \gls{gps} ein Ort festgelegt, um den ein virtueller Zaun gelegt wird. Verlässt oder betritt der Nutzer den festgelegten Radius um den Ort, wird ein Trigger ausgelöst, dem beliebige Aktionen folgen können.)
         	\item der Nutzer befindet sich in Reichweite, um über sein Smartphone mit dem Schloss kommunizieren zu können
         	\item der Nutzer ist berechtigt das Schloss zu öffnen
         \end{itemize}
@@ -63,12 +63,12 @@
 		Die Logs werden asynchron mit der Smartphone App aktualisiert, sobald sich das Gerät des Nutzers in Reichweite des \gls{ble} befindet\citeauthor{Ho2016}.
 	
 	\subsubsection{Kommunikation}
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=\textwidth]{graphics/sl_arch.png}
-			\caption{Beispiel eines Smart Lock-Systems}
-			\label{fig:sl_arch}
-		\end{figure}
+	    \begin{figure}[H]
+    		\centering
+    		\includegraphics[width=0.9\textwidth]{graphics/gateway_arch.png}
+    		\caption{Typische Architektur, welche das Smartphone des Nutzers als Gateway/Proxy nutzt\cite{Ho2016}.}
+    		\label{fig:gateway_arch}
+    	\end{figure}
 
         nach \citeauthor{Ho2016}:
         In \fref{fig:sl_arch} abgebildet: Smart Lock hat keine Internetverbindung. 
@@ -97,6 +97,12 @@
 		\subparagraph{Rechte:} Lock/Unlock, Lock Activity, Guest List, User Invitation (new Users), User Level Control (update User Role), User Permission Control (e.g. set time slots for guests, revoke permissions from users), Schloss kalibrieren und zurücksetzen\cite{Fuller2017}, Activiy Protokoll ansehen\cite{Fuller2017}, Autolocking/-unlocking akivieren/deaktivieren, eigenen Account löschen
 		
 		\paragraph{Secret Keys}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{graphics/sl_arch.png}
+			\caption{Beispiel eines Smart Lock-Systems}
+			\label{fig:sl_arch}
+		\end{figure}
 		über Secret Keys\cite{Fuller2017}
 		\begin{itemize}
 		    \item jede Bluetooth-Verbindungssession bekommmt einen eigenen einzigartigen Session-Key (weiter SK genannt), welcher für Owner wie folgt entsteht:
