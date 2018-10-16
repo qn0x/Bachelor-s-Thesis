@@ -10,92 +10,126 @@
 	\end{itemize}
 	Kurze Einfühung, dann gleich Überleitung zum CVSS.
 	
+	\cite{CVSSspec}
+	Confidentiality refers to limiting information access and disclosure to only authorized users, as well as preventing access by, or disclosure to, unauthorized ones.
+	
+	Integrity refers to the trustworthiness and veracity of information.
+	
+	Since availability refers to the accessibility of information resources, attacks that consume network bandwidth, processor cycles, or disk space all impact the availability of an impacted component.
+	
 \subsubsection{Common Vulnerability Scoring System (CVSS)}
 \label{sec:sota_sa_cvss}
-    \url{https://www.first.org/cvss/user-guide}
-    Der Base Score wird aus acht Variablen berechnet:\todo[color=cyan]{Be~schrei~bung~en anpassen}
-    The Base Metric group represents the intrinsic characteristics of a vulnerability that are constant over time and across user environments. 
-    Determine the vulnerable component and score Attack Vector, Attack Complexity, Privileges Required and User Interaction relative to this. 
-    Die Punkte werden folgend kurz erläutert.
-    \begin{description}[itemsep=1em,align=left]
-        \item [Attack Vector:] This metric reflects the context by which vulnerability exploitation is possible. 
-            The Base Score increases the more remote (logically, and physically) an attacker can be in order to exploit the vulnerable component.
-            \begin{description}[noitemsep,align=left]
-                \item [Network:] A vulnerability exploitable with network access means the vulnerable component is bound to the network stack and the attacker's path is through OSI layer 3 (the network layer). 
-                Such a vulnerability is often termed "remotely exploitable” and can be thought of as an attack being exploitable one or more network hops away.
-                \item [Adjacent:] A vulnerability exploitable with adjacent network access means the vulnerable component is bound to the network stack, however the attack is limited to the same shared physical (e.g. Bluetooth, IEEE 802.11), or logical (e.g. local IP subnet) network, and cannot be performed across an OSI layer 3 boundary (e.g. a router).
-                \item [Local:] A vulnerability exploitable with local access means that the vulnerable component is not bound to the network stack, and the attacker’s path is via read/write/execute capabilities. 
-                    In some cases, the attacker may be logged in locally in order to exploit the vulnerability, otherwise, she may rely on User Interaction to execute a malicious file.
-                \item [Physical:] A vulnerability exploitable with physical access requires the attacker to physically touch or manipulate the vulnerable component. Physical interaction may be brief or persistent.
+    \todo[color=cyan]{System kurz erlöären}
+    \noindent Der Base Score besteht aus zwei Subscores, Exploitability Score und Impact Score, welche wie folgt in Listing \ref{eq:cvss_basescore} verrechnet werden:
+    \begin{lstlisting}[caption={Berechnung des BaseScore \cite{CVSSspec}},label=eq:cvss_basescore,captionpos=b,mathescape=true]
+if (ImpactSubScore <= 0)
+    BaseScore = 0
+else
+if(Scope == Unchanged)
+    BaseScore = RoundUp(Minimum [(Impact + Exploitability), 10])
+if(Scope == Changed)
+    BaseScore = RoundUp(
+      Minimum [1.08 $\mathsf{\times}$ (Impact + Exploitability), 10])
+    \end{lstlisting}
+    
+    \noindent Ziel des Base Scores ist es wesentliche Charakteristiken, die in verschiedenen Umgebungenen und Zeitpunkten konstant sind, einer Schwachstelle zu repräsentieren. 
+    Der Score liegt zwischen dem Wert 0.0 und 10.0, wobei 0 das kleinste Risiko repräsentiert und 10 das Größte\cite{CVSSspec}. 
+    Die \fref{tab:cvss_severity} zeigt die Zuordnung der verschiedenen Scores zu Risikograden. 
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|}
+        \hline
+        \textbf{Rating}   & \textbf{\gls{cvss} Score}   \\ \hline
+        None              & 0.0                         \\ \hline
+        Low               & 0.1 - 3.9                   \\ \hline
+        Medium            & 4.0 - 6.9                   \\ \hline
+        High              & 7.0 - 8.9                   \\ \hline
+        Critical          & 9.0 - 10.0                  \\ \hline
+        \end{tabular}
+        \caption{Skala des Ausmaßes\cite{CVSSspec}}
+        \label{tab:cvss_severity}
+    \end{table}
+    \noindent Der Exploitability Score wird aus den Exploitablility Metrics berechnet(vgl. Listing \ref{eq:cvss_explscore}) und modelliert die Charakteristiken der anfälligen Komponente. 
+    \smallskip\\
+    \begin{lstlisting}[caption={Berechnung des Exploitability Score \cite{CVSSspec}},label=eq:cvss_explscore,captionpos=b,mathescape=true]
+Exploitability = 8.22 $\mathsf{\times}$ AttackVector $\mathsf{\times}$ AttackComplexity 
+  $\mathsf{\times}$ PrivilegeRequired $\mathsf{\times}$ UserInteraction
+    \end{lstlisting}
+    \noindent Folgende Variablen werden dabei verrechnet:
+    \begin{description}[itemsep=0.7em,align=left,labelindent=0pt,leftmargin=0pt]
+        \item [Attack Vector:] Beschreibt den Kontext, in der Ausnutzung der Schwachstelle möglich ist.
+            Der Wert, der in den Exploitability Score einfließt ist größert, je entfernter (im technischen Sinne) ein Angreifer sein kann, um einen Angriff zu starten.
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [Network:] Schwachstelle ist über Netzerkzugriff ausnutzbar, auch, wenn der Zugriff ein oder mehrere Hops via Layer 3
+                \footnote{nach dem OSI-Modell}
+                entfernt ist. 
+                \item [Adjacent:] Schwachstelle ist über Netzerkzugriff ausnutzbar, aber der Angriff ist auf das selbse physische oder logische Netzwerk eingeschränkt und kann nicht über eine Layer 3 Grenze (bspw. einem Router) ausgeführt werden.
+                \item [Local:] Ein lokaler Zugriff ist nötig, um die Schwachstelle ausnutzen zu können und die Komponente ist nicht an den Netzwerkstack gebunden.
+                Der Angriff funktioniert über lesende/schreibende/ausführende Zugriffe und kann voraussetzen, dass der Angreifer entweder in das System eingeloggt ist und/oder eine Nutzerinteraktion tätigt, bei der eine bösartige Datei ausgefürt wird.
+                \item [Physical:] Der Angreifer muss in der Lage sein die anfällige Komponente über eine bestimmte Zeit physisch zu bedienen oder zu manipulieren.
             \end{description}
-        \item [Attack Complexity:] This metric describes the conditions beyond the attacker’s control that must exist in order to exploit the vulnerability. Such conditions may require the collection of more information about the target, the presence of certain system configuration settings, or computational exceptions.
-            \begin{description}[noitemsep,align=left]
-                \item [Low:] Specialized access conditions or extenuating circumstances do not exist. An attacker can expect repeatable success against the vulnerable component.
-                \item [High:] A successful attack depends on conditions beyond the attacker's control. 
-                    That is, a successful attack cannot be accomplished at will, but requires the attacker to invest in some measurable amount of effort in preparation or execution against the vulnerable component before a successful attack can be expected. 
-                        For example, a successful attack may require the attacker: to perform target-specific reconnaissance; to prepare the target environment to improve exploit reliability; or to inject herself into the logical network path between the target and the resource requested by the victim in order to read and/or modify network communications (e.g. a man in the middle attack).
+        \item [Attack Complexity:] Beschreibt die Bedingungen außerhalb der Kontrolle des Angreifers, die herrschen müssen, um die Schwachstelle auszunutzen (bspw. bestimmte Systemkonfiguration).
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [Low:] Spezielle Zugriffsbedingungen oder ähnliches existieren nicht.
+                Ein Angreifer kann wiederkehrenden Erfolg gegen die Komponente erzielen.
+                \item [High:] Ein erfolgreicher Angriff hängt von Zuständen außerhalb des Einflusses des Angreifers ab und kann voraussetzen, dass der Angreifer im Voraus einiges an Aufwand investieren muss, um diese Zuständer herzustellen.
             \end{description}
-        \item [Privileges Required:] This metric describes the level of privileges an attacker must possess before successfully exploiting the vulnerability. 
-            This Base Score increases as fewer privileges are required.
-            \begin{description}[noitemsep,align=left]
-                \item [None:] The attacker is unauthorized prior to attack, and therefore does not require any access to settings or files to carry out an attack.
-                \item [Low:] The attacker is authorized with (i.e. requires) privileges that provide basic user capabilities that could normally affect only settings and files owned by a user. 
-                    Alternatively, an attacker with Low privileges may have the ability to cause an impact only to non-sensitive resources.
-                \item [High:] The attacker is authorized with (i.e. requires) privileges that provide significant (e.g. administrative) control over the vulnerable component that could affect component-wide settings and files.
+        \item [Privileges Required:] Beschreibt das Level an Privilegien, die ein Angreifer besitzen muss, um eine Schwachstelle ausnutzen können.
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [None:] Der Angreifer ist vor dem Angriff nicht autorisiert und benötigt daher keinen Zugriff auf Einstellungen oder Dateien, um den Angriff ausführen zu können.
+                \item [Low:] Der Angreifer ist mit grundlegenden Nutzerrechten autorisisiert.
+                \item [High:] Der Angreifer ist mit erweiterten oder administrativen Rechten autorisiert und kann komponentenweite Einstellungen und Dateien ändern.
             \end{description}
-        \item [User Interaction:] This metric captures the requirement for a user, other than the attacker, to participate in the successful compromise the vulnerable component. 
-            This metric determines whether the vulnerability can be exploited solely at the will of the attacker, or whether a separate user (or user-initiated process) must participate in some manner. 
-            The Base Score is highest when no user interaction is required.
-            \begin{description}[noitemsep,align=left]
-                \item [None:] The vulnerable system can be exploited without any interaction from any user.
-                \item [Required:] Successful exploitation of this vulnerability requires a user to take some action before the vulnerability can be exploited.
-            \end{description}
-        \item [Scope:] Does a successful attack impact a component other than the vulnerable component? 
-            If so, the Base Score increases and the Confidentiality, Integrity and Authentication metrics should be scored relative to the impacted component.
-            \begin{description}[noitemsep,align=left]
-                \item [Unchanged:] An exploited vulnerability can only affect resources managed by the same authority. 
-                    In this case the vulnerable component and the impacted component are the same.
-                \item [Changed:] An exploited vulnerability can affect resources beyond the authorization privileges intended by the vulnerable component. 
-                    In this case the vulnerable component and the impacted component are different.
-            \end{description}
-        \item [Confidentiality:] This metric measures the impact to the confidentiality of the information resources managed by a software component due to a successfully exploited vulnerability.
-            Confidentiality refers to limiting information access and disclosure to only authorized users, as well as preventing access by, or disclosure to, unauthorized ones.
-            \begin{description}[noitemsep,align=left]
-                \item [None:] There is no loss of confidentiality within the impacted component.
-                \item [Low:] There is some loss of confidentiality. 
-                    Access to some restricted information is obtained, but the attacker does not have control over what information is obtained, or the amount or kind of loss is constrained. 
-                    The information disclosure does not cause a direct, serious loss to the impacted component.
-                \item [High:] There is total loss of confidentiality, resulting in all resources within the impacted component being divulged to the attacker. 
-                    Alternatively, access to only some restricted information is obtained, but the disclosed information presents a direct, serious impact.
-            \end{description}
-        \item [Integrity:] This metric measures the impact to integrity of a successfully exploited vulnerability. 
-            Integrity refers to the trustworthiness and veracity of information.
-            \begin{description}[noitemsep,align=left]
-                \item [None:] There is no loss of integrity within the impacted component.
-                \item [Low:] Modification of data is possible, but the attacker does not have control over the consequence of a modification, or the amount of modification is constrained. 
-                    The data modification does not have a direct, serious impact on the impacted component.
-                \item [High:] There is a total loss of integrity, or a complete loss of protection. 
-                    For example, the attacker is able to modify any/all files protected by the impacted component. 
-                    Alternatively, only some files can be modified, but malicious modification would present a direct, serious consequence to the impacted component.
-            \end{description}
-        \item [Availability:] This metric measures the impact to the availability of the impacted component resulting from a successfully exploited vulnerability. 
-            It refers to the loss of availability of the impacted component itself, such as a networked service (e.g., web, database, email). 
-            Since availability refers to the accessibility of information resources, attacks that consume network bandwidth, processor cycles, or disk space all impact the availability of an impacted component.
-            \begin{description}[noitemsep,align=left]
-                \item [None:] There is no impact to availability within the impacted component.
-                \item [Low:] There is reduced performance or interruptions in resource availability. 
-                    Even if repeated exploitation of the vulnerability is possible, the attacker does not have the ability to completely deny service to legitimate users. 
-                    The resources in the impacted component are either partially available all of the time, or fully available only some of the time, but overall there is no direct, serious consequence to the impacted component.
-                \item [High:] There is total loss of availability, resulting in the attacker being able to fully deny access to resources in the impacted component; this loss is either sustained (while the attacker continues to deliver the attack) or persistent (the condition persists even after the attack has completed). 
-                    Alternatively, the attacker has the ability to deny some availability, but the loss of availability presents a direct, serious consequence to the impacted component (e.g., the attacker cannot disrupt existing connections, but can prevent new connections; the attacker can repeatedly exploit a vulnerability that, in each instance of a successful attack, leaks a only small amount of memory, but after repeated exploitation causes a service to become completely unavailable).
+        \item [User Interaction:] Beschreibt die Voraussetzung, ob ein Angreifer einen erfolgreichen Angriff ohne weitere Beteiligung von anderen Nutzern ausführen kann oder ob ein Nutzer in irgendeiner Weise mitwirken muss.
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [None:] Ein Angriff kann ohne Interaktion eines anderen Nutzers erfolgreich sein.
+                \item [Required:] Erfolgreiches Ausnutzen einer Schwachstelle ist nur möglich, wenn ein anderer Nutzer eine oder mehrere bestimmte Aktionen ausführt.
             \end{description}
     \end{description}
     
-    Es existieren Erweiterungen des Base Scores, der Temporal Score und Environmental Score. \todo[color=cyan]{ausformulieren}
-    \begin{itemize}
-        \item The Temporal metrics measure the current state of exploit techniques or code availability, the existence of any patches or workarounds, or the confidence that one has in the description of a vulnerability. 
-            Exploit Code Maturity, Remediation Level, Report Confidence
-        \item These metrics enable the analyst to customize the CVSS score depending on the importance of the affected IT asset to a user's organization, measured in terms of complementary/alternative security controls in place, Confidentiality, Integrity, and Availability. 
-            The metrics are the modified equivalent of base metrics and are assigned metrics value based on the component placement in organization infrastructure. 
-            Security Requirement (Confidentiality, Integrity, Availability), Modified Attack Vector, Modified Base Score Variables
-    \end{itemize}
+    \noindent Der Impact Score wird aus den Impact Metrics berechnet (vgl. Listing \ref{eq:cvss_impscore} und beschreiben die Eigenschaften des betroffenen Komponenten. 
+    Sollte ein erfolgreich ausgeführter Angriff auch andere Komponenten beeinflussen, so wird die Komponente mit dem worst-case, also der höchsten Einstufung gewertet.
+    \smallskip\\
+    \begin{lstlisting}[caption={Berechnung des Impact Score \cite{CVSSspec}},label=eq:cvss_impscore,captionpos=b,mathescape=true]
+$\mathsf{ISC_{Base}}$ = 1 - [(1 - $\mathsf{Impact_{Conf}}$) $\mathsf{\times}$ (1 - $\mathsf{Impact_{Integ}}$) $\mathsf{\times}$ (1-$\mathsf{Impact_{Avail}}$)]
+if (Scope == Unchanged)
+    Impact = 6.42 $\mathsf{\times}$ $\mathsf{ISC_{Base}}$
+if (Scope == Changed)
+    Impact = 7.52 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.029] - 3.25 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.02]$\mathsf{^{15}}$
+    \end{lstlisting}
+    \begin{description}[itemsep=0.7em,align=left,labelindent=0pt,leftmargin=0pt]
+        \item [Confidentiality:] Ausmaß auf die Vertraulichkeit der Informationsressourcen, die von einer Softwarekomponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [None:] Kein Verlust der Vertraulichkeit.
+                \item [Low:] Der Angreifer erlangt eingeschränkt Zugriff auf Informationen, hat aber keine Kontrolle darüber, welcher Informationen er erlangt.
+                    Oder: Die Preisgabe der Informationen verursacht keinen direkten, schweren Verlust bei der betroffenen Konponente.
+                \item [High:] Die Vertraulichkeit ist nicht mehr gegeben.
+            \end{description}
+        \item [Integrity:] Ausmaß auf die Integrität der Informationsressourcen, die von einer Softwarekomponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [None:] Kein Verlust der Integrität.
+                \item [Low:] Änderung von Daten durch einen Angreifer ist möglich, aber der Angreifer selbst hat keine Kontrolle über die Konsequenz seiner Modifikation oder das Maß der Modifikation ist eingeschränkt.
+                \item [High:] Verlust jeglicher Integrität.
+                    Der Angreifer kann alle Daten, die durch die Komponente geschützt oder kontrolliert werden modifizieren.
+            \end{description}
+        \item [Availability:] Ausmaß auf die Verfügbarkeit der Informationsressourcen, die von einer Softwarekomponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
+            Damit ist der Verlust der Verfügbarkeit der betroffenen Komponente (wie ein Webservice, eine Datenbank, etc.) selbst gemeint.
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [None:] Kein Verlust der Verfügbarkeit
+                \item [Low:] Reduzierte Leistung oder Unterbrechungen in der Verfügbarkeit der Ressource.
+                \item [High:] Kompletter Verlust der Verfügbarkeit, was dazu führt, dass ein Angreifer den Zugriff auf Ressourcen innerhalb der betroffenen Komponente verhindern kann.
+            \end{description}
+    \end{description}
+    
+    \begin{description}[itemsep=0.7em,align=left,labelindent=0pt,leftmargin=0pt]
+        \item [Scope:] Beeinflusst ein erfolgreicher Angriff mindestens eine andere Komponente außer die Anfällige?
+            \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
+                \item [Unchanged:] Eine ausgenutzte Schwachstelle beeinflusst nur Ressourcen, die von der gleichen Authorität verwaltet werden - anfällige und die betroffene Komponenten sind also identisch.
+                \item [Changed:] Eine ausgenutzte Schwachstelle kann Ressourcen außerhalb der Komponente beeinflussen - anfällige und die betroffene Komponenten sind also nicht identisch.
+            \end{description}
+    \end{description}
+    
+    \noindent Es existieren Erweiterungen des Base Scores, der Temporal Score und Environmental Score. 
+    Diese beiden Werte werden in dieser Arbeit nicht verwendet. 
+    Für die genauen Werte, die für die Berechnungen verwendet werden, wird auf \cite{CVSSspec} verwiesen.\todo[color=cyan]{Anhang?}
+    
