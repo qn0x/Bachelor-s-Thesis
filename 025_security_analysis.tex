@@ -1,25 +1,35 @@
-\subsection{Sicherheitsanalysen im Internet of Things}
+\subsection{Vulnerability Assessment im Internet of Things}
 \label{sec:sota_sa}
+    Logisch gesehen kann das \gls{iot} als Sammlung von Smart Devices gehen werden, die kollaborativ auf ein gemeinsames Ziel hinarbeiten. 
+    Technologisch gehen nutzen diese Geräte dafür unterschiedliche Kommunikationswege und -protokolle, basierend auf verschiedenen Architekturen und Mechanismen. 
+    Dies führt dazu, dass ein hohes Level an Heterogenität herrscht. 
+    Die Geräte haben zudem meist nur geringe Rechenleistung, sind aber dennoch untereinander stark vernetzt, wodurch sich die für einen Angreifer möglichen Angriffsvektoren vervielfacht und es erschwert traditionelle Sicherheitesmechanismen anzuwenden.\cite{Sicari2015}
+    
+    Um mögliche Schwachstellen in diesen komplexen Ökosystemen zu finden und zu vermeiden wurden vom \gls{owasp} mehrere Ressourcen veröffentlicht.
+    Darunter befinden sich ein Dokument mit den Top 10 gefundenen Sicherheitslücken in \gls{iot}-Geräten\cite{Miessler2015}, sowie ein Testing Guide\cite{Miessler}, um ein Gerät systematisch zu untersuchen.
+    
+    
+    Die gefundenen Schwachstellen werden als solche bezeichnet, sobald sie eines der klassischen Ziele\cite{Perrin2008} in der Informationssicherheit bedrohen. 
+    Zu den Zielen gehören:
+    \begin{itemize}[noitemsep]
+        \item Vertraulichkeit: Zugriff und Preisgabe von Informationen ist nur auf autorisierte Entitäten limitiert.
+        \item Integrität: Die Information ist vertrauenswürdig und integer, wurde als während einer möglichen Übertragung nicht verändert.
+        \item Verfügbarkeit: Hiermit ist die Verfügbarkeit der Informatin gemeint, die beispielsweise von auf einem Webserver liegt.
+    \end{itemize}
+    
+    \noindent In \cite{Sicari2015} werden die Ziele für das \gls{iot} erweitert. 
+    Zusätzlich zu den o.g. Sicherheitszielen werden Folgende definiert:
+    \begin{itemize}[noitemsep]
+        \item Authentifizierung: Eine Entität muss verifizieren, dass sie auch die ist, als welche sie sich indentifiziert.
+        \item Zugriffskontrolle: Verschiedene Entitäten haben verschiedene Autorisierungen, um verschiedene Informationen zu lesen oder schreiben.
+        \item Non-Repudiation: Jegliche Änderungen an einer Information müssen auf die ändernde Entität zurückverfolgbar sein.
+    \end{itemize}
 	
-	\begin{itemize}
-		\item Sicherheitskonzepte erklären, Sicherheitsziele (CIA, Auth, Non-rep, etc.)
-		\item Erwähnung von OWASP-Projekt und Guidelines
-		\item \gls{cvss} Bewertungsschema erklären
-		\item Threat Model
-		\item Securityl Goals
-	\end{itemize}
-	Kurze Einfühung, dann gleich Überleitung zum CVSS.
-	
-	\cite{CVSSspec}
-	Confidentiality refers to limiting information access and disclosure to only authorized users, as well as preventing access by, or disclosure to, unauthorized ones.
-	
-	Integrity refers to the trustworthiness and veracity of information.
-	
-	Since availability refers to the accessibility of information resources, attacks that consume network bandwidth, processor cycles, or disk space all impact the availability of an impacted component.
+	\noindent Um existierende Schwachstellen zu bewerten, kann ein Standard, wie das \gls{cvss} verwendet werden.
 	
 \subsubsection{Common Vulnerability Scoring System (CVSS)}
 \label{sec:sota_sa_cvss}
-    \todo[color=cyan]{System kurz erlöären}
+    \todo[color=cyan]{System kurz erklären}
     \noindent Der Base Score besteht aus zwei Subscores, Exploitability Score und Impact Score, welche wie folgt in Listing \ref{eq:cvss_basescore} verrechnet werden:
     \begin{lstlisting}[caption={Berechnung des BaseScore \cite{CVSSspec}},label=eq:cvss_basescore,captionpos=b,mathescape=true]
 if (ImpactSubScore <= 0)
