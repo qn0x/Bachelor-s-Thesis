@@ -1,90 +1,107 @@
 \subsection{Bekannte Schwachstellen und Angriffe}
 \label{sec:analysis_weaknesses}
-    Bla bla es werden nach Literaturrecherche hier einige Schwachstellen und Angreiffe vorgestellt.
-    
-    Schwachstellen und Sicherheitslücken in August Smart Lock nach \citeauthor{Ye2017}.
-	Setzt u.U. voraus, dass der Angreifer Zugriff auf den mobilen Client des Benutzers hat und evtl. Jailbroken/rooted ist.
-	In der Applikation werden nach den Untersuchungen von \citeauthor{Ye2017} ein Handshake-Key, Benutzeraccount und persönliche Informationen als Klartext innerhalb einer XML-Datei abgelegt.
-	\begin{itemize}
-		\item nutzt direktes Bluetooth-Pairing, welches nur auf dem konstanten/statischen Handshake-Key basiert
-		\item keine Authentifizierung der Pairing-Partner zwischen Mobile Client und Lock
-		\item Kopieren von der Einstellungen aus dem System von Alice.
-		    Eve legt sich einen neuen Account an und kopiert die Einstellungen von Alice, sodass von ihrem Nutzerkonto auf diese zugegriffen wird. \textrightarrow Mandatory Access Control
-		\item Personenbezogene Daten des Nutzers liegen in Klartext auf dem Dateisystem
-		\item DOS: Wenn mehrere Nutzer gleichzeitig versuchen sich mit dem Smart Lock zu verbinden wird bei einem die App suspendiert, sodass niemand gleichzig Öffnen/Schließen-Befehle senden kann.
-		    Somit kann ein Angreifer kontinuierlich wechseln Öffnen/Schließen-Befehle senden und der legitime Nutzer kann die Smart Lock nicht kontrollieren.
-	   \item Angreifer repliziert die App und bringt den Nutzer dazu die bösartige App zu verwenden, da keine Authentifizierung zwischen App und Nutzer
-	   \item Bluetooth interference
-	   \item OS Level flaws
-	\end{itemize}
-
-	Andere Locks
-	\begin{itemize}
-		\item Kwikset Kevo smart lock but the physical lock contains serious vulnerabilities making it easily compromised, which only takes 10 seconds\cite{Ye2017}
-		\item QuickLock Smart Lock does not encrypt the passwords and sends the password to the user who forgets the password in plaintext\cite{Ye2017}
-		\item iBluLock Smart Lock 6-character password, which is vulnerable against the brute forcing attack\cite{Ye2017}
-		\item Lockitron: direkte Verbindung des Schlosses mit den Servern des Herstellers \textrightarrow legitime Nutzer könnten ausgeschlossen werden, wenn dessen Server nicht erreichbar sind
-	\end{itemize}
-	
-	Paper von \citeauthor{Ho2016}:
-	Zwei Angriffe werden vorgestellt und an fünf verschiedenen Modellen(August, Danalock, Kevo, Okidokeys, Lockitron) getestet.
-	An private Informationen kommen und unauthorisierten Zugang bekommen.
-	\begin{itemize}
-	    \item Systemdesign und Access Control Policies: Angreifer kann Mechanismen für den Entzug von Rechten und Zugriffsprotokollierungen umgehen, die von den meisten Geräten genutzt werden.
-	    \item automatisches öffnen: wird oft ungewollt im beisein eines Angreifers geöffnet. 
-	        Alle Systeme nutzen unsichere Mechanismen, um die vom Nutzer beabsichtigten Aktionen zu erfassen.
-        \item State-Consistency Attacks: Dadurch, dass das Smart Lock mit dem in \fref{fig:gateway_arch} vorgestellen Kommunikationsmodell volkommen davon abängig ist, dass das Gerät des Owners die Nachrichten unangerührt weiterleitet, ist dieses Vertrauensmodell im Falle eines Entzugs von Rechten eines anderen Nutzers unpassend.
-        
-        \item Revocation Evasion: Indem ein Angreifer, dessen Rechte entzogen werden soll jegliche Kommunikation zwischen Alice und dem remote Server des Herstellers verhindert.
-        Dies kann beispielsweise am einfachsten mittels des Flugmodus erreicht werden.
-        Gleichzeitig entgeht der Angreifer auch dem Access Logging.
-        Szenario mit Danalock: Alice möchte Mallory, einem Nutzer mit temprärem Zugang die Rechte entziehen. 
-        Dazu nutzt sie die App, welche diese Information an den Server des Herstellers sendet und ihr sofort bestätigt, dass sie Rechte von Mallory nun entzogen wurden. 
-        Dieser sendet eine Benachrichtigung darüber an Mallorys Gerät. 
-        Befindet sich Mallorys Gerät zu diesem Zeitpunkt im Flugmodus, erreicht diese Benachrichtigung ihr Ziel nicht und das Schloss selbst bleibt unwissend über dieses Ereignis. 
-        Selbst, wenn ein legitimes Gerät mit dem Schloss interagiert, wird die Benachrichtung über Mallorys Entzug der Recht nicht vom Server über jenes übertragen.
-        Somit behält Mallory Zugang für das Schloss.
-        \item Access Log Evasion: ist möglich, da, wie in dem oben beschriebenen Szenario davon ausgegangen wird, dass alle Geräte alle Aktionen an den remote Server senden.
-        Szenario mit Danalock: Alice, Bob und Mallory haben einen legitimen Zugang.
-        Bob ist Owner und kann die Access Logs einsehen.
-        Mallory blockiert alle Pakete, die von der App an den remote Server gesendet werden während er mit dem Schloss via ÖFFNEN/SCHLIEßEN- Befehl interagiert.
-        Somit werden seine Aktionen nicht mitgeschrieben, da das Schloss selbst diese Aktionen von Schloss selbst nicht zwischengespeichert und über einen anderen Client an den remote Server gesendet werden.
-        Da diese Informationen auch nachdem Alice mit dem Schloss interagiert nicht über ihr Gerät an den Server weitergeleitet werden, kann Bob als Owner nicht sehen, dass Mallory das Schloss geöffenet oder geschlossen hat.
-        \item Unwanted Unlocking (August und Danalock): Apps nutzen Location Services mittels Geofencing (50m Radius) auf dem Mobilgerät, über welche das Schloss, wenn in Reichweite von \gls{ble} und autorisiert, automatisch entriegelt wird.
-        Ist Alice einmal innerhalb des Radiuses, wird das Schloss nicht automatisch wieder verschlossen so lange sie sich noch innerhalb der Reichweite des \gls{ble}-Moduls befindet - erst bei Austritt aus dem Radius wird das Schloss wieder verriegelt.
-        Szenario: Das Schloss ist an Alices Haustür angebracht.
-        Zusätzlich hat das Haus von Alice eine weitere Tür durch die ihr Haus betreten werden kann.
-        Geht Alice nicht durch die Haustür, sondern durch die andere, bleibt die Haustür durch die oben Beschriebene Funktion entriegelt.
-        Gleiches Problem entsteht, wenn Alice beispielsweise an beiden Türen Smart Locks angebracht hat.
-        Bewegt sie sich mit ihrem Smartphone durch ihr Haus werden die Schlösser, sobald sie in \gls{ble}-Reichweite ist, automatisch entriegelt und nicht wieder automatisch verriegelt, da sie sich weiterhin innerhalb des Geofencing-Radius befindet.\\
-        Kevo: Da dieses Schloss über einen Touch-To-Unlock-Mechanismus verfügt, funktioniert das oben Beschriebene Szenario nicht.
-        Dieser Mechanismus erlaubt es Alice, wenn autorisiert und in \gls{ble}-Reichweite das Schloss mittels eines Fingertippens zu entriegeln.
-        Jedoch ist es bei diesem Modell möglich, dass Alice sich innerhalb des Hauses befindet und ein Angreifer von außen mittels eines Fingertippens die Tür öffnen kann, da alle Bedingungen für ein legitimes Öffnen - minus der physischen Person - erfüllt sind.
-        Allerdings ist dieser Angriff nur bei bestimmten Grundrissen möglich, da der Hersteller einen Algorithmus verwendet, der die Richtung, aus der das Bluetooth-Signal kommt, bestimmt und lediglich Signale entgegennimmt, die im 180$^{\circ}$-Winkel vor dem Schloss befinden.
-        \item Relay Attacks (Kevo, Danalock, August): Ein Angreifer folgt Alice (außerhalb des Bluetooth- und Geofencingradius, aber in Bluetooth-Reichweite zu Alices Gerät) und überträgt das Signal an einen anderen Angreifer, der vor Alices Haus mit einem bluetoothfähigen Gerät wartet und mittels des übertragenen Signals nun alle Bedingungen erfüllt und das Schloss entriegeln kann.
-        Bei Systemen mit Geofencing muss zusätzlich Alices Standort gespooft werden.
-	\end{itemize}
-	
-	Threat Models
+    Bla bla es werden nach Literaturrecherche hier einige Schwachstellen und Angreiffe vorgestellt. 
+    Die Kategorisierung und Sortierung erfolgt nach den \gls{owasp} Top Ten für das \gls{iot}. 
+    Nutzer: Alice, Bob
+    Angreifer: Eve, Mallory
+	Threat Models\cite{Ho2016}
 	\begin{itemize}
 	    \item Physically-present Attacker: Angreifer beobachtet einen Nutzer bei der Interaktion mit dem Smart Lock und kann jederzeit damit interagieren, besitzt aber kein authorisiertes Gerät.
 		\item Revoked Attacker: Besitzt legitimen Zugriff, der welcher aber zu einem spätereen Zeitpunkt wieder entzogen wird.
 		\item Dieb: Der Angreifer stiehlt das authorisierte Gerät des Nutzers
 		\item Relaying Attacker: Angreifer besitzt ein Bluetoothgerät, das mit anderen Bluetoothgeräten kommmunizieren kann, aber nicht für authorisiert ist.
 	\end{itemize}
+    
+    
+    \begin{itemize}[leftmargin=0cm,label={}]
+        \item \emph{Insecure Bluetooth-Pairing}\\
+            Produkt: August Smart Lock, Quelle: \cite{Rose2016},\cite{Ye2017}\\
+            Voraussetzungen: Angreifer hat Zugriff auf das Smartphone eines Nutzers, welches bereits mit dem Schloss gepairt wurde und auf dem Smartphone selbst Root-Rechte\\
+            Das Bluetooth-Pairing zwischen Schloss und Alices Smartphone wird über die Passkey-Methode vollzogen. 
+            Der verwendete Handshake-Key ist statisch und ist in den Einstellungen der App als Klartext auf Alices Smartphone zu finden. 
+            Zudem wird keine Authentifizierung zwischen beiden Entitäten durchgeführt und in den Zugriffsprotokollen ist nicht erkennbar, dass ein Angreifer mit dem Schloss interagiert hat. 
+            Kann exploited werden (mit POC auf Github)
+        \item \emph{Stolen User Account}\\
+            Produkt: August Smart Lock, Quelle: \cite{Ye2017}\\ 
+            Voraussetzungen: Angreifer hat Zugriff auf das Smartphone eines Nutzers und auf dem Smartphone selbst Root-Rechte\\
+            Mallory kopiert die Einstellungen der App, welche als eine bestimmte Datei auf dem Smartphone von Alice gespeichert werden.
+		    Mallory legt sich einen neuen Account an und nutzt dafür die kopierten Einstellungen. \textrightarrow Mandatory Access Control 
+		    Nun wird der Angreifer als legitimer Nutzer angesehen.
+		    Dies beinhaltet die Verwendung von jeglichen administrativen Funktionen wie das Ändern der Gästeliste.
+		    Zudem gelangt der Angreifer an die in der App abgelegten persönlichen Informationen von Alice.
+	    \item \emph{Denial of Service}\\
+	        Produkt: August Smart Lock, Quelle: \cite{Ye2017}\\ 
+            Voraussetzungen: Angreifer hat Zugriff auf das Smartphone eines Nutzers und auf dem Smartphone selbst Root-Rechte\\
+            Wenn mehrere Nutzer gleichzeitig versuchen sich mit dem Schloss zu verbinden, wird die App suspendiert, sodass niemand gleichzig Öffnen/\-Schließen-Befehle senden kann. 
+		    Somit kann ein Angreifer kontinuierlich wechseln Öffnen/Schließen-Befehle senden und der legitime Nutzer kann die Smart Lock nicht kontrollieren. 
+	    \item \emph{Phishing?}\\
+	        Produkt: August Smart Lock, Quelle: \cite{Ye2017}\\ 
+            Voraussetzungen: keine\\
+            Der Angreifer bringt den Nutzer dazu eine bösartige App zu verwenden, welche der Legitimen sehr ähnlich sieht. 
+            Da keine Authentifizierung zwischen Schloss und Nutzer durchgeführt wird, ist dies nur sehr schwer vom Nutzer zu erkennen.
+        \item \emph{Insufficient Password Protection}\\
+	        Produkt: QuickLock Smart Lock, Quelle: \cite{Ye2017}\\ 
+            Voraussetzungen: keine\\
+            Wird die ,,Passwort vergessen``-Funktion genutzt, so wird dem Nutzer sein verwedetes Passwort zugesendt. 
+            Das übertragene Passwort wird allerdings nicht verschlüsselt.
+        \item \emph{Insecure Password Policy}\\
+            Produkt: iBluLock Smart Lock, Quelle: \cite{Ye2017}\\
+            Voraussetzungen: keine\\
+            Der Nutzer verwendet ein Passwort, das maximal 6 Zeichen lang ist und somit unter Umständen mit einem Brute-Force-Angriff geknackt werden kann.
+        \item \emph{Denial of Service (via manufacturer's server)}\\
+            Produkt: Lockitron, Quelle: \cite{Ye2017}\\
+            Voraussetzungen: im WLAN Bereich des Nutzers
+            direkte Verbindung des Schlosses mit den Servern des Herstellers \textrightarrow legitime Nutzer könnten ausgeschlossen werden, wenn dessen Server nicht erreichbar sind
+        \item \emph{Unintended Automatic Unlocking}\\
+            Produkt: August, Danalock Quelle: \cite{Ho2016}\\
+            Voraussetzungen: \\
+            Apps nutzen Location Services mittels Geofencing (50m Radius) auf dem Mobilgerät, über welche das Schloss, wenn in Reichweite von \gls{ble} und autorisiert, automatisch entriegelt wird.
+            Ist Alice einmal innerhalb des Radiuses, wird das Schloss nicht automatisch wieder verschlossen so lange sie sich noch innerhalb der Reichweite des \gls{ble}-Moduls befindet - erst bei Austritt aus dem Radius wird das Schloss wieder verriegelt.
+            Szenario: Das Schloss ist an Alices Haustür angebracht.
+            Zusätzlich hat das Haus von Alice eine weitere Tür durch die ihr Haus betreten werden kann.
+            Geht Alice nicht durch die Haustür, sondern durch die andere, bleibt die Haustür durch die oben Beschriebene Funktion entriegelt.
+            Gleiches Problem entsteht, wenn Alice beispielsweise an beiden Türen Smart Locks angebracht hat.
+            Bewegt sie sich mit ihrem Smartphone durch ihr Haus werden die Schlösser, sobald sie in \gls{ble}-Reichweite ist, automatisch entriegelt und nicht wieder automatisch verriegelt, da sie sich weiterhin innerhalb des Geofencing-Radius befindet.\\
+            Kevo: Da dieses Schloss über einen Touch-To-Unlock-Mechanismus verfügt, funktioniert das oben Beschriebene Szenario nicht.
+            Dieser Mechanismus erlaubt es Alice, wenn autorisiert und in \gls{ble}-Reichweite das Schloss mittels eines Fingertippens zu entriegeln.
+            Jedoch ist es bei diesem Modell möglich, dass Alice sich innerhalb des Hauses befindet und ein Angreifer von außen mittels eines Fingertippens die Tür öffnen kann, da alle Bedingungen für ein legitimes Öffnen - minus der physischen Person - erfüllt sind.
+            Allerdings ist dieser Angriff nur bei bestimmten Grundrissen möglich, da der Hersteller einen Algorithmus verwendet, der die Richtung, aus der das Bluetooth-Signal kommt, bestimmt und lediglich Signale entgegennimmt, die im 180$^{\circ}$-Winkel vor dem Schloss befinden.
+        \item \emph{State Consistency Attacks}\\
+            Produkt: August, Danalock, Kevo, Okidokeys, Lockitron, Quelle: \cite{Ho2016}\\
+            Voraussetzungen: \\
+            Dadurch, dass das Smart Lock mit dem in \fref{fig:gateway_arch} vorgestellen Kommunikationsmodell volkommen davon abängig ist, dass das Gerät des Owners die Nachrichten unangerührt weiterleitet, ist dieses Vertrauensmodell im Falle eines Entzugs von Rechten eines anderen Nutzers unpassend.
+        \item \emph{Revocation Evasion}\\
+            Produkt: August, Danalock, Kevo, Okidokeys, Lockitron, Quelle: \cite{Ho2016}\\
+            Voraussetzungen: \\
+            Indem ein Angreifer, dessen Rechte entzogen werden soll jegliche Kommunikation zwischen Alice und dem remote Server des Herstellers verhindert.
+            Dies kann beispielsweise am einfachsten mittels des Flugmodus erreicht werden.
+            Gleichzeitig entgeht der Angreifer auch dem Access Logging.
+            Szenario mit Danalock: Alice möchte Mallory, einem Nutzer mit temprärem Zugang die Rechte entziehen. 
+            Dazu nutzt sie die App, welche diese Information an den Server des Herstellers sendet und ihr sofort bestätigt, dass sie Rechte von Mallory nun entzogen wurden. 
+            Dieser sendet eine Benachrichtigung darüber an Mallorys Gerät. 
+            Befindet sich Mallorys Gerät zu diesem Zeitpunkt im Flugmodus, erreicht diese Benachrichtigung ihr Ziel nicht und das Schloss selbst bleibt unwissend über dieses Ereignis. 
+            Selbst, wenn ein legitimes Gerät mit dem Schloss interagiert, wird die Benachrichtung über Mallorys Entzug der Recht nicht vom Server über jenes übertragen.
+            Somit behält Mallory Zugang für das Schloss.
+        \item \emph{Access Log Evasion}\\
+            Produkt: August, Danalock, Kevo, Okidokeys, Lockitron, Quelle: \cite{Ho2016}\\
+            Voraussetzungen: \\
+            ist möglich, da, wie in dem oben beschriebenen Szenario davon ausgegangen wird, dass alle Geräte alle Aktionen an den remote Server senden.
+            Szenario mit Danalock: Alice, Bob und Mallory haben einen legitimen Zugang.
+            Bob ist Owner und kann die Access Logs einsehen.
+            Mallory blockiert alle Pakete, die von der App an den remote Server gesendet werden während er mit dem Schloss via ÖFFNEN/\-SCHLIEßEN- Befehl interagiert.
+            Somit werden seine Aktionen nicht mitgeschrieben, da das Schloss selbst diese Aktionen von Schloss selbst nicht zwischengespeichert und über einen anderen Client an den remote Server gesendet werden.
+            Da diese Informationen auch nachdem Alice mit dem Schloss interagiert nicht über ihr Gerät an den Server weitergeleitet werden, kann Bob als Owner nicht sehen, dass Mallory das Schloss geöffenet oder geschlossen hat.
+        \item \emph{Access Log Evasion}\\
+            Produkt: August, Danalock, Kevo, Quelle: \cite{Ho2016}\\
+            Voraussetzungen: \\
+            Ein Angreifer folgt Alice (außerhalb des Bluetooth- und Geofencingradius, aber in Bluetooth-Reichweite zu Alices Gerät) und überträgt das Signal an einen anderen Angreifer, der vor Alices Haus mit einem bluetoothfähigen Gerät wartet und mittels des übertragenen Signals nun alle Bedingungen erfüllt und das Schloss entriegeln kann.
+        Bei Systemen mit Geofencing muss zusätzlich Alices Standort gespooft werden.
+    \end{itemize}
 	
-	Weitere im Paper von \citeauthor{Ye2017} aufgelistete Angriffe\todo[color=cyan]{sortieren und filtern}
+		Weitere im Paper von \citeauthor{Ye2017} aufgelistete Angriffe
 	\begin{itemize}
-	    \item August smart lock (earlier Version) has hard-coded secret key in the application source code \cite{Rose2016}
-		\item August: does not perform the 2-factor authentication properly, and the hackers compromising the user email and text message could illegally control the lock
-		\item does not perform the password reset process properly, and the	attackers can easily figure out the true verification code for resetting any passwords
+	    \item August: does not perform the 2-factor authentication properly, and the hackers compromising the user email and text message could illegally control the lock
 		\item Bluetooth Jammer \textrightarrow DOS
-		\item Mobile Device: Offizielle App fälschen oder bösartige App verwenden \textrightarrow Informationen des Nutzers stehlen \textrightarrow 
-		\item Handshake Key Leakage Attack: in which the attacker is able to steal the handshake key from the smart lock, and	illegally and covertly control the lock using a third-party	device\\
-		    Kann einfach durch ein vom Hersteller öffentliches Open Source Programm ausgenutzt werden ohne für den Besitzer sichtbare Spuren zu hinterlassen (und ohne die offizielle App zu benutzen)
-		\item Owner Account Leakage Attack: in which the attacker is able to disguise himself/herself to be the owner, by logging into the lock owner’s account in the third-party device to control the smart lock without being discovered
-		\item Personal Information Leakage Attack: in which the attacker is able to obtain the lock user information, which seriously threatens the user privacy; and
-		\item Denial-of-service (DoS) Attack: in which the attacker disrupts the regular usage of smart lock, which dramatically brings down the user experience
 	\end{itemize}
 	
 	Das in \fref{sec:sota_smart_locks} vorgestellte Schlüsselaustauschprotokoll lässt auf den ersten Blick folgende potentielle Angriffe zu\cite{Fuller2017}: 
@@ -147,5 +164,16 @@
 	    \item Brute-Forcing: bei Quicklock möglich mit 8-Ziffern PIN (100.000.000 Kombinationen)
 	\end{itemize}
 	
-
+    \subsubsection*{Insecure Web Interface}
+    \subsubsection*{Insecure Authentification/Authorization}
+    \subsubsection*{Insecure Web Interface}
+    \subsubsection*{Insufficient Authentication/Authorization}
+    \subsubsection*{Insecure Network Services}
+    \subsubsection*{Lack of Transport Encryption/Integrity Verification}
+    \subsubsection*{Privacy Concerns}
+    \subsubsection*{Insecure Cloud Interface}
+    \subsubsection*{Insecure Mobile Interface}
+    \subsubsection*{Insufficient Security Configurability}
+    \subsubsection*{Insecure Software/Firmware}
+    \subsubsection*{Poor Physical Security}
     
