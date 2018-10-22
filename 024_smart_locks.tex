@@ -10,7 +10,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.9\textwidth]{graphics/august_2.jpg}
-		\caption{Bestandteile eines August Smart Lock Pro\cite{August}}
+		\caption[Bestandteile eines August Smart Lock Pro]{Bestandteile eines August Smart Lock Pro\cite{August}}
 		\label{fig:august1}
 	\end{figure}
 	
@@ -29,7 +29,7 @@
     	\begin{figure}[H]
 			\centering
 			\includegraphics[width=\textwidth]{graphics/sl_arch.png}
-			\caption{Beispiel eines Smart Lock-Systems}
+			\caption[Beispiel eines Smart Lock-Systems]{Beispiel eines Smart Lock-Systems}
 			\label{fig:sl_arch}
 		\end{figure}
     	
@@ -79,7 +79,7 @@
 	    \begin{figure}[H]
     		\centering
     		\includegraphics[width=0.9\textwidth]{graphics/gateway_arch.png}
-    		\caption{Typische Architektur, welche das Smartphone des Nutzers als Gateway/Proxy nutzt\cite{Ho2016}.}
+    		\caption[Typische Architektur eines Smart Locks]{Typische Architektur, welche das Smartphone des Nutzers als Gateway/Proxy nutzt\cite{Ho2016}.}
     		\label{fig:gateway_arch}
     	\end{figure}
 	    Nach \cite{Ho2016}:
@@ -113,7 +113,7 @@
             \textbf{Guest}      & \checkmark                   & \checkmark          & ~                    & ~                                  & ~                             & ~                                    \\ \hline
             \end{tabular}
             }
-            \caption{Beispiel einer rollenbasierten Zugriffskontrolle}
+            \caption[Rollenbasierte Zugangskontrolle bei Smart Locks]{Beispiel einer rollenbasierten Zugriffskontrolle bei Smart Locks}
             \label{tab:rbac}
         \end{table}
 		\normalsize
@@ -137,14 +137,14 @@
 		Dieser wird verwendet, um Nachrichten zwischen dem Schloss und dem Smartphone des Nutzers mit dem Verschlüsselungsalgorithmus \gls{aes} zu ver- und entschlüsseln. 
 		Voraussetzung für das Protokoll, welches den Session Key erstellt ist, dass bereits im Voraus das Schloss und entweder die Webserver des Herstellers oder das Smartphone des Nutzers einen Secret Key teilen. 
 		Dieser Secret Key ist beipsielsweise das Passwort, das der Nutzer während seiner Anmeldung in der App verwendet. 
-		In dem Smart Lock von August können insgesamt 256 Schlüssel (von 0 bis 255 nummeriert) gespeichert werden, wobei Nummer 0 besondere Privilegien hat und als ,,Firmware Key`` angesehen wird.\cite{Fuller2017} 
-		Im Fall von August ist der Key hardcoded und somit anfällig, sollte er in falsche Hände geraten\cite{Rose2016}. 
+		In dem Smart Lock von August können insgesamt 256 Schlüssel (von 0 bis 255 nummeriert, je einen pro Nutzer des Schlosses) gespeichert werden, wobei Nummer 0 besondere Privilegien hat und als ,,Firmware Key`` angesehen wird.\cite{Jmaxxz2016,Fuller2017} 
+		Der Key 0 wird dazu genutzt die anderen Keys zu übertragen und ist hardcoded. 
         Die restlichen 255 Keys sind ,,offline Keys``, die zur Initialisierung einer Bluetooth-Session verwendet werden, sollte der Nutzer nicht mit dem Internet verbunden sein.\cite{Fuller2017}
         
-		\begin{figure}[H]
+		\begin{figure}[!htbp]
     		\centering
     		\includegraphics[width=0.6\textwidth]{graphics/owner_key.png}
-    		\caption{Ablauf der Generierung eines \gls{sk} mittels offline Key\cite{Fuller2017}}
+    		\caption[Generierung eines Session Keys mittels Offline Key]{Ablauf der Generierung eines \gls{sk} mittels offline Key\cite{Fuller2017}}
     		\label{fig:owner_key}
     	\end{figure}
 		
@@ -157,10 +157,10 @@
         
         \noindent Gäste, welche keinen ,,offline Key`` zugewiesen bekommen, kommunizieren mit dem Webserver (vgl. \fref{fig:online_key}):\todo[color=orange]{nachlesen}
         
-        \begin{figure}[H]
+        \begin{figure}[!htbp]
     		\centering
     		\includegraphics[width=0.9\textwidth]{graphics/online_key.png}
-    		\caption{Ablauf der Generierung eines \gls{sk} ohne offline Key\cite{Fuller2017}}
+    		\caption[Generierung eines Session Keys ohne Offline Key]{Ablauf der Generierung eines \gls{sk} ohne offline Key\cite{Fuller2017}}
     		\label{fig:online_key}
     	\end{figure}
         

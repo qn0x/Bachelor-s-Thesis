@@ -3,4 +3,34 @@
     Die Bewertung wird mittels des online bereitgestellten Rechners durchgeführt \url{https://www.first.org/cvss/calculator/3.0}.\todo[color=cyan]{\textrightarrow Quellen}
 	\todo[color=cyan]{erlären: Kategorisierung, warum \& was Base Score ist}
     Grundlage hierfür ist der in \fref{sec:sota_sa_cvss} vorgestellte Base Score.
-	Tabelle mit den Angriffen, kategorisiert, ähnliche Angriffe zusammengefasst.
+	Tabelle mit den Angriffen, kategorisiert, ähnliche Angriffe zusammengefasst, Vector Strings zur Nachverfolgung wie die einzelnen Faktoren bewertet wurden.
+	Ein Scope Change wird als solcher angesehen, sobald von den in \fref{fig:sl_arch} mindestens eine zusätzliche Komponente betroffen ist.
+	
+    \newpage
+    %\begin{sidewaystable}[H]
+      {\centering
+        \begin{table}[H]
+        {\small
+        \begin{tabular}{>{\raggedright}p{0.28\textwidth}|m{0.56\textwidth}|m{0.05\textwidth}}
+            \textbf{}                                      & \textbf{Vector String}                        & \textbf{Score}   \\ \hline
+            \textbf{API: User Enumeration}                 & CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H  & 5.3              \\ \hline
+            \textbf{Insufficient Password Protection}      & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:N  & 6.5              \\ \hline
+            \textbf{API: Privilege Escalation}             & CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L  & 8.5              \\ \hline
+            \textbf{Insecure Password Policy}              & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:N/A:H  & 7.5              \\ \hline
+            \textbf{Phishing}                              & CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:N/A:H  & 6.9              \\ \hline
+            \textbf{Replay}                                & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
+            \textbf{Device Spoofing}                       & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
+            \textbf{Missing 2-Factor Authentication}       & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:L  & 5.4              \\ \hline
+            \textbf{\gls{dos} via Commands}                &    & 5.4              \\ \hline
+            \textbf{\gls{dos} via Manufacturer}            &    & 5.4              \\ \hline
+            \textbf{\gls{dos} via Bluetooth}               &    & 5.4              \\ \hline
+            \textbf{Access Log Evasion}                    &    & 5.4              \\ \hline
+            \textbf{Insecure Password Transmission}        &    & 5.4              \\ \hline
+            \textbf{Insecure Bluetooth Pairing - \gls{sk}} &    & 5.4              \\ \hline
+        \end{tabular}
+        }
+        \end{table}}
+      %\caption{Nach \gls{cvss} bewertete Schwachstellen aus \fref{sec:analysis_vulns}}
+      \label{tab:test}
+    %\end{sidewaystable}
+    \newpage
