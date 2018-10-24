@@ -6,16 +6,9 @@
     Für weitere Details zu den im Folgenden beschriebenen Schwachstellen wird auf die jeweiligen Quellen verwiesen.
     \todo[color=orange]{\cite{Tierney2018}\cite{Stykas2018}}
 
-    \begin{itemize}[leftmargin=0cm,label={}]
-        \item \emph{State Consistency Attacks}\cite{Ho2016}\todo[color=orange]{löschen?}\\
-            Produkt: August, Danalock, Kevo, Okidokeys, Lockitron\\
-            Voraussetzungen: \\
-            Dadurch, dass das Smart Lock mit dem in \fref{fig:gateway_arch} vorgestellen Kommunikationsmodell volkommen davon abängig ist, dass das Gerät des Owners die Nachrichten unangerührt weiterleitet, ist dieses Vertrauensmodell im Falle eines Entzugs von Rechten eines anderen Nutzers unpassend.
-    \end{itemize}
-	
     \subsubsection*{I1: Insecure Web Interface}
        \begin{itemize}[leftmargin=0cm,label={}]
-            \item \emph{Insecure API: User Enumeration}\cite{Fuller2017,Lariviere2015}\label{enum:user_enum}\\
+            \item \emph{Insecure API: User Enumeration}\cite{Fuller2017,Lariviere2015}\label{vuln:user_enum}\\
                 Produkt: August\\
                 Voraussetzungen: \\
                 Die in \fref{sec:sota_smart_locks} vorgestellte Kommunikation via Wifi zwischen dem Webserver: 
@@ -26,41 +19,41 @@
        
     \subsubsection*{I2: Insecure Authentification/Authorization}
         \begin{itemize}[leftmargin=0cm,label={}]
-            \item \emph{Insufficient Password Protection}\cite{Ye2017}\label{enum:pwd_prot}\\
+            \item \emph{Insufficient Password Protection}\cite{Ye2017}\label{vuln:pwd_prot}\\
     	        Produkt: QuickLock Smart Lock\\ 
                 Voraussetzungen: keine\\
                 Wird die ,,Passwort vergessen``-Funktion genutzt, so wird dem Nutzer sein verwedetes Passwort zugesendt. 
                 Das übertragene Passwort wird allerdings nicht verschlüsselt.
-            \item \emph{Insecure API: Privilege Escalation}\cite{Fuller2017,Lariviere2015}\label{enum:priv_esc}\\
+            \item \emph{Insecure API: Privilege Escalation}\cite{Fuller2017,Lariviere2015}\label{vuln:priv_esc}\\
                 Produkt: August\\
                 Voraussetzungen: \\
                 Die in \fref{sec:sota_smart_locks} vorgestellte Kommunikation via Wifi zwischen dem Webserver: 
                 Ebenfalls möglich war eine Privilege Escalation, in dem ein String von 'user' auf 'superuser' geändert wurde.
-            \item \emph{Insecure Password Policy}\cite{Rose2016,Ye2017,Jmaxxz2015a}\label{enum:pwd_pol}\\
+            \item \emph{Insecure Password Policy}\cite{Rose2016,Ye2017,Jmaxxz2015a}\label{vuln:pwd_pol}\\
                 Produkt: Quicklock Smart Lock, August Smart Lock\\
                 Voraussetzungen: keine\\
                 Quicklock: 8-Ziffern PIN (100.000.000 Kombinationen)\\
                 August: Verifikation über Rufnummer enthält einen Code mit 6 Ziffern (1.000.000 Kombinationen)\\
                 Sollte kein Rate-Limiting im Server vorhanden sein, könnte der Angreifer mit beispielsweise 50 Versuchen pro Sekunde (bei 20ms Netzwerkverzögerung) ide 1.000.000 Kombinationen innerhalb von maximal 5-6 Stunden knacken.
-            \item \emph{Phishing?}\cite{Ye2017}\\
+            \item \emph{Phishing?}\cite{Ye2017}\label{vuln:phishing}\\
     	        Produkt: August Smart Lock\\ 
                 Voraussetzungen: keine\\
                 Der Angreifer bringt den Nutzer dazu eine bösartige App zu verwenden, welche der Legitimen sehr ähnlich sieht. 
                 Da keine Authentifizierung zwischen Schloss und Nutzer durchgeführt wird, ist dies nur sehr schwer vom Nutzer zu erkennen.
-            \item \emph{Replay}\cite{Tierney2018,Rose2016,Ho2016}\\
+            \item \emph{Replay}\cite{Tierney2018,Rose2016,Ho2016}\label{vuln:replay}\\
                 Produkt: Tapplock Smart Lock, Ceomate Bluetooth, Elecycle Smart Padlack, Vians Bluetooth Smart Doorlock, Lagute Sciener Smart Doorlock\\
                 Voraussetzungen: \\  
                 Vom Nutzer übertragene Befehle zwischen Smartphone und Schloss werden eine Zeit lang aufgezeichnet und zu einem späteren Zeitpunkt wieder abgespielt. 
                 Hat sich der Nutzer innerhalb dieser Zeitspanne beispielsweise gegenüber dem Schloss authentifiziert, so kann sich der Angreifer mit dem abgespielten Befehl als der Nutzer authentifizieren.\todo[color=yellow]{doof formuliert}
                 Ein Angreifer folgt Alice (außerhalb des Bluetooth- und Geofencingradius, aber in Bluetooth-Reichweite zu Alices Gerät) und überträgt das Signal an einen anderen Angreifer, der vor Alices Haus mit einem bluetoothfähigen Gerät wartet und mittels des übertragenen Signals nun alle Bedingungen erfüllt und das Schloss entriegeln kann.
                 Bei Systemen mit Geofencing muss zusätzlich Alices Standort gespooft werden.
-            \item \emph{Device Spoofing}\cite{Rose2016}\\
+            \item \emph{Device Spoofing}\cite{Rose2016}\label{vuln:spoofing}\\
                 Produkt: Mesh Motion Bitlock Padlock\\
                 \begin{enumerate}[noitemsep]
     	            \item Angreifer gibt sich als Schloss aus, um das Passwort des Nutzers zu stehlen
     	            \item möglich, da ein vorhersehbarer Nonce geschickt wird und die App beim Nutzer im Hintergrund läuft und Befehle ohne Nutzerinteraktion sendet.
     	        \end{enumerate}
-	        \item \emph{Missing 2-Factor Authentication}\cite{Jmaxxz2015}\\
+	        \item \emph{Missing 2-Factor Authentication}\cite{Jmaxxz2015}\label{vuln:2-factor}\\
                 Produkt: August Smart Lock\\
                 Voraussetzungen: \\  
                 Proof of Posession: E-Mail, Handynummer\\
@@ -81,21 +74,21 @@
         
     \subsubsection*{I3: Insecure Network Services}
         \begin{itemize}[leftmargin=0cm,label={}]
-            \item \emph{Denial of Service via Commands}\cite{Ye2017}\label{enum:dos_cmd}\\
+            \item \emph{Denial of Service via Commands}\cite{Ye2017}\label{vuln:dos_cmd}\\
     	        Produkt: August Smart Lock \\ 
                 Voraussetzungen: Angreifer hat Zugriff auf das Smartphone eines Nutzers und auf dem Smartphone selbst Root-Rechte\\
                 Winn mehrere Nutzer gleichzeitig versuchen sich mit dem Schloss zu verbinden, wird die App suspendiert, sodass niemand gleichzig Öffnen/\-Schließen-Befehle senden kann. 
     		    Somit kann ein Angreifer kontinuierlich wechseln Öffnen/Schließen-Befehle senden und der legitime Nutzer kann die Smart Lock nicht kontrollieren. 
-		    \item \emph{Denial of Service (via manufacturer's server)}\cite{Ye2017}\label{enum:dos_server}\\
+		    \item \emph{Denial of Service (via manufacturer's server)}\cite{Ye2017}\label{vuln:dos_server}\\
                 Produkt: Lockitron\\
                 Voraussetzungen: im WLAN Bereich des Nutzers
                 direkte Verbindung des Schlosses mit den Servern des Herstellers \textrightarrow legitime Nutzer könnten ausgeschlossen werden, wenn dessen Server nicht erreichbar sind
-            \item \emph{Denial of Service via Bluetooth}\cite{Ye2017}\label{enum:dos_ble}\\
+            \item \emph{Denial of Service via Bluetooth}\cite{Ye2017}\label{vuln:dos_ble}\\
     	        Produkt: alle\\ 
                 Voraussetzungen: keine\\
                 Der Angreifer nutzt einen Bluetooth-Jammer, um die Kommunikation zwischen Smartphone und Schloss zu unterbinden. 
                 Aufgrund der in \fref{fig:gateway_arch} vorgestellten Architektur sind somit keine Dienste mehr verfügbar. 
-            \item \emph{Access Log Evasion}\cite{Ho2016}\\
+            \item \emph{Access Log Evasion}\cite{Ho2016}\label{vuln:access_log_evasion}\\
                 Produkt: August, Danalock, Kevo, Okidokeys, Lockitron\\
                 Voraussetzungen: \\
                 ist möglich, da, wie in dem oben beschriebenen Szenario davon ausgegangen wird, dass alle Geräte alle Aktionen an den remote Server senden.
@@ -108,18 +101,18 @@
         
     \subsubsection*{I4: Lack of Transport Encryption/Integrity Verification}
         \begin{itemize}[leftmargin=0cm,label={}]
-            \item \emph{Insecure Password Transmission}\cite{Rose2016}\label{enum:pwd_trns}\\
+            \item \emph{Insecure Password Transmission}\cite{Rose2016}\label{vuln:pwd_trns}\\
                 Produkt: Quicklock, iBluLock, Pantraco Phantomlock\\
                 Voraussetzungen: \\ 
                 Plain Text Password: z.B. einfach Opcode (Herstellserspezifisch), aktuelles Passwort, neues Passwort konkatiniert und gesendet. 
     	        Wird dies gesendet, dann wird der Owner mit einem neuen Passwort ausgesperrt und ein hard Reset ist nötig. 
     	        Jedoch ist diser Angriff nur möglich, wenn das Schloss in dem Moment, in dem die Nachricht gesendet wird, entriegelt ist.
-            \item \emph{Insecure Bluetooth-Pairing - Session Key}\cite{Fuller2017}\label{enum:ble_sk}\\
+            \item \emph{Insecure Bluetooth-Pairing - Session Key}\cite{Fuller2017}\label{vuln:ble_sk}\\
                 Produkt: August\\
                 Voraussetzungen: \\
                 der Session Key wird als Klartext vom Server an den Gast geschickt, sodass ein Mithörer an diesen gelangen könnte.
     	        Er wird jedoch unverzüglich für die Kommunikation zwischen Schloss und Gast genutzt und direkt nach Nutzung wieder verworfen, sodass das Kennen des Session Keys für einen Angreifer laut \citeauthor{Fuller2017} eher unwahrscheinlich einen Nutzen hervorbringt.
-	        \item \emph{Revocation Evasion}\cite{Fuller2017,Ho2016}\\
+	        \item \emph{Revocation Evasion}\cite{Fuller2017,Ho2016}\label{vuln:revocation_evasion}\\
                 Produkt: August, Danalock, Kevo, Okidokeys, Lockitron\\
                 Voraussetzungen: \\
                 Indem ein Angreifer, dessen Rechte entzogen werden soll jegliche Kommunikation zwischen Alice und dem remote Server des Herstellers verhindert.
@@ -132,7 +125,7 @@
                 Selbst, wenn ein legitimes Gerät mit dem Schloss interagiert, wird die Benachrichtung über Mallorys Entzug der Recht nicht vom Server über jenes übertragen.
                 Somit behält Mallory Zugang für das Schloss. 
                 Oder: in Angreifer mit einem in der Zukunft auf Zeit limitierten Gastzugang ändert die Zeiteinstellung auf seinem Gerät, um zu einem anderen Zeitpunkt Zugriff zu erhalten
-            \item \emph{Decompiling APKs}\cite{Rose2016}\\
+            \item \emph{Decompiling APKs}\cite{Rose2016}\label{vuln:decompile}\\
                 Produkt: Poly-Control Danalock Doorlock\\
                 Voraussetzungen: \\  
                 \begin{enumerate}[noitemsep]
@@ -146,7 +139,7 @@
         
     \subsubsection*{I5: Privacy Concerns}
         \begin{itemize}[leftmargin=0cm,label={}]
-            \item \emph{Extracted User Data}\cite{Lariviere2015,Ye2017}\label{enum:user_data}\\
+            \item \emph{Extracted User Data}\cite{Lariviere2015,Ye2017}\label{vuln:user_data}\\
                 Produkt: August Smart Lock\\ 
                 Voraussetzungen: Angreifer hat Zugriff auf das Smartphone eines Nutzers\\
                 Jegliche gesammelten persönlichen Informationen, die für die Anmeldung der App benötigt werden, werden auf dem Smartphone des Nutzers mit \gls{aes} verschlüsselt abgelegt. 
@@ -161,14 +154,14 @@
         
     \subsubsection*{I7: Insecure Mobile Interface}
         \begin{itemize}[leftmargin=0cm,label={}]
-            \item \emph{Stolen User Settings}\cite{Ye2017}\label{enum:user_settings}\\
+            \item \emph{Stolen User Settings}\cite{Ye2017}\label{vuln:user_settings}\\
                 Produkt: August Smart Lock\\ 
                 Voraussetzungen: Angreifer hat Zugriff auf das Smartphone eines Nutzers und auf dem Smartphone selbst Root-Rechte\\
                 Mallory kopiert die Einstellungen der App, welche als eine bestimmte Datei auf dem Smartphone von Alice gespeichert werden.
     		    Mallory legt sich einen neuen Account an und nutzt dafür die kopierten Einstellungen. \textrightarrow Mandatory Access Control 
     		    Nun wird der Angreifer als legitimer Nutzer angesehen.
     		    Dies beinhaltet die Verwendung von jeglichen administrativen Funktionen wie das Ändern der Gästeliste. 
-		    \item \emph{Insecure Bluetooth-Pairing}\cite{Tierney2018,Rose2016,Ye2017,Fuller2017}\\
+		    \item \emph{Insecure Bluetooth-Pairing}\cite{Tierney2018,Rose2016,Ye2017,Fuller2017}\label{vuln:ble_pairing}\\
                 Produkt: August Smart Lock, Tapplock Smart Lock\\
                 Voraussetzungen: keine\\
                 August: Das Bluetooth-Pairing zwischen Schloss und Alices Smartphone wird über die Passkey-Methode vollzogen. 
@@ -183,7 +176,7 @@
         
     \subsubsection*{I9:Insecure Software/Firmware}
         \begin{itemize}[leftmargin=0cm,label={}]
-            \item \emph{Fuzzing}\cite{Rose2016}\\
+            \item \emph{Fuzzing}\cite{Rose2016}\label{vuln:fuzzing}\\
                 Produkt: Okidokey Smart Doorlock\\
                 Voraussetzungen: \\  
                 Indem man einige Bytes eines gültigen Befehls ändert und versucht das Schloss in einen Fehlerzustand zu bringen. 
@@ -194,7 +187,7 @@
     	            \lstinline{9348(Opcode?)|llub6cad7299ec1481791303d7c90d549352398(Key)}
     	            \item während dieses Fehlerzustands ist das Schloss für den Nutzer unbrauchbar
     	        \end{enumerate} 
-	        \item \emph{Hardcoded Firmware Key}\cite{Fuller2017}\\
+	        \item \emph{Hardcoded Firmware Key}\cite{Fuller2017}\label{vuln:firmware_key}\\
                 Produkt: August\\
                 Voraussetzungen: \\
                 Wenn der Angreifer an den Firmware Key gelangt, könnte dieser mit einer Chosen Plaintext-Attacke fabrizierte Nachrichten anstatt 64 random Bits den Server schicken
@@ -202,6 +195,4 @@
         
     \subsubsection*{I10: Poor Physical Security}
         Wird wie in \fref{sec:problem_limit} erwähnt, nicht betrachtet.
-    
-    Referenz auf einen Punkt: \ref{enum:dos_ble}
     

@@ -30,6 +30,10 @@
 \subsubsection{Common Vulnerability Scoring System (CVSS)}
 \label{sec:sota_sa_cvss}
     \todo[color=cyan]{System kurz erklären}
+    The Common Vulnerability Scoring System (CVSS) provides a way to capture the principal characteristics of a vulnerability, and produce a numerical score reflecting its severity, as well as a textual representation of that score. The numerical score can then be translated into a qualitative representation (such as low, medium, high, and critical) to help organizations properly assess and prioritize their vulnerability management processes.
+    Vorteile: standardized vulnerability scores, open framework, enables prioritized risk\cite{CVSSspec}
+    
+    
     \noindent Der Base Score besteht aus zwei Subscores, Exploitability Score und Impact Score, welche wie folgt in Listing \ref{eq:cvss_basescore} verrechnet werden:
     \begin{lstlisting}[caption={Berechnung des BaseScore \cite{CVSSspec}},label=eq:cvss_basescore,captionpos=b,mathescape=true]
 if (ImpactSubScore <= 0)

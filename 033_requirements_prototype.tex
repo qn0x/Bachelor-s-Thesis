@@ -1,14 +1,17 @@
 \subsection{Ableiten der Anforderungen an den Prototypen}
 \label{sec:analysis_requirements}
-    Aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken lassen sich direkt folgende Anforderungen ableiten, die diese vermeiden:
+
+    Aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken lassen sich einige Anforderungen ableiten, welche mit deren Umsetzung dabei helfen diese zu vermeiden.
+    Ebenso werden die Anforderungen nach der Möglichkeit und Unmöglichkeit der Umsetzung mittels einer Blockchain gruppiert.
+    Außerdem: Falls dies der Fall ist, einer Referenz auf die Schwachstelle, aus der die Anforderung entstanden ist.
+    \noindent Möglich:
     \begin{itemize}
-        \item Sicherung der (relevanten) Daten, bevor diese auf dem Mobilgerät gespeichert werden\cite{Ye2017}
-        \item sicheres Kommunikationsprotokoll für die Dateiübertragung via Bluetooth\cite{Ye2017}
-        \item Authentifizierung des Nutzers und des Smart Locks, um sicherzustellen, dass niemand anderes den zwischen beiden Parteien steht (Man-In-The-Middle)\cite{Ye2017}
-        \item Mandatory Access Control für die Systeme, Daten auf den Systemen und Funktionen innerhalb eines Systems.\cite{Ye2017}
-        \item Priorisierung der Befehle\cite{Ye2017} je nach Rolle.
+        \item Authentifizierung des Nutzers und des Smart Locks, speziell auch das Sicherstellen, dass die empfangenen Daten von der Richtigen Quelle kommen, um sicherzustellen, dass niemand anderes den zwischen beiden Parteien steht und Nachrichten manipulieren kann (Man-In-The-Middle) \textrightarrow\ \hyperref[vuln:phishing]{Phishing}, \hyperref[vuln:replay]{Replay}, \hyperref[vuln:spoofing]{Device Spoofing}, 
+        \item Mandatory Access Control für die Systeme, Daten auf den Systemen und Funktionen innerhalb eines Systems \textrightarrow\ \hyperref[vuln:user_data]{Extracted User Data}, \hyperref[vuln:user_settings]{Stolen User Settings}
+        \item Priorisierung der an das Schloss gesendeten Befehle\cite{Ye2017}.
         \item evtl: Authentifizierung des Clients gegeüber dem Nutzer und umgekehrt.\cite{Ye2017}
-        \item For smart locks that follow a DGC architecture, state consistency attacks fundamentally arise because they are distributed systems, and their design does not provide consistency in the face of network partitions. Recall the CAP Theorem for distributed systems: it states that if network partitions can occur, it is impossible to provide full availability for the system's service, while simultaneously maintaining the latest, consistent state across all nodes in the system.
+        \item Gegen Angriffe, die eine Diskrepanz des aktuellen Zustands Systems zwischen verschiedenen Teilnehmer und Knoten im Netzwerk ausnutzen: 
+        For smart locks that follow a DGC architecture, state consistency attacks fundamentally arise because they are distributed systems, and their design does not provide consistency in the face of network partitions. Recall the CAP Theorem for distributed systems: it states that if network partitions can occur, it is impossible to provide full availability for the system's service, while simultaneously maintaining the latest, consistent state across all nodes in the system.
         Thus, no distributed system can provide perfect consistency and availability in the face of partitions.\cite{Ho2016} \\
         Nach \citeauthor{Ho2016}:
         Als verteiltes System gesehen: Schloss, remote Server und Endgeräte sind Knoten.
@@ -23,31 +26,16 @@
 	        Somit kann ein Angreifer sich auf dem Gerät von Alice nach Belieben anmelden und in ihrem Namen Aktionen ausführen.
 	        Jedoch kann der Angreifer sich nicht mit den Nutzerdaten von Alice auf einem anderen Gerät anmelden, da die App beim Anmelden auf einem neuen Gerät eine einmal gültige Verifikation über E-Mail oder SMS erfordert.\todo[color=yellow]{besser ausdrücken}
 	        Hat nicht funktioniert \textrightarrow Server gibt die Zeit vor \cite{Fuller2017}
-        \item 
+        \item nicht-authorisierten Zugriff verhindern bzw. nur dann öffnen/schließen, wenn der Nutzer, der den Befehl gibt, authorisiert ist(Whitelisting) \cite{Ho2016}
+        \item Access Log Integrität \cite{Ho2016}
+    \end{itemize}
+    \noindent Unmöglich:
+    \begin{itemize}
+        \item Sicherung der (relevanten) Daten, bevor diese auf dem Mobilgerät gespeichert werden\cite{Ye2017}
+        \item sicheres Kommunikationsprotokoll für jegliche Nachrichten\cite{Miessler,Ye2017}
+        \item keine Hardcoded Paasswörter\cite{Rose2016}
+        \item 2-Factor Authentication\cite{Rose2016}
+        \item Bei Verwendung eines Nonce-Wertes: echt zufälliger Nonce-Wert mit 8-16 Bytes\cite{Rose2016}
+        \item ordentlich implementierte AES-Verschlüsselung\cite{Rose2016}
     \end{itemize}
     
-    Sicherheitsziele von Smart Locks\cite{Ho2016}
-    \begin{itemize}
-        \item nicht-authorisierten Zugriff verhindern bzw. nur dann öffnen/schließen, wenn der Nutzer, der den Befehl gibt, authorisiert ist(Whitelisting)
-        \item Access Log Integrität
-    \end{itemize}
-    
-    In \cite{Rose2016} vorgestellte Features von "uncrackable" Locks:
-    \begin{itemize}
-        \item ordentlich implementierte AES-Verschlüsselung
-        \item echt zufälliger Nonce-Wert mit 8-16 Bytes
-        \item 2-Factor Authentication
-        \item keine Hardcoded Pwasswörter
-        \item lange Passwörter sind erlaubt (16-20 Zeichen)
-    \end{itemize}
-	
-	Weiterhin lassen sich mittels den Ressourcen des \gls{owasp}-Projekts\cite{Miessler2015}\cite{Miessler2015a} weitere Anforderungen aufstellen\todo[color=orange]{besser ausdrücken}:
-	\begin{itemize}
-	    \item 
-	\end{itemize}
-	
-	Außerdem
-	\begin{itemize}
-	    \item Mandatory Access Control
-	    \item Role Based Access Control
-	\end{itemize}
