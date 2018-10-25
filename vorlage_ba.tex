@@ -72,6 +72,7 @@
 }
 
 \usepackage{rotating}
+\usepackage{color, colortbl}
 \usepackage{amssymb}
 \usepackage{array}
 \usepackage{float}
@@ -86,6 +87,7 @@
 \usepackage{xcolor}
 \usepackage[colorinlistoftodos,textsize=scriptsize,textwidth=2cm]{todonotes}
 \reversemarginpar
+\definecolor{light-gray}{gray}{0.95}
 
 %---------------------------------------------------
 % PLATZHALTER FÜLLEN MIT NAMEN, THEMA, ETC.
@@ -176,7 +178,7 @@
 	%---------------------------------------------------
 	%---------------------------------------------------
 	% VERZEICHNISSE -- AUTOMATISCHE EINTRAGUNG
-	\setstretch{1.1}
+	\setstretch{1.0}
 	
 	\normalsize
 	\tableofcontents
@@ -210,18 +212,20 @@
     \input{030_analysis}
     \input{031_vulnerabilities}
     \input{032_cvss_scoring}
-    \input{033_requirements_prototype}
     \newpage
     \input{040_prototype}
+    \input{041_requirements}
+    \input{042_framework}
+    \input{043_arch}
     \newpage
     \input{050_evaluation}
     \newpage
     \input{060_comparison}
     \newpage
     \input{070_ending}
-    \newpage
-    \input{099_fragen}
-    \nocite{*}
+    %\newpage
+    %\input{998_fragen}
+    %\nocite{*}
 
 	%!!!!!!!!!!!!!!!!!!!!!!!!BIS HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
 	%########################################################################################################
