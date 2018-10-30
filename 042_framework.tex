@@ -2,7 +2,7 @@
 \label{sec:prototype_framework}
     Ein (kurzer) Abschnitt der Arbeit soll die Auswahl des genutzen Frameworks für den Prototypen darstellen, da dies eine zentrale Entscheidung für die Arbeit und somit auch essentiell für die Bearbeitung der Problemstellung ist.
     Es existieren mittlerweile diverse Frameworks mit verschiedenen Anwendungsgebieten, daher sollte das letztendlich verwendete Framework folgenden Kriterien entsprechen:
-    \begin{itemize}
+    \begin{itemize}[noitemsep]
         \item Open Source \textrightarrow\ eigene Einflussmöglichkeit
         \item aktive Community \textrightarrow\ Unterstützung bei Schwierigkeiten
         \item aktive Weiterentwicklung \textrightarrow\ zumindest in naher Zukunft besteht die Möglichkeit, dass das Framework auch in Produkten auf dem Markt genutzt werden könnte
@@ -11,12 +11,20 @@
     \end{itemize}
     \medskip
     \textbf{Auswahl verfügbarer Frameworks nach erster Recherche}
-    \begin{itemize}
+    \begin{itemize}[noitemsep]
         \item Hyperledger (Auswahl an verschiedenen Projekten mit unteschiedlichen Einsatzszenarien):\\
-            Favorit: Iroha - mit rollenbasierter Rechtevergabe und Unterstützung für mobile Plattformen, sowie Bibliotheken für mehrere Sprachen und guter Dokumentation; Composer, viele Beispiele, aktive Community
+            \begin{itemize}[noitemsep]
+                \item Iroha: simpel, auf auch auf mobile Devices verfügbar, Automatisierung über Kubernetes, major Release noch in Beta
+                \item Fabric: Bekanntestes und am weitesten entwickeltes Framework, sehr viele verschiedene Features, auf Enterprise Use ausgelegt, viele Konfigurationsmöglichkeiten
+                \item Composer: Abstrahierung des Fabric Frameworks, für rapid Development geeignet, explizite rollenbasierte Zugriffskontrolle
+            \end{itemize}
         \item Exonum
         \item Ethereum
         \item Multichain
     \end{itemize}
     Auswahl fiel auf Hyperledger Composer, da dieses Projekt am aktivsten Weiterentwickelt wird und reifer ist als Ihroha.
     Da Composer auf Fabric basiert, stellt es zur Konfiguration verschiedene Konsensalgorithmen zur Verfügung.
+    
+    \begin{itemize}[noitemsep]
+        \item Anonymität nicht wichtig (wegen Access Control, Identifzierung und Authentifizierung)
+    \end{itemize}
