@@ -1,10 +1,11 @@
 \subsection{Hyperledger Composer}
         Hyperledger Composer ist ein Framework für das bauen, operieren und deployen von Blockchain-Netzwerken (genannt Business Networks) und dient vornehmlich als Abstraktion des Hyperledger Fabric Frameworks. 
         
-        
         Für die Entwicklung der Logik von Business Networks wird die Sprache JavaScript verwendet. 
         Zusätzlich werden domainspezifische Sprachen für die Modellierung, sowie Access Control eingesetzt.
         Als Datenbank wird CouchCB verwendet (eventual Consistency, bei CAP auf A und P ausgelegt.)
+        
+        Kleine Beispielapplikation mit generierter Angular-App(?)
         
         \begin{itemize}[noitemsep]
             \item Ein Blockchain-Netzwerk wird Business Network genannt. 
@@ -33,17 +34,15 @@
                 Sind nur für bestimmte Netzwerkmitglieder sichtbar, denen der Channel freigegeben wurde.
             \item Ordering Service: Menge an Knoten, die Transaktionen in einem Block ordnen
             \item Ledger: Blockchain + World State
+            \item Deployable: Business Network Archive (bna)
+            \item Historian: registry which records successful transactions, including the participants and identities that submitted them
         \end{itemize}
-        
         
         \begin{itemize}[noitemsep]
             \item Single Organization 
             \item Membership Provider Service
         \end{itemize}
-        
     
-
-
 \subsection{Architektur und Funktionsweise}
 \label{sec:prototype_arch}
     Enstprechend dem Kapitel mit dem Stand der Wissenschaft wurden die Konzepte im Framework umgesetzt.
@@ -97,7 +96,7 @@
             \item Owner
             \item Guest
         \end{itemize}
-        \begin{lstlisting}[caption={Participant Types},label=participants,captionpos=b]
+        \begin{lstlisting}[caption={Participant Types (TODO)},label=participants,captionpos=b]
 asset Commodity identified by tradingSymbol {
     o String tradingSymbol
     o String description
@@ -127,6 +126,9 @@ transaction Trade {
     \paragraph{Transaction Functions}
     
     \paragraph{Access Control Rules}
+        \begin{itemize}
+            \item Whitelisting
+        \end{itemize}
     
     \paragraph{Query Definitions}
     
