@@ -2,7 +2,7 @@
 \label{sec:sota_blockchain}
 
     Quellen:
-    \begin{itemize}
+    \begin{itemize}[noitemsep]
         \item \cite{Dorri2016}
         \item \cite{Conoscenti2016}
         \item \cite{Greenspan2015}
@@ -10,24 +10,31 @@
         \item \cite{Kshetri2017}
         \item \cite{Nakamoto2008}
         \item \cite{Underwood2016}
-        \item \cite{Volulic2016}
-        \item \cite{Volulic2017}
+        \item \cite{Vukolic2016}
+        \item \cite{Vukolic2017}
         \item \cite{Wuest2017}
         \item \cite{Zheng2017}
     \end{itemize}
-    Eine Blockchain ist in ihrer Essenz eine immer größer werdende Kette von Einträgen, die dezentral gespeichert wird. 
-    Erstmals 2008 von Satoshi Nakamoto, ursprünglich als Peer-to-Peer Electronic Cash System ,,Bitcoin`` erfunden, fand die Technologie aufgrund ihren Vorteilen wie des dezentralen, anonymen Konzepts schnell viele <Anhänger>. \todo[color=cyan]{Einleitung schreiben}
+    
+    Eine Blockchain ist in ihrer Essenz eine immer länger werdende, öffentliche Kette von Transaktionen, die dezentral gespeichert wird. 
+    Erstmals 2008 von Satoshi Nakamoto, ursprünglich als Peer-to-Peer Electronic Cash System ,,Bitcoin`` erfunden, fand die Technologie aufgrund ihren Vorteilen wie des dezentralen, anonymen Konzepts schnell viele Sympathisanten. 
     
     \subsubsection{Einführung in das Konzept}
     \label{sec:sota_blockchain_introduction}
     % Top-down Erklärung... Blockchain -> Block -> Transaktion -> Asset
     Bitcoin ist die erste digitale Währung, die ursprünglich ohne zentrale Autorität wie beispielsweise einer \gls{ttp} das bereits in \fref{sec:sota_doublespend} vorgestellte Double-Spending Problem lösen sollte\cite{Nakamoto2008}. 
-    Übertragen auf Bitcoin bedeutet es, dass der Empfänger sichergehen können muss, dass die vorigen Besitzer keine vorherigen Transaktionen signiert hatte \cite{Nakamoto2008}\todo[color=yellow]{Übersetzung okay?}.
-    Dies wird mittels kryptographischem Beweis anstatt des laut \citeauthor{Nakamoto2008} vorstellten mangelhaften Modells der \gls{ttp} gelöst\todo[color=orange]{besser ausdrücken}.
+    Übertragen auf Bitcoin bedeutet es, dass der Empfänger sichergehen können muss, dass der vorige Besitzer den Bitcoin oder den Bruchteil dessen nicht schon einmal an einen anderen Empfänger gesendet hat.
+    Dies wird mittels kryptographischem Beweis anstatt des laut \citeauthor{Nakamoto2008} vorstellten mangelhaften Modells der \gls{ttp}, welche stets einen Single Point of Failure
+    \footnote{Ein Single Point of Failure stellt beipsielsweise eine Bank im Zahlungsverkehr dar.
+    Fällt die Bank beispsielsweise aus irgendeinem Grund aus, haben deren Kunden keine Möglichkeit mehr Überweisungen von und zu ihren Konten zu tätigen.}
+    darstellt, gelöst. 
+    \todo[color=orange]{besser ausdrücken}.
+    Das Konzept \citeauthor{Nakamoto2008}s ermöglicht es somit zwei Entitäten, die sich gegenseitig nicht vertrauen müssen, um eine sichere (im Sinne der Vertraulichkeit) direkte Transaktion miteinander durchzuführen.
+    
     Getätigte Transaktionen sollen nicht rückgängig machbar sein, in dem die Rückrechnung des Beweises rechnerisch zu aufwändig sein soll\cite{Nakamoto2008}.
     Somit wird der Verkäufer vor Täuschung geschützt und Treuhandmechanismen können einfach implementiert werden\cite{Nakamoto2008}.  
     
-    Das Konzept \citeauthor{Nakamoto2008}s ermöglichte es somit zwei Entitäten, die sich gegenseitig nicht vertrauen müssen eine direkte Transaktion durchzuführen.
+    
     Es müssen also alle Teilnehmer in einem Bitcoin-Netzwerk alle Transaktionen innerhalb des Netzwerkes kennen (Analog: Rollen des Ausstellers bzw. des Mint übernehmen)\todo[color=orange]{nachlesen}.
     Ebenso müssen alle Transaktionen für alle Teilnehmer einsehbar sein, also veröffentlicht werden.
     Weiterhin benötigt das System eine einzige Historie, in welcher alle vergangenen Transaktionen in der Reihenfolge ihres Auftretens stehen.
