@@ -1,11 +1,14 @@
 \section*{Fragen}
+    Feedback:\\
+    Die Arbeit ist bisher ganz ok. Vieles steht und fällt mit Formulierungen die u.U. eine gewisse Präzision aufweisen.
+    Bei 3.2.1 habe ich besonders hingeschaut. Grundlegend treffen Sie den Kern der Blockchain. Man muss allerdings die Betrachtung auf Blockchain unterscheiden:
+    Grundsätzlich möchte man eine TTP weg haben. Gerade nach den Finanzkrisen. Daher braucht man eine Möglichkeit sicher und vertrauensvoll direkt miteinander zu kommunizieren und zu handeln.
+    Das erfordert zunächst einen Mechanismus um auf einen Konsens zu kommen. Irgendwie müssen ja alle unabhängig voneinander sich einig werden, dass das so stimmt. Die Verteilung der Daten und Replicas ist dabei Mittel zum Zweck um einer zentralisierten Vorgehensweise zu entgehen.
+    Im Bitcoinnetzwerk müssen nicht alle die gesamte Transaktionshistorie kennen, eher muss diese von allen verifizierbar sein. Es gibt einen Unterschied zwischen Minern und Teilnehmern (und das auch noch je nach Blockchain-Framework..). Darüberhinaus: Die Sicherheit steht und fällt nicht ganz mit der Mehrheit von ehrlichen Nutzern. In der Basis-Blockchain geht darum, einen Nonce-Wert zu erraten um einen besonders gearteten Hashwert herauszubekommen. Es ist nur statistisch unwahrscheinlicher dass eine Minderheit von unehrlichen Minern dieses Wert zuerst herausbekommt als die ehrlichen. Ferner ist es statistisch noch unwahrscheinlicher das gleich zweimal am Stück zu schaffen und somit die „längste Kette“ zu formen (darum geht es ja: vergangene Transaktionen zu verändern à erfordert „aufholen“ zur aktuellen Länge à „selfish mining“). Die Statistik spricht für die Praxis und bestätigt diese, daher wird gesagt „es ist genau deshalb sicher“…allerdings ist es mit Vorsicht zu genießen.
+    
     \begin{itemize}
-        \item Soll ich alle Quellen mit abgeben, an die man nicht so einfach kommt(Paywalls)? Wenn ja, wie (als Archiv)?
-        \item Soll auch in irgendeiner Form eine Anleitung zur Nutzung des Prototypen dabei sein, bspw. im Anhang?
-        \item Soll die Beschreibung der Methodik des Vorgehens immer häppchenweise am Anfang eines Kapitels stehen und in der Einleitung ein kurzer Ablauf der Arbeit?
-        \item Erklärung des verwendeten Bewertungsschemas für die gefundenen Schwachstellen: soll diese schon bei den Grundlagen stehen oder erst bei der Analyse selbst erläutert werden?
-        \item Sollen die verwendeten Akronyme in Verzeichnis geordnet sein? Wenn ja, Alphabetisch, nach Auftreten im Text,...?
-        \item Die im ILIAS vorgegebenen Layoutvorlagen stimmen nicht mit der dort abgelegten Latex-Vorlage überein. Welche sollen nun verwendet werden?
+        \item Vor Abgabe noch Sophie schicken und ,,wichtige`` Kapitel markieren
+        \item Wichtige Kapitel: 1 (Einleitung), 2 (Problemstellung)
     \end{itemize}
     
 \section*{How to todos:}
@@ -21,13 +24,14 @@
 \centering
 \begin{tabular}{l|c|c|c}
                                & \textbf{Seitenanzahl (geplant)} & \textbf{Seitenanzahl (ist)} & \textbf{Status}        \\ \hline
-\textbf{Einleitung}            & 1 - 3                           & {\color{yellow} 1}          & {\color{green} Done}   \\ \hline
+\textbf{Einleitung}            & 1 - 3                           & {\color{yellow} 2}          & {\color{green} Done}   \\ \hline
 \textbf{Problemstellung}       & 1 - 2                           & {\color{green} 2}           & {\color{green} Done}   \\ \hline
-\textbf{Grundlagen}            & 10 - 15                         & {\color{green} 14}          & {\color{yellow} Doing} \\ \hline
+\textbf{Grundlagen}            & 10 - 15                         & {\color{green} 15}          & {\color{yellow} Done}  \\ \hline
 \textbf{Analyse}               & 5 - 10                          & {\color{green} 7}           & {\color{green} Done}   \\ \hline
 \textbf{Prototyp}              & 15                              & {\color{red} 8}             & {\color{yellow} Doing} \\ \hline
 \textbf{Evaluation}            & 5 - 10                          & {\color{red} 1}             & {\color{red} Todo}     \\ \hline
 \textbf{Vergleich}             & 3                               & {\color{red} 1}             & {\color{red} Todo}     \\ \hline
-\textbf{Schluss}               & 2 - 3                           & {\color{red} 1}             & {\color{red} Todo}     \\
+\textbf{Schluss}               & 2 - 3                           & {\color{red} 1}             & {\color{red} Todo}     \\ \hline
+\textbf{Gesamt}                & 44 - 61                         & {\color{red} 1}             & {\color{red} Todo}     \\
 \end{tabular}
 \end{table}

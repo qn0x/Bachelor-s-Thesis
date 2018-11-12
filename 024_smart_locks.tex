@@ -2,7 +2,7 @@
 \label{sec:sota_smart_locks}
 	Da sich Architektur und Funktionsmechanismen in manchen Punkten je nach Hersteller unterscheiden, gelten die im Folgenden dargelegten technischen Erklärungen, soweit nicht explizit erwähnt, für das Smart Lock von der Firma August. 
     \medskip\\
-    \noindent Smart Locks sind ,,elektromechanische Türschlösser``, die sich dadurch auszeichnen, dass sie für einen Nutzer mit einer Smartphone-App steuerbar sind und mittels eines kabellosen Standards wie Bluetooth (siehe \fref{sec:sota_iot_protocols}) für kurze Distanzen kommunizieren.
+    \noindent Smart Locks sind ,,elektromechanische Türschlösser``, die sich dadurch auszeichnen, dass sie für einen Nutzer mit einer Smartphone-App steuerbar sind und mittels eines kabellosen Standards wie Bluetooth oder Z-Wave  für kurze Distanzen kommunizieren.
 	Als ,,Smart Lock`` werden keine Schlösser bezeichnet, bei denen ein physisches Schloss
 	\footnote{beispielweise ein Stiftschloss, welches mit einem herkömmlichen Schlüssel geöffnet werden kann} 
 	mit einem Ziffernblock ersetzt wurde oder sich nicht mit anderen Geräten innerhalb des \gls{iot} in irgendeiner Weise verbinden.\cite{Ho2016}
@@ -169,6 +169,6 @@
             \item der Server verschlüsselt diese 64 Bits mit dem Firmware Key und sendet die verschlüsselten Bits als Nachricht an den Gast zurück
             \item der Gast leitet den Ciphertext, welcher von dem Server empfangen wurde, an das Schloss weiter
             \item das Schloss sendet 64 Bits mit XY\todo[color=orange]{nachlesen} verschlüsselt an den Gast, welcher diesen Ciphertext an den Server weiterleitet
-            \item Der Server entschlüsselt die Nachricht und sendet sie als Klartext per SSL an den Gast
+            \item Der Server entschlüsselt die Nachricht und sendet sie als Klartext per \gls{tls} (ehem. \gls{ssl}) an den Gast
             \item das Schloss und der Gast konkatenieren beide 64-Bit langen Folgen zu einem 128-Bit Schlüssel, welcher als Session Key verwendet wird
         \end{enumerate}

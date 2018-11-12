@@ -60,7 +60,7 @@ if(Scope == Changed)
         Low               & 0.1 - 3.9                   \\ \hline
         \rowcolor{orange}
         Medium            & 4.0 - 6.9                   \\ \hline
-        \rowcolor{RedOrange}
+        \rowcolor{redorange}
         High              & 7.0 - 8.9                   \\ \hline
         \rowcolor{red}
         Critical          & 9.0 - 10.0                  \\ \hline
@@ -111,10 +111,10 @@ Exploitability = 8.22 $\mathsf{\times}$ AttackVector $\mathsf{\times}$ AttackCom
     \smallskip\\
     \begin{lstlisting}[caption={Berechnung des Impact Score \cite{CVSSspec}},label=eq:cvss_impscore,captionpos=b,mathescape=true]
 $\mathsf{ISC_{Base}}$ = 1 - [(1 - $\mathsf{Impact_{Conf}}$) $\mathsf{\times}$ (1 - $\mathsf{Impact_{Integ}}$) $\mathsf{\times}$ (1-$\mathsf{Impact_{Avail}}$)]
-if (Scope == Unchanged)
-    Impact = 6.42 $\mathsf{\times}$ $\mathsf{ISC_{Base}}$
-if (Scope == Changed)
-    Impact = 7.52 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.029] - 3.25 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.02]$\mathsf{^{15}}$
+if ($\mathsf{Scope}$ == Unchanged)
+    $\mathsf{Impact}$ = 6.42 $\mathsf{\times}$ $\mathsf{ISC_{Base}}$
+if ($\mathsf{Scope}$ == Changed)
+    $\mathsf{Impact}$ = 7.52 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.029] - 3.25 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.02]$\mathsf{^{15}}$
     \end{lstlisting}
     \begin{description}[itemsep=0.7em,align=left,labelindent=0pt,leftmargin=0pt]
         \item [Confidentiality:] Ausmaß auf die Vertraulichkeit der Informationsressourcen, die von einer Softwarekomponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.

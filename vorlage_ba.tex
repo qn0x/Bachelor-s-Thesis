@@ -89,9 +89,16 @@
 \usepackage[colorinlistoftodos,textsize=tiny,textwidth=2cm]{todonotes}
 \usepackage{realboxes}
 
+\usepackage{appendix}
+\renewcommand\appendixname{Anhang}
+\renewcommand\appendixpagename{Anhang}
+\renewcommand\appendixtocname{Anhang}
+
 \reversemarginpar
 
 \definecolor{light-gray}{gray}{0.95}
+\definecolor{redorange}{HTML}{F45900}
+
 \hyphenation{Block-chain}
 \hyphenation{Block-chains}
 
@@ -211,7 +218,7 @@
     %\include{0211_notes_bc}
     \input{021_doublespend}
     \input{022_blockchain}
-    \input{023_iot}
+    %\input{023_iot}
     \input{024_smart_locks}
     \input{025_security_analysis}
     \newpage
@@ -235,8 +242,16 @@
 
 	%!!!!!!!!!!!!!!!!!!!!!!!!BIS HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
 	%########################################################################################################
-	
-	
-\newpage	
-\printbibliography[title=Literaturverzeichnis]
+    \newpage	
+    \printbibliography[title=Literaturverzeichnis]
+
+    %% ANHANG 
+    \newpage
+    \appendix
+    \renewcommand{\thesection}{\Roman{section}}
+    \appendixpage
+    \addappheadtotoc
+    \input{100_appendix}
+
+
 \end{document}
