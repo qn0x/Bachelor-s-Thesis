@@ -14,11 +14,12 @@
     erfunden, erregte die Technologie aufgrund ihrer Eigenschaften wie ihres dezentralen, anonymen Konzepts schnell Aufmerksamkeit. 
     Bitcoin ist die erste populäre digitale Währung, die ohne zentrale Autorität wie beispielsweise einer \gls{ttp} das in \fref{sec:sota_doublespend} vorgestellte Double-Spending Problem lösen sollte\cite{Nakamoto2008}. 
     Übertragen auf Bitcoin bedeutet es, dass ein Empfänger einer Transaktion sichergehen können muss, dass der vorige Besitzer den Bitcoin oder den Bruchteil dessen vorher nicht schon einmal erfolgreich an einen anderen Empfänger gesendet hat.
-    Dies wird mittels kryptographischem Beweis, welcher in \fref{sec:sota_blockchain_trx} genauer betrachtet wird, anstatt des laut \citeauthor{Nakamoto2008} vorstellten mangelhaften Modells dker \gls{ttp}, welche stets einen Single Point of Failure
+    Dies wird mittels kryptographischem Beweis, welcher in \fref{sec:sota_blockchain_consensus} genauer betrachtet wird, anstatt des laut \citeauthor{Nakamoto2008} vorstellten mangelhaften Modells dker \gls{ttp}, welche stets einen Single Point of Failure
     \!\footnote{Ein Single Point of Failure stellt beipsielsweise eine Bank im Zahlungsverkehr dar.
-    Fällt die Bank beispsielsweise aus irgendeinem Grund aus oder wird kompromittiert, haben deren Kunden keine Möglichkeit mehr sicher Überweisungen von und zu ihren Konten zu tätigen.}
+    Fällt die Bank beispsielsweise aus irgendeinem Grund aus oder wird kompromittiert, haben deren Kunden keine Möglichkeit mehr (sicher) Überweisungen auszuführen und zu empfangen.}
     darstellt, gelöst. 
-    Das Konzept ermöglicht es somit zwei Entitäten, auch wenn sie sich gegenseitig nicht vertrauen, eine sichere (im Sinne der Vertraulichkeit) direkte Transaktionen miteinander durchzuführen, welche auch im Nachhinein nicht mehr verändert werden können und stets nachverfolgbar sind.
+    Das Konzept ermöglicht es somit zwei Entitäten, auch, wenn sie sich gegenseitig nicht vertrauen, ohne vermittelnde Person oder Organisation eine sichere (im Sinne der Vertraulichkeit) direkte Transaktionen miteinander durchzuführen, welche auch im Nachhinein nicht mehr verändert werden können.\cite{Christidis2016}
+    \missingfigure[]{Einfache Darstellung eines Blockchain-Netzwerkes}
     
     \subsubsection{Einführung in das Konzept}
     \label{sec:sota_blockchain_introduction}
@@ -32,8 +33,25 @@
     
     Zunächst wurde mit digitalen Coins gehandelt, welche einer in Form einer Kette digitaler Signaturen modelliert wurden\cite{Nakamoto2008}.
     In anderen Anwendungsbereichen außerhalb des Bereiches der Kryptowährungen wird von generalisierten Assets gesprochen.
-    Der aktuelle Zustand ergibt sich also durch das Zurückverfolgen der einzelnen Transaktionen in der Blockchain. 
-    Es wird also kein aktueller Stand, welcher Teilnehmer des Netzwerks was besitzt, gespeichert.\cite{Christidis2016}
+    Der aktuelle Zustand (,,World View`` genannt) ergibt sich also durch das Zurückverfolgen der einzelnen Transaktionen in der Blockchain. 
+    Es wird also kein aktueller Stand, welcher Teilnehmer des Netzwerks was und wie viel besitzt, gespeichert.\cite{Christidis2016}
+    
+    \subsubsection{Transaktionen}
+    \label{sec:sota_blockchain_trx}
+    In einer Blockchain werden Aktivitäten von Nutzern in Form von Transaktionen repräsentiert. 
+    
+    Tätigt ein Nutzer eine Transaktion \lstinline{X}, so signiert er diese mit seinem privaten Schlüssel, der Knoten, über welchen der Nutzer mit dem Netzwerk interagiert, validiert diese, sammelt diese und verteilt die valide Transaktion an die nächsten Nachbarn
+    \!\footnote{Nächste Nachbarn sind jene Knoten, die einen Sprung im \gls{p2p}-Netzwerk voneinander entfernt sind.}.
+    Die Nachbarn überprüfen die Transaktion ebenfalls auf deren Validität und verbreiten diese wiederrum an ihre nächsten Nachbarn. 
+    Schlussendlich kennen eine Vielzahl von Knoten im Netzwerk die Transaktion \lstinline{X}. 
+    
+    Im sogenannten ,,Mining``-Prozess, der wiederholt wird, werden valide Transaktionen, die innerhalb eines im Voraus abgestimmten Zeitintervalls gesammelt wurden, zeitlich geordnet, zu einem mit Zeitstempel versehenem ,,Candidate``-Block zusammengefügt und wieder im Netzwerk verbreitet. 
+    Andere Knoten im Netzwerk stellen sicher, dass der neue Block valide Transaktionen enthält und den richtigen Hash des vorigen Blocks in der Kette enthält. 
+    Bei erfolgreicher Validierung hängen die Knoten den Block jeweils an ihre Kopie der Kette an, übernehmen die darin enhaltenen Transaktionen und aktualisieren somit den aktuellen Zustand. 
+    Sollte innerhalb des Mining-Prozesses eine Validierung fehlschlagen, wird der ganze Block verworfen.
+    
+    Der Knoten, der diesen Prozess ausführt wird Miner genannt und von der Auswahl des Knotens und Konsensmechanismus abhängig und unter Umständen in der gleichen Situation unterschiedlich.\cite{Christidis2016}
+    
     \begin{figure}[H]
     	\centering
     	\includegraphics[width=\textwidth]{graphics/transaction.png}
@@ -41,37 +59,37 @@
     	\label{fig:txio}
     \end{figure}
     
-    \subsubsection{Transaktionen}
-    \label{sec:sota_blockchain_trx}
-    Tätigt ein Nutzer eine Transaktion \lstinline{x}, so signiert er diese mit seinem privaten Schlüssel, der Knoten, über welchen der Nutzer mit dem Netzwerk interagiert, validiert diese, sammelt diese und verteilt die valide Transaktion an die nächsten Nachbarn
-    \!\footnote{Nächste Nachbarn sind jene Knoten, die einen Sprung im \gls{p2p}-Netzwerk voneinander entfernt sind.}
-    .
-    Die Nachbarn überprüfen die Transaktion ebenfalls und verbreiten diese wiederrum an ihre nächsten Nachbarn. 
-    Schlussendlich kennt jeder Knoten im Netzwerk die Transaktion \lstinline{x} und es kann davon ausgegangen werden, dass diese valide ist. 
-    Im sogenannten ,,Mining``-Prozess werden Transaktionen, die innerhalb eines im Voraus abgestimmten Zeitintervalls gesammelt wurden, zeitlich geordnet, zu einem mit Zeitstempel versehenem ,,Candidate``-Block zusammengefügt und wieder im Netzwerk verbreitet. 
-    Der Knoten, der diesen Prozess ausführt wird Miner genannt und von der Auswahl des Knotens und Konsensmechanismus abhängig und unter Umständen in der gleichen Situation unterschiedlich.\cite{Christidis2016}
-    \medskip\\
+    Wie in \fref{fig:txio} dargestellt, werden Assets von einem Versender zu einem Empfänger transferiert, in dem der Sender einen Hash der vorigen Transaktion und den öffentlichen Schlüssel des Empfängers mit seinem eigenen privaten Schlüssel digital signiert und diese Hash dann am Ende des Assets anfügt.
+    Der Empfänger, sowie alle Teilnehmer des Netzwerkes können den Besitz des Assets über die Kette der digitalen Signaturen zurückverfolgen.
+    Transaktionen können zudem mehrere Ein- und Ausgaben haben.\cite{Nakamoto2008}
+    
+    
     Getätigte Transaktionen sollen nicht mehr rückgängig gemacht werden können.
     Erreicht wird dies, indem die Rückrechnung des Beweises rechnerisch zu aufwändig sein soll\cite{Nakamoto2008}.
     Somit wird der Verkäufer vor Täuschung geschützt und Treuhandmechanismen können einfach implementiert werden\cite{Nakamoto2008}.  
     \medskip\\
     Wie in \fref{fig:txio} dargestellt, werden Assets von einem Versender zu einem Empfänger transferiert, in dem der Sender einen Hash der vorigen Transaktion und den öffentlichen Schlüssel des Empfängers mit seinem eigenen privaten Schlüssel digital signiert und diese Hash dann am Ende des Assets anfügt.
     Transaktionen können zudem mehrere Ein- und Ausgaben haben\cite{Nakamoto2008}.
+    
     Der Empfänger, sowie alle Teilnehmer des Netzwerkes können den Besitz des Assets über die Kette der digitalen Signaturen zurückverfolgen\cite{Nakamoto2008}.
-    
-    Every signed transaction is broadcasted by a user’s node to its one-hop peers\cite{Christidis2016}
-    
-    The neighboring peers make sure this incoming transaction is valid before relaying it any further; invalid transactions are discarded. Eventually this transaction is spread across the entire network\cite{Christidis2016}
-    
-    The transactions that have been collected and validated by the network using the process above during an agreed-upon time interval, are ordered and packaged into a timestamped candidate block. This is a process called mining. The mining node broadcasts this block back to the network. (The choice of the mining node and the contents of the block depend on the consensus mechanism that the network employs. Refer to Section II-B for more information.)
-    The nodes verify that the suggested block (a) contains valid transactions, and (b) references via hash the correct previous block on their chain. If that is the case, they add the block to their chain, and apply the transactions it contains to update their world view. If that is not the case, the proposed block is discarded. This marks the end of a round.\cite{Christidis2016}
 	    
     \subsubsection{Konsens}
     \label{sec:sota_blockchain_consensus}
+        Um Transaktionen selbst zu validieren, deren Reihenfolge im nächsten Block zu bestimmen und Mining-Blöcke auszuwählen zu können wird von allen Teilnehmern des Netzwerkes ein gemeinsamer Konsens vorausgesetzt. 
+        Ist dies nicht der Fall können unterschiedliche Ketten (,,Forks`` genannt) innerhalb der jeweiligen Kopien der Blockchain auf den einzelnen Knoten entsehen. 
+        Ideal wäre es, wenn alle validierenden Knoten des Netzwerkes abstimmen und die Mehrheit über die Reihenflolge der Transaktionen für den nächsten Block entscheidet.\cite{Christidis2016} 
+        Aufgrund der Gefahr eines sogenannten ,,Sybil-Angriffs``\cite{Trifa2014}
+        \!\footnote{Bei einem ,,Sybil-Angriff`` erlangt ein Angreifer mehr Einfluss auf die Abstimmung, indem er entweder zusätzliche Nutzeridentitäten für sich selbst erstellt oder mehrere Knoten kontrolliert.
+        } ist dies jedoch unzumutbar.\cite{Christidis2016}
+        \begin{itemize}[noitemsep]
+            \item \gls{pow} \& \gls{pos} erklären
+            \item kurz: \gls{bft} und andere
+            \item Validation checks kurz mit Beispiel
+        \end{itemize}
     
     \subsubsection{Smart Contracts}
     \label{sec:sota_blockchain_sc}
-        Smart Contracts sind Skripte, die innerhalb einer Blockchain gespeichert sind (ähnlich der Stored Procedures eines Relationalen Datenbankmanagementsystems) und agieren autonom. 
+        Smart Contracts sind Skripte, die innerhalb einer Blockchain gespeichert werden (ähnlich der Stored Procedures eines Relationalen Datenbankmanagementsystems) und agieren autonom. 
         Sie haben eine eigene Adresse und werden angesteuert, indem sie als Empfänger einer Transaktion adressiert werden.
         Die Ausführung passiert unabhängig automatisch und mit vorgegebenem Verhalten auf jedem Knoten des Netzwerks.
         \cite{Christidis2016} 
@@ -83,22 +101,26 @@
         \medskip\\
         Mit einer Blockchain können auch je nach Anwendungsszenario, außer Kryptowährungen, andere (digital repräsentierte) Waren oder Assets wie Güter im Supply Chain Management\cite{Underwood2016}, Identitäten zur Zugangskontrolle\cite{Kshetri2017} oder Proof of Ownership digitaler Rechte\cite{Wuest2017} gespeichert und gehandelt werden. 
         Unterschiedliche Anwendungen haben auch verschiedene Anforderungen an die Blockchain selbst. 
-        Zur Zeit haben sich unterschiedliche Typen einer Blockchain herauskristallisiert, wo.
+        Bei Anwendungen wie Supply Chain Management rückt beispielsweise der Aspekt ohne \gls{ttp} auszukommen eher in den Hintergrund. 
+        Wichtig ist dort eher die Unveränderbareit und Nachverfolgbarkeit der Güter auf ihrem Weg vom Start zum Ziel. 
+        Zur Zeit haben sich unterschiedliche Typen einer Blockchain herauskristallisiert, welche je nach Autor teilweise verschieden bezeichnet werden.
+        Nach \sloppy\url{https://blockchainhub.net/blockchains-and-distributed-ledger-technologies-in-general/} wird folgend unterschieden:
+        \begin{itemize}
+            \item private und public
+            \item permissioned und permissionless
+        \end{itemize}
         
-        
-        \sloppy\url{https://blockchainhub.net/blockchains-and-distributed-ledger-technologies-in-general/}
         \begin{itemize}[noitemsep]
-            \item in private/\-permissioned ist \gls{pow} und \gls{pos} nicht nötig
+            \item in private/\-permissioned ist \gls{pow} und \gls{pos} nicht nötig \textrightarrow \gls{bft} oder andere
         \end{itemize}
     
     \subsubsection{Sicherheit}
     \label{sec:sota_blockchain_security}
-        Das System ist so lange sicher, wie ,,ehrliche'` Knoten gemeinsam mehr Rechenleistung als eventuell zusammenarbeitende Angreifer haben\cite{Nakamoto2008}
-        Byzantine Fault Tolerance
-        Consensus Algorithms
         \begin{itemize}
             \item Users interact with the blockchain via a pair of private/public keys [13]. They use their private key to sign their own transactions, and they are addressable on the network via their public key.2 The use of asymmetric cryptography brings authentication, integrity, and nonrepudiation into the network\cite{Christidis2016}
+            \item sonst noch was?
         \end{itemize}
     
     \subsubsection{Identity Management}
     \label{sec:sota_blockchain_identitymgmnt}
+        ??
