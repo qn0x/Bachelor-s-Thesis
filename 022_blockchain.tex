@@ -19,7 +19,6 @@
     Fällt die Bank beispsielsweise aus irgendeinem Grund aus oder wird kompromittiert, haben deren Kunden keine Möglichkeit mehr (sicher) Überweisungen auszuführen und zu empfangen.}
     darstellt, gelöst. 
     Das Konzept ermöglicht es somit zwei Entitäten, auch, wenn sie sich gegenseitig nicht vertrauen, ohne vermittelnde Person oder Organisation eine sichere (im Sinne der Vertraulichkeit) direkte Transaktionen miteinander durchzuführen, welche auch im Nachhinein nicht mehr verändert werden können.\cite{Christidis2016}
-    \missingfigure[]{Einfache Darstellung eines Blockchain-Netzwerkes}
     
     \subsubsection{Einführung in das Konzept}
     \label{sec:sota_blockchain_introduction}
@@ -27,9 +26,15 @@
     Die Blockchain beinhaltet das maßgebliche ,,Hauptbuch`` (im Englischen ,,Ledger`` genannt) mit allen vergangenen Transaktionen, ein Log, dessen Einträge mit Zeitstempeln jeweils zu unterschiedlichen Blöcken zusammengefasst werden. 
     Alle vergangenen Transaktionen in der Reihenfolge ihres Auftretens sind für alle Teilnehmer einsehbar\cite{Nakamoto2008}.
     \medskip\\
-    Nutzer nehmen an dem Netzwerk über Knoten teil, wobei ein Knoten auch für mehrere Nutzer einen Zugang bieten kann. 
+    Nutzer nehmen an dem Netzwerk über Knoten teil, wobei ein Knoten auch für mehrere Nutzer einen Zugang bieten kann(s. \fref{fig:bc_network}). 
     Knoten des Netzwerkes speichern stets eine eigene Kopie der Blockchain.
     Jeder Nutzer interagiert mit dem Netzwerk mittels eines Paares von öffentlichem und privatem Schlüssel, wobei der Öffentliche oder dessen Hashwert zur Adressierung und der Private zur Signierung von Transaktionen des Nutzers verwendet wird.\cite{Christidis2016}
+    \begin{figure}[H]
+    	\centering
+    	\includegraphics[width=\textwidth]{graphics/BCNetwork.png}
+    	\caption[Blockchain-Netzwerk]{Blockchain-Netzwerk}
+    	\label{fig:bc_network}
+    \end{figure}
     
     Zunächst wurde mit digitalen Coins gehandelt, welche einer in Form einer Kette digitaler Signaturen modelliert wurden\cite{Nakamoto2008}.
     In anderen Anwendungsbereichen außerhalb des Bereiches der Kryptowährungen wird von generalisierten Assets gesprochen.
@@ -55,14 +60,13 @@
     \begin{figure}[H]
     	\centering
     	\includegraphics[width=\textwidth]{graphics/transaction.png}
-    	\caption[Kette digitaler Signaturen]{Kette digitaler Signaturen\cite{Nakamoto2008}}
+    	\caption[Kette digitaler Signaturen]{Kette digitaler Signaturen\cite{Nakamoto2008}. \lstinline{+K} stellt dabei den öffentlichen und \lstinline{-K} den privaten Schlüssel dar.}
     	\label{fig:txio}
     \end{figure}
     
     Wie in \fref{fig:txio} dargestellt, werden Assets von einem Versender zu einem Empfänger transferiert, in dem der Sender einen Hash der vorigen Transaktion und den öffentlichen Schlüssel des Empfängers mit seinem eigenen privaten Schlüssel digital signiert und diese Hash dann am Ende des Assets anfügt.
     Der Empfänger, sowie alle Teilnehmer des Netzwerkes können den Besitz des Assets über die Kette der digitalen Signaturen zurückverfolgen.
     Transaktionen können zudem mehrere Ein- und Ausgaben haben.\cite{Nakamoto2008}
-    
     
     Getätigte Transaktionen sollen nicht mehr rückgängig gemacht werden können.
     Erreicht wird dies, indem die Rückrechnung des Beweises rechnerisch zu aufwändig sein soll\cite{Nakamoto2008}.
@@ -72,48 +76,73 @@
     Transaktionen können zudem mehrere Ein- und Ausgaben haben\cite{Nakamoto2008}.
     
     Der Empfänger, sowie alle Teilnehmer des Netzwerkes können den Besitz des Assets über die Kette der digitalen Signaturen zurückverfolgen\cite{Nakamoto2008}.
-	    
-    \subsubsection{Konsens}
+	
+	\subsubsection{Typen}
+    \label{sec:sota_blockchain_types}
+        Mit einer Blockchain können auch je nach Anwendungsszenario, außer Kryptowährungen, andere (als Token  repräsentierte) Waren oder Assets wie Güter im Supply Chain Management\cite{Underwood2016}, Identitäten zur Zugangskontrolle\cite{Kshetri2017} oder Proof of Ownership digitaler Rechte\cite{Wuest2017} gespeichert und gehandelt werden. 
+        Unterschiedliche Anwendungen haben auch verschiedene Anforderungen an die Blockchain selbst. 
+        Bei Anwendungen wie Supply Chain Management rückt beispielsweise der Aspekt ohne \gls{ttp} auszukommen eher in den Hintergrund. 
+        Wichtig ist dort eher die Unveränderbareit und Nachverfolgbarkeit von Transaktionen in der Blockchain, die dabei helfen den Weg von Gütern von Start zum Ziel nachvollzeihbar zu machen. 
+        Zur Zeit haben sich unterschiedliche Typen einer Blockchain herauskristallisiert, welche je nach Autor teilweise verschieden bezeichnet werden.
+        Nach \cite{Wuest2017} wird in drei unterschiedliche Typen unterschieden:
+        \begin{enumerate}[noitemsep]
+            \item public/permissionless
+            \item public/permissioned (auch consortium genannt)
+            \item private/permissioned
+        \end{enumerate}
+        Weitere Quellen: \cite{Wuest2017,Zheng2017,Christidis2016,Buterin2015}
+	
+    \subsubsection{Konsens und Sicherheit}
     \label{sec:sota_blockchain_consensus}
         Um Transaktionen selbst zu validieren, deren Reihenfolge im nächsten Block zu bestimmen und Mining-Blöcke auszuwählen zu können wird von allen Teilnehmern des Netzwerkes ein gemeinsamer Konsens vorausgesetzt. 
-        Ist dies nicht der Fall können unterschiedliche Ketten (,,Forks`` genannt) innerhalb der jeweiligen Kopien der Blockchain auf den einzelnen Knoten entsehen. 
-        Ideal wäre es, wenn alle validierenden Knoten des Netzwerkes abstimmen und die Mehrheit über die Reihenflolge der Transaktionen für den nächsten Block entscheidet.\cite{Christidis2016} 
-        Aufgrund der Gefahr eines sogenannten ,,Sybil-Angriffs``\cite{Trifa2014}
+        Ist dies nicht der Fall können, wie in \fref{fig:bc_forks} dargestellt, unterschiedliche Ketten (,,Forks`` genannt) innerhalb der jeweiligen Kopien der Blockchain auf den einzelnen Knoten entsehen. 
+        
+        \begin{figure}[H]
+        	\centering
+        	\includegraphics[width=\textwidth]{graphics/BCForks.png}
+        	\caption[Blockchain mit Forks]{Blockchain mit zwei Forks}
+        	\label{fig:bc_forks}
+        \end{figure}
+        \noindent Ideal wäre es, wenn alle validierenden Knoten des Netzwerkes abstimmen und die Mehrheit über die Reihenflolge der Transaktionen für den nächsten Block entscheidet.\cite{Christidis2016} 
+        Aufgrund der Gefahr eines ,,Sybil-Angriffs``\cite{Trifa2014}
         \!\footnote{Bei einem ,,Sybil-Angriff`` erlangt ein Angreifer mehr Einfluss auf die Abstimmung, indem er entweder zusätzliche Nutzeridentitäten für sich selbst erstellt oder mehrere Knoten kontrolliert.
-        } ist dies jedoch unzumutbar.\cite{Christidis2016}
-        \begin{itemize}[noitemsep]
-            \item \gls{pow} \& \gls{pos} erklären
-            \item kurz: \gls{bft} und andere
-            \item Validation checks kurz mit Beispiel
-        \end{itemize}
+        } ist dies jedoch unzumutbar.
+        Um diese Gefahr zu umgehen werden unterschiedliche Methoden angewendet, von denen einige Ausgewählte kurz erläutert werden:\cite{Christidis2016}
+        \smallskip\\
+        Bei Bitcoin wird ein sogenannnter \gls{pow} verwendet. 
+        Das Mining wird rechnerisch ,,teuer`` gemacht, indem vorausgesetzt wird, dass ein minender Knoten eine richtige Zufallszahl (genannt ,,Nonce``) mit variablem Schwierigkeitsgrad und mit bestimmten Eigenschaften berechnet und mit einer bestimmten Anzahl Bitcoins belohnt wird. 
+        Da bei der Berechnung kryptographische Hashfunktionen verwerndet werden, kann das Ergebnis durch die anderen Knoten einfach verifiziert werden. 
+        Diese Zahl kann jeder Knoten im Netzwerk berechnenn, sodass die explizite Auswahl des Miners entfällt. 
+        Der Candidate-Block jenes Knotens, der den Nonce findet, wird an die Blockchain angehängt. 
+        Sollten Forks entstehen, wird der Fork verwendet, in der der meiste Rechenaufwand steckt. 
+        Oft sind dies entweder der längste Fork oder der Fork, mit dem höchsten Schwierigkeitsgrad.\cite{Christidis2016,Nakamoto2008}
+        \smallskip\\
+        Alternativ kann ein \gls{pos} verwendet werden, welcher bedeutend weniger Rechenaufwand erfordert. 
+        Dabei senden sich Besitzer selbst eine bestimmte Anzahl an Coins und addieren einen vordefinieren Prozentsatz als Belohnung. 
+        Analog zum \gls{pow} wird ein Hashwert, entweder größer oder kleiner als ein gesuchter Wert ist berechnet, wobei die Schwierigkeit der Berechnung (umgekehrt proportional zum Alter der Coins) individuell festgelegt wird. 
+        Der Hashwert wird aus statischen Daten, ausgenommen des Zeitstempels, berechnet, sodass bei jeder Änderung des Zeitstempels eine Chance zum Finden des Hashwertes besteht und die individuelle Rechenleistung der Knoten nur eine minimale Rolle spielt. 
+        Wird ein Wert gefunden, so wird die Belohnung an den minenden Knoten ausgeschüttet und das Alter der Coins zurückgesetzt.\cite{Tschorsch2016}
+        \medskip\\
+        \gls{pow} und \gls{pos} werden vornehmlich in public (permissionless) Netzwerken eingesetzt.
+        Für private Blockchains sind sie jedoch eher ungeeignet, da in solchen Netzwerken die Teilnehmer häufig per Whitelist bekannt sind. 
+        In solchen Fällen werden Algorithmen wie das Practical \gls{bft} angewendet. Es löst das Problem der byantinischen Generäle
+        \!\footnote{TODO
+        } in asynchronen Umgebungen. 
+        Es schließt ein Protokoll mit drei Phasen ein, sowie der Idee eines Primärknotens, welcher als Block Miner agiert. 
+        Der Primärknoten kann über eine ,,View-Change``-Abstimmung geändert werden, falls dieser ausfällt oder sich willkürlich verhält (byzantinischer Fehler).
+        Jedoch wird bei diesem Algorithmus davon ausgegangen, dass sich weniger als ein Dittel der Knoten fehlerhaft verhalten.
+        \cite{Christidis2016}
     
     \subsubsection{Smart Contracts}
     \label{sec:sota_blockchain_sc}
         Smart Contracts sind Skripte, die innerhalb einer Blockchain gespeichert werden (ähnlich der Stored Procedures eines Relationalen Datenbankmanagementsystems) und agieren autonom. 
         Sie haben eine eigene Adresse und werden angesteuert, indem sie als Empfänger einer Transaktion adressiert werden.
-        Die Ausführung passiert unabhängig automatisch und mit vorgegebenem Verhalten auf jedem Knoten des Netzwerks.
-        \cite{Christidis2016} 
-        \todo[color=cyan]{Beispiel Smart Contract fehlt}
+        Die Ausführung passiert unabhängig automatisch und mit vorgegebenem Verhalten auf jedem Knoten des Netzwerks. \cite{Christidis2016}
+        \smallskip\\
+        Ein Beispiel für einen Smart Contract ist die Überprüfung von Transaktionen. 
+        Dabei wird beispielsweise kontrolliert, ob der Sender mindestens die Anzahl an digitalen Token besitzt, die bei der Transaktion an den Empfänger übertragen werden sollen.
     
-    \subsubsection{Typen}
-    \label{sec:sota_blockchain_types}
-        Private, Public - Permissioned, Permissionless
-        \medskip\\
-        Mit einer Blockchain können auch je nach Anwendungsszenario, außer Kryptowährungen, andere (digital repräsentierte) Waren oder Assets wie Güter im Supply Chain Management\cite{Underwood2016}, Identitäten zur Zugangskontrolle\cite{Kshetri2017} oder Proof of Ownership digitaler Rechte\cite{Wuest2017} gespeichert und gehandelt werden. 
-        Unterschiedliche Anwendungen haben auch verschiedene Anforderungen an die Blockchain selbst. 
-        Bei Anwendungen wie Supply Chain Management rückt beispielsweise der Aspekt ohne \gls{ttp} auszukommen eher in den Hintergrund. 
-        Wichtig ist dort eher die Unveränderbareit und Nachverfolgbarkeit der Güter auf ihrem Weg vom Start zum Ziel. 
-        Zur Zeit haben sich unterschiedliche Typen einer Blockchain herauskristallisiert, welche je nach Autor teilweise verschieden bezeichnet werden.
-        Nach \sloppy\url{https://blockchainhub.net/blockchains-and-distributed-ledger-technologies-in-general/} wird folgend unterschieden:
-        \begin{itemize}
-            \item private und public
-            \item permissioned und permissionless
-        \end{itemize}
-        
-        \begin{itemize}[noitemsep]
-            \item in private/\-permissioned ist \gls{pow} und \gls{pos} nicht nötig \textrightarrow \gls{bft} oder andere
-        \end{itemize}
-    
+    \iffalse
     \subsubsection{Sicherheit}
     \label{sec:sota_blockchain_security}
         \begin{itemize}
@@ -124,3 +153,4 @@
     \subsubsection{Identity Management}
     \label{sec:sota_blockchain_identitymgmnt}
         ??
+    \fi
