@@ -17,7 +17,7 @@
 
 %Seriflos#####
 %-------------
-\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\familydefault}{\rmdefault}
 %\setkomafont{section}{\fontfamily{\sfdefault}\Large}
 %\setkomafont{subsection}{\fontfamily{\sfdefault}\large}
 %\setkomafont{subsubsection}{\fontfamily{\sfdefault}\normalsize}
@@ -59,7 +59,9 @@
 \usepackage{setspace}
 \setstretch{1.2}
 
-\usepackage{svg}
+%\usepackage{svg}
+
+% eigene Source Code Listings
 \usepackage{listings}
 \lstset{
     framexleftmargin=3mm,
@@ -67,9 +69,13 @@
     framextopmargin=2mm,
     framexbottommargin=2mm,
     frame=shadowbox, 
+    breaklines=true,
     rulesepcolor=\color{black},
     basicstyle=\ttfamily\small,
-    backgroundcolor=\color{light-gray}
+    backgroundcolor=\color{light-gray},
+    keywordstyle=\color{blue},
+    morekeywords={asset,identified,participant,String,Double,transaction}
+    % am ende stylen https://tex.stackexchange.com/questions/283170/using-different-colors-for-different-keywords-in-lstlisting
 }
 
 \usepackage{rotating}
@@ -89,16 +95,32 @@
 \usepackage[colorinlistoftodos,textsize=tiny,textwidth=2cm]{todonotes}
 \usepackage{realboxes}
 
+% Anhang
 \usepackage{appendix}
 \renewcommand\appendixname{Anhang}
 \renewcommand\appendixpagename{Anhang}
 \renewcommand\appendixtocname{Anhang}
 
+% eigene Listentypen
+\newlist{FA}{enumerate}{1}
+\setlist[FA]{label=\textsf\textbf{{FA-\arabic*}},leftmargin=*,labelindent=0.4cm} % align=left,
+
+\newlist{SA}{enumerate}{1}
+\setlist[SA]{label=\textsf\textbf{{SA-\arabic*}},leftmargin=*,labelindent=0.4cm} % align=left
+
+% eine descriptions
+\setlist[description]{
+  font={\bfseries\rmfamily} % set the label font
+}
+
+% für Todonotes: Kommentarboxen sollen links vom Text angezeigt werden
 \reversemarginpar
 
+% eigene Farbdefinitionen
 \definecolor{light-gray}{gray}{0.95}
 \definecolor{redorange}{HTML}{F45900}
 
+% eigene Worttrennungen
 \hyphenation{Block-chain}
 \hyphenation{Block-chains}
 
@@ -187,6 +209,14 @@
 	
 	Leipzig, den \abgabe \tab \rule{6cm}{0.5pt}\\
 	\hspace*{22em}\name
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% ABSTRACT
+	\thispagestyle{empty}
+	
+	\textsc{{\LARGE Abstracts etc.}}
+	
 	\newpage
 	%---------------------------------------------------
 	%---------------------------------------------------

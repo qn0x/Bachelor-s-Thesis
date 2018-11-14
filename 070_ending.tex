@@ -1,22 +1,26 @@
 \section{Ergebnis}
 \label{sec:end}
     Abwägungen zum Einsatz der Blockchain-Technologie im \gls{iot}
-    
-    \begin{itemize}
+    \begin{itemize}[noitemsep]
         \item Blockchain tut sehr viel in Richtung Identity Management, nützt aber nichts, wenn das Umfeld (Übertragung via HTTP und nicht HTTPS, keine 2-Factor Authentication, etc.) nicht gesichert ist.
         \item kurz Vorteile/Nachteile von Blockchain
         \item Manche Anforderungen aus \fref{sec:prototype_requirements} nicht direkt umsetzbar.
             Einige dieser sind dennoch essentiell für die Sicherheit einer \gls{iot}-Applikation.
+        \item Grenzen der Aussagekraft des Prototypen
+		    \begin{itemize}[noitemsep]
+		        \item Mindestanzahl an Teilnehmern im Blockchain-Netzwerk wegen \gls{bft} \textrightarrow andere Konsensalgorithmen bzw. -mechanismen
+		        \item Privatsphäre in private Blockchains
+		        \item Passwortrücksetzung
+		        \item falsche Sicherheitskonfigurationen auf Host des Prototypen kann nicht betrachtet werden
+		    \end{itemize}
+		\item Worüber keine Aussagen getroffen werden konnten, z.B. Automatisches Öffnen-/\-Schließen konnte gar nicht getestet werden
     \end{itemize}
-    
-    Daher lohnt es sich nach dieser Untersuchung (nicht) die Blockchain-Technologie im \gls{iot} einzusetzen.
+    Daher lohnt es sich nach der Untersuchung (oder lohnt es sich nicht) innerhalb des Rahmens dieser Arbeit die Blockchain-Technologie im \gls{iot}, spezifisch bei Smart Locks einzusetzen.
     
     
 \section{Ausblick}
 \label{sec:end_further}
-	Ideen zur Erweiterung des Prototypen
-	\begin{itemize}
-		\item Self-Sovereign Identitiy
-		\item Decentralized Identifiers
-		\item Automatisches Öffnen-/\-Schließen
+	\begin{itemize}[noitemsep]
+		\item Auf die Konzepte Self-Sovereign Identitiy, Decentralized Identifiers eingehen und referenzieren
+		\item Ideen zur Erweiterung des Prototypen erläutern
 	\end{itemize}

@@ -1,51 +1,71 @@
 \subsection{Anforderungen an den Prototypen}
 \label{sec:prototype_requirements}
-    Nichtfunktionale Anforderungen werden nicht betrachtet.
-    Hier gelistete funktionale Anforderungen, sowie die die Sicherheit bereffenden als möglich aufgeführt werden, sind im Prototypen umgesetzt.
+    Nichtfunktionale Anforderungen werden in dieser Arbeit nicht betrachtet. 
+    Die hier aufgelisteten funktionalen Anforderungen, sowie die Sicherheitsanforderungen, die als umsetzbar aufgeführt werden, werden im Prototypen umgesetzt. 
     
 \subsubsection{Funktionale Anfoderungen}
 \label{sec:prototype_func_req}
-    Mindestfunktionen:
-    \begin{itemize}[noitemsep]
-        \item Hinzufügen von neuen Nodes/Peers
-        \item Funktion ,,Schloss öffnen``
-        \item Vergeben/Entziehen von Rechten die Funktion ,,Schloss öffnen`` zu nutzen
-        \item Übertragung der Daten zwischen Nodes via Bluetooth oder anderem Protokoll
-    \end{itemize}
+    Aus dem Beispiel des August Smart Lock, das unter anderen in \fref{sec:sota_smart_locks} vorgestellt wurden, ergeben sich folgende funktionale Anforderungen 
+    \!\footnote{im weiteren Verlauf mit FA-<Ziffer> bezeichnet} 
+    für minimale Basisfunktionen:
+    \begin{FA}[noitemsep]
+        \item \label{fa:1},,Nutzer verwalten``-Funktion: Hinzufügen und Entfernen von neuen Nutzern
+        \item \label{fa:2}Schloss öffnen
+        \item \label{fa:3}Schloss schließen
+        \item \label{fa:4}Vergabe/Entzug der Berechtigung für die Funktion ,,Schloss öffnen``
+        \item \label{fa:5}Vergabe/Entzug der Berechtigung für die Funktion ,,Schloss schließen``
+        \item \label{fa:6}Vergabe/Entzug der Berechtigung für die Funktion ,,Nutzer verwalten``
+    \end{FA}
 
 \subsubsection{Sicherheitsanforderungen}
 \label{sec:prototype_sec}
-    Zusätzlich zu den funktionalen Anforderungen für den Prototypen, lassen sich aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken einige Anforderungen ableiten, welche mit Umsetzung derer dabei helfen diese zu vermeiden.
+    Zusätzlich zu den funktionalen Anforderungen für den Prototypen, lassen sich aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken einige Sicherheitsnforderungen
+    \!\footnote{im weiteren Verlauf mit SA-<Ziffer> bezeichnet}
+    ableiten, welche mit Umsetzung derer dabei helfen diese zu vermeiden.
     Die abgeleiteten Anforderungen werden nach der Möglichkeit und Unmöglichkeit der Umsetzung mittels einer Blockchain gruppiert.
-    Sollten die Anforderungen direkt auf die vermeidung einzelner vorgestellter Schwachstellen abzielen wird auf diese refernziert.\bigskip\\
-    \noindent \textbf{Möglich}:
-    \begin{itemize}
-        \item Gegenseitige Authentifizierung des Nutzers und des Smart Locks, speziell auch das Sicherstellen, dass die empfangenen Daten von der Richtigen Quelle kommen, um sicherzustellen, dass niemand anderes den zwischen beiden Parteien steht und Nachrichten manipulieren kann (Data Origin Authentication, Entity Authentication) \textrightarrow\ \hyperref[vuln:phishing]{Phishing}, \hyperref[vuln:replay]{Replay}, \hyperref[vuln:spoofing]{Device Spoofing}, 
-        \item Mandatory Role Based Access Control für die Systeme, Daten auf den Systemen und Funktionen innerhalb eines Systems (Authorization) \cite{Miessler2015} \textrightarrow\ \hyperref[vuln:userdata]{Extracted User Data}, \hyperref[vuln:usersettings]{Stolen User Settings}
-        \item Vollständiges und wohldefiniertes Protokoll bei der Kommunikation von Schloss und Smartphone des Nutzers \textrightarrow\ \hyperref[vuln:fuzzing]{Fuzzing}
-        \item Gegen Angriffe, die eine Diskrepanz des aktuellen Zustands Systems zwischen verschiedenen Teilnehmer und Knoten im Netzwerk ausnutzen: \textrightarrow ,,eventual consistency`` (Availability, Non-Repudiation)\cite{Ho2016}
-        \item nicht-authorisierten Zugriff verhindern bzw. nur dann öffnen/schließen, wenn der Nutzer, der den Befehl gibt, authorisiert ist(Whitelisting) \cite{Ho2016}
-        \item Access Logging \& Integrität der Logs gewährleisten \textrightarrow\ \hyperref[vuln:accesslogevasion]{Access Log Evasion}
-        \item Timestamping \textrightarrow\ \hyperref[vuln:replay]{Replay}, \hyperref[vuln:revocationevasion]{Revocation Evasion}, \hyperref[vuln:accesslogevasion]{Access Log Evasion}
-        \item Consistency, Availability, Partition Tolerance (CAP-Theorem \cite{Brewer2012}) \textrightarrow\ \hyperref[vuln:accesslogevasion]{Access Log Evasion}
-    \end{itemize}
-    \bigskip
-    \noindent \textbf{Unmöglich}:
-    \begin{itemize}
-        \item Sicherung der (relevanten) Daten, bevor diese auf dem Mobilgerät gespeichert werden\cite{Ye2017}
-        \item sicheres Kommunikationsprotokoll für jegliche Nachrichten\cite{Miessler,Ye2017}
-        \item keine Hardcoded Paasswörter\cite{Rose2016}
-        \item 2-Factor Authentication\cite{Rose2016}
-        \item Bei Verwendung eines Nonce-Wertes: echt zufälliger Nonce-Wert mit 8-16 Bytes\cite{Rose2016}
-        \item ordentlich implementierte AES-Verschlüsselung\cite{Rose2016}
-        \item gegen Relay-Attacken: Distance-boudning Protocols, die via RTT die Distanz des Nutzers zum Schloss bestimmen, leider aber noch nicht verfügbar\cite{Ho2016} \textrightarrow\ %\hyperref[vuln:relay]{Relay}
-    \end{itemize}
-    
-    
-    Aus \gls{owasp}
+    Sollten die Anforderungen direkt auf die vermeidung einzelner vorgestellter Schwachstellen abzielen wird auf diese refernziert.
+    \bigskip\\
+    \noindent \textbf{Umsetzbare Sicherheitsanforderungen}:
+    \begin{SA}[noitemsep]
+        \item \label{sa:1}Gegenseitige Authentifizierung des Nutzers und des Smart Locks, speziell auch das Sicherstellen, dass die empfangenen Daten von der Richtigen Quelle kommen, um sicherzustellen, dass niemand anderes den zwischen beiden Parteien steht und Nachrichten manipulieren kann (Data Origin Authentication, Entity Authentication)\\
+            \textrightarrow\ \hyperref[vuln:phishing]{Phishing}, \hyperref[vuln:replay]{Replay}, \hyperref[vuln:spoofing]{Device Spoofing}, 
+        \item \label{sa:2}Mandatory Role Based Access Control für die Systeme, Daten auf den Systemen und Funktionen innerhalb eines Systems (Authorization) \cite{Miessler2015}\\ 
+            \textrightarrow\ \hyperref[vuln:userdata]{Extracted User Data}, \hyperref[vuln:usersettings]{Stolen User Settings}
+        \item \label{sa:3}Vollständiges und wohldefiniertes Protokoll bei der Kommunikation von Schloss und Smartphone des Nutzers\\
+            \textrightarrow\ \hyperref[vuln:fuzzing]{Fuzzing}
+        \item \label{sa:4}Gegen Angriffe, die eine Diskrepanz des aktuellen Zustands Systems zwischen verschiedenen Teilnehmer und Knoten im Netzwerk ausnutzen\\
+            \textrightarrow ,,eventual consistency`` (Availability, Non-Repudiation)\cite{Ho2016}
+        \item \label{sa:5}nicht-authorisierten Zugriff verhindern bzw. nur dann öffnen/schließen, wenn der Nutzer, der den Befehl gibt, authorisiert ist(Whitelisting) \cite{Ho2016}
+        \item \label{sa:6}Access Logging \& Integrität der Logs gewährleisten\\
+            \textrightarrow\ \hyperref[vuln:accesslogevasion]{Access Log Evasion}
+        \item \label{sa:7}Timestamping\\
+            \textrightarrow\ \hyperref[vuln:replay]{Replay}, \hyperref[vuln:revocationevasion]{Revocation Evasion}, \hyperref[vuln:accesslogevasion]{Access Log Evasion}
+        \item \label{sa:8}Consistency, Availability, Partition Tolerance (CAP-Theorem \cite{Brewer2012})\\
+            \textrightarrow\ \hyperref[vuln:accesslogevasion]{Access Log Evasion}
+        \item sicheres Kommunikationsprotokoll für jegliche Übertragung von Nachrichten\cite{Miessler,Ye2017}
+    \end{SA}
+    \medskip
+    \noindent \textbf{Nicht umsetzbare Sicherheitsanforderungen}:
     \begin{itemize}[noitemsep]
-        \item Web Interface: keine Default-Einstellungen, Passwortrücksetzungen sichern (keine Metainformationen herausgeben, z.B. Account vorhanden/\-nicht vorhanden, keine XSS, SQLi oder CSRF, Anmeldedaten nicht im Netzwerkverkehr offenlegen, keine schwachen Passwörter zulassen, Lockout nach 3-5 Versuchen (kein Brute-Force)
-        \item Authentication/\-Authorization: starke Passwörter, granulares Access Control, Anmeldedaten sichern, 2Factor Auth(Fußnote), Passwortrücksetzung muss sicher sein, re-authentication für sensible Funktionen, Options for password controls?, Entzug der Anmeldedaten möglich, Authentifizierung für App, Gerät, Server, auf Server managen und müssen unique sein: UserID, UserDeviceID, UserAppID, Token/\-Session Key müssen immer unterschiedlich sein
+        \item Sicherung der (relevanten) Daten, bevor diese auf dem Mobilgerät gespeichert werden\cite{Ye2017}\\
+            \textrightarrow\ für den Prototypen ist keine mobile Komponente vorgesehen\todo[color=yellow]{reicht als Grund aus?}
+        \item keine statischen Passwörter speichern oder übertragen\cite{Rose2016}\todo[color=yellow]{nicht sogar zu den Möglichen packen?}
+        \item 2-Factor Authentication\cite{Rose2016,Miessler2015}\\
+            \textrightarrow\ der Prototyp arbeitet nur mit der generierten \gls{api}, der Authentifizierungsmechanismus wird vom Framework voregegeben?
+        \item Bei Verwendung eines Nonce-Wertes: echt zufälliger Nonce-Wert mit 8-16 Bytes\cite{Rose2016}\\
+            \textrightarrow\ s.o.
+        \item ordentlich implementierte AES-Verschlüsselung\cite{Rose2016}\\
+            \textrightarrow\ s.o.
+        \item gegen Relay-Attacken: Distance-bounding Protocols, die via RTT die Distanz des Nutzers zum Schloss bestimmen\cite{Ho2016}\\ 
+            \textrightarrow\ keine mobile Komponente
+        \item Web Interface: keine Default-Einstellungen, Passwortrücksetzungen sichern (keine Metainformationen herausgeben, z.B. Account vorhanden/\-nicht vorhanden, keine XSS, SQLi oder CSRF, Anmeldedaten nicht im Netzwerkverkehr offenlegen, keine schwachen Passwörter zulassen, Lockout nach 3-5 Versuchen (kein Brute-Force)\cite{Miessler2015}\\
+            \textrightarrow\ kein Webinterface für Nutzer des Prototypen
+        \item mehr \gls{ble}-Kram \todo[color=cyan]{Bluetooth-Kram}
+    \end{itemize}
+    
+    Aus \cite{Miessler2015}(\gls{owasp})
+    \begin{itemize}[noitemsep]
+        \item Authentication/\-Authorization: starke Passwörter, granulares Access Control, Anmeldedaten sichern, Passwortrücksetzung muss sicher sein, re-authentication für sensible Funktionen, Options for password controls?, Entzug der Anmeldedaten möglich, Authentifizierung für App, Gerät, Server, auf Server managen und müssen unique sein: UserID, UserDeviceID, UserAppID, Token/\-Session Key müssen immer unterschiedlich sein
         \item Network Services: nur nötige Ports exposen, keine Buffer Overflow und Fuzzing Angriffe zulassen, kein DoS (für ein Gerät und auswirkungen auf andere Geräte), unregelmäßiger Servicerequest-Verkehr sollte beim Service-Gateway erkannt und blockiert werden
         \item Transport Encyption: SSL/\-TLS verwenden, weitere standardisierte Verschlüsselungen verwenden (falls SSL/\-TLS nicht verfügbar), Message Payload Encryption, Secure Encryption Key Handshaking, received Data Integrity verification
         \item Privacy: nur dringend nötige Daten des Gerätes und der Person sammeln, möglichst keine sensiblen Daten sammeln, gesammelte Daten nicht identifizierbar machen oder anonymisieren, gesammelte Daten durch Verschlüsselung schützen, Gerät und alle Komponenten zielen darauf auf ab persönliche Informationen zu schützen, nur autorisierte Entitäten haben Zugang zu persönlichen Informationen, pers. Daten werden nur für einen bestimmten Zeitraum gespeichert, Nutzer muss mit Informationen und Wahl beliefert werden falls mehr als erwartet gesammelt wird, RBAC für die Daten, analysierte Daten nicht identifizierbar

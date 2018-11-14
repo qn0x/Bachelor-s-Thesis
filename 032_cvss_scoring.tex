@@ -1,14 +1,14 @@
 \subsection{Bewertung nach CVSS}
 \label{sec:analysis_cvss}
     Da die Arbeit sich um die Verwendung einer Blockchain-Technologie dreht, werden zunächst alle Schwachstellen gefiltert, die prinzipiell nicht durch deren Verwendung behoben werden können.
-    Dazu gehören beispielsweise die Übertragung per Bluetooth (unsichere Pairing-Mechanismen und Session Keys), \todo[color=cyan]{weiter filtern}
-    In der \fref{tab:bewertung_vulns} werden die Bewertung der übrig gebliebenen Schwachstellen aufgeführt.
-    Die Bewertung wird mittels des online bereitgestellten Rechners durchgeführt. \url{https://www.first.org/cvss/calculator/3.0}.\todo[color=cyan]{\textrightarrow Quellen}
+    Dazu gehören beispielsweise die Übertragung per Bluetooth (unsichere Pairing-Mechanismen und Session Keys), sowie physische Sicherheit und blabla\todo[color=cyan]{weitere auflisten}
+    In der \fref{tab:bewertung_vulns} werden somit nur die Schwachstellen berwertet, die potentiell verhindert werden können und später am Prototypen getestet werden.
+    Die Bewertung wird mittels des online bereitgestellten Rechners\cite{CvssCalc} durchgeführt.
 	Grundlage hierfür ist der in \fref{sec:sota_sa_cvss} vorgestellte Base Score.
-	\footnote{Ein Scope Change wird als solcher angesehen, sobald von den in \fref{fig:sl_arch} dargestellten Komponenten mindestens eine Zusätzliche betroffen ist.}
+	\footnote{Ein Scope Change wird in der Bewertung als solcher angesehen, sobald von den in \fref{fig:sl_arch} dargestellten Komponenten mindestens eine Zusätzliche betroffen ist.}
 	Darin wurden ähnliche Angriffe zusammengefasst und die \gls{cvss}-Vector Strings zur Nachverfolgung hintelegt, um die Nachverfolgung der Bewertung einzelner Faktoren zu gewährleisten.
 	
-	\todo[color=yellow]{not sure...}In die Tabelle die Strings oder einzelne Spalten mit den Faktoren etc.?
+	\todo[color=yellow]{not sure...}\noindent In die Tabelle die Strings oder einzelne Spalten mit den Faktoren etc.?\\
 	{\large\textsc{Tabelle unfertig, nur provisorisch}}
     %\begin{sidewaystable}[H]
       {\centering
