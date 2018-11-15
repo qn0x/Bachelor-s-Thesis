@@ -1,0 +1,78 @@
+\section{Source Code des Prototypen}
+    Der Source Code des Prototypen ist unter \sloppy\url{https://github.com/qn0x/smart-lock-prototype} zu finden. 
+    Zudem sind im Folgedenden die wichtigsten Bestandteile des Prototypen angehängt.
+    
+    \subsection{Modelle}
+        \begin{lstlisting}[caption={Assets},label=model_assets,captionpos=b]
+asset LockKey identified by keyId {
+    o String keyId
+    o DateTime expirationDate
+    o DateTime lastUsed
+    --> Lock lockId
+    --> User owner
+    --> User issuer
+}
+        \end{lstlisting}
+        \vspace{1em}
+        \begin{lstlisting}[caption={Participants},label=model_participants,captionpos=b]
+participant User identified by userId {
+    o String userId
+    o String firstName
+    o String lastName
+    o UserRole role
+}
+
+participant Lock identified by lockId {
+    o String lockId
+    o String name
+    o DateTime lastUnlocked
+    o LockState state
+}
+
+enum UserRole {
+  o USER
+  o ADMIN
+}
+
+enum LockState {
+  o UNLOCKED
+  o LOCKED
+}
+        \end{lstlisting}
+        \vspace{1em}
+        \begin{lstlisting}[caption={Transactions},label=model_transactopms,captionpos=b]
+transaction Unlock {
+    --> LockKey lockKey
+    --> Lock lock
+}
+
+transaction GrantUnlock {
+    --> LockKey lockKey
+    --> Lock lock
+    --> User issuer
+    --> User grantee
+}
+
+transaction RevokeUnlock {
+    --> LockKey lockKey
+    --> Lock lock
+    --> User issuer
+    --> User revokee
+}
+
+transaction GrantAdmin {
+    --> User issuer
+    --> User grantee
+}
+
+transaction RevokeAdmin {
+    --> User issuer
+    --> User revokee
+}
+        \end{lstlisting}
+    
+    \subsection{Access Control}
+    \subsection{Transaktionslogik}
+\newpage
+\section{Verwendung des Prototypen}
+    For Dummies. 
