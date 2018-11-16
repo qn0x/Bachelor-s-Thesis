@@ -83,7 +83,7 @@ participant Lock identified by lockId {
             \begin{itemize}[noitemsep]
                 \item Ein Asset-Typ eines Schlüssels, welcher je Nutzer und Schloss ausgestellt wird
                 \item Um \gls{dos} zu vermeiden, etwas ähnliches wie Mutex-Token? z.B. wenn Tür offen ist, dann hat sie genau diesen einen Token
-                \item Transaktionen bekommen aus dem Systemnamespace schon einen Timestamp udn eine ID
+                \item 
             \end{itemize}
             
             Asset Types:
@@ -141,18 +141,27 @@ transaction RevokeAdmin {
             \end{lstlisting}
             
             \begin{itemize}[noitemsep]
+                \item Transaktionen bekommen aus dem Systemnamespace schon einen Timestamp und eine ID
                 \item OpenDoor
                 \item User (AddUser, DeleteUser, ChangeUserRole)
                 \item TimeSlot (AddTimeSlot, DeleteTimeSlot, ChangeGuestTimeSlot)
             \end{itemize}
     
-    \paragraph{Transaction Functions}
+    \paragraph{\textrm{Transaction Functions}}
     
-    \paragraph{Access Control Rules}
-        \begin{itemize}
-            \item Whitelisting
+    \paragraph{\textrm{Access Control Rules}}\hspace{0cm}\\
+        Die Vorgehensweise bei der Definition der \gls{acl}s ist sogenanntes ,,Whitelisting``. 
+        Es werden also grundsätzlich alle Operationen auf alle Ressourcen verboten und nur einzelne bestimmte Aktionen von bestimmten Teilnehmern, teilweise nur unter bestimmten Bedinungen erlaubt. 
+        Da in Hyperledger Composer die einzelnen Regeln geordnet nacheinander evaluiert werden, müssen zunächst alle erlaubten Aktionen definiert und zum Schluss alle verweigert werden. 
+        Eine ausführliche auflistung aller Regeln befindet sich im Anhang\todo[color=orange]{Referenz einfügen}. 
+        Beispielsweise:
+        \missingfigure{Komplettes Regelwerk für eine Ressource als Beispiel}
+        
+        Zusammenfassung der implementierten regeln auflisten.
+        \begin{itemize}[noitemsep]
+            \item 
         \end{itemize}
-    
+        
     \paragraph{Query Definitions}
     
 

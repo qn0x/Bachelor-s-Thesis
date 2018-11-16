@@ -10,9 +10,18 @@
         \noindent Für den Prototypen relevante Eigenschaften des Hyperledger Composer Frameworks:
         \begin{itemize}[noitemsep]
             \item Ein Blockchain-Netzwerk wird im Kontext des Frameworks als ,,Business Network`` bezeichnet. 
-            \item Ein Business Network besteht aus Assets, Participants, Transactions, Access Control Rules, Events (optional) und Queries (optional).
+            \item Ein Business Network besteht aus Assets, Participants, Transactions, \gls{acl}, Events (optional) und Queries (optional).
+                \begin{itemize}[noitemsep]
+                    \item Assets: Güter, die auf der Blockchain gespeichert sind.
+                    \item Participants: Teilnehmer des Netzwerkes.
+                    \item Transactions: Funktionen, die ausgeführt werden können, können Smart Contracts (Transaction Processor Functions) auslösen, welche beliebige Aktionen ausfüren können. 
+                    \item Access Control Rules: legen fest, welche Teilnehmer welche Aktionen im Netzwerk ausüben dürfen. 
+                        Zu vergebende Berechtigungen (CRUD
+                        \!\footnote{Create, Read, Update, Delete}
+                        ) beschränken sich auf Assets und Transactions und werden sequentiell in geordneter Reihenfolge ausgewertet. 
+                \end{itemize}
             \item Metadaten wie Dependencies und Versionsnummern werden in einer separaten Datei (\colorbox{light-gray}{\lstinline|package.json|}) abgelegt.
-            \item bei der Ausführung einer Transaktion kann gleichzeitig optional ein Smart Contract ausgeführ werden
+            \item bei der Ausführung einer Transaktion kann gleichzeitig optional ein Smart Contract ausgeführt werden
         \end{itemize}
         
         \begin{figure}[H]
