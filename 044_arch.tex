@@ -1,46 +1,145 @@
-\subsection{Architektur und Funktionsweise}
+\newpage
+\subsection{Architektur, Funktionsweise und Implementierung}
 \label{sec:prototype_arch} 
-    Da momentan weder eine Standardisierung noch Best Practices von Blockchainarchitekturen existieren, wurde die Architektur des Prototypen anhand der Dokumentation des Frameworks\cite{ComposerDocs}  ausgearbeitet.
-    \medskip\\
-    Notizen für den Prototypen:
-    \begin{itemize}[noitemsep]
-        \item Ein Asset als Token für (,,du darfst die Tür aufmachen``) je berechtigtem Nutzer \textrightarrow\ zurückverfolgbar (Accountability)
-        \item Framework bietet in irgendeiner Form Access Control an?
-        \item How to ensure a consistent state across all entities?...
-        \item keine Anonymisierung, da der Access Log auditable sein muss
-        \item Hyperledger bietet CA für Identitäten, Authentifizierung \textrightarrow\ wie ist das bei Composer?
-        \item \begin{itemize}
-            \item erlaubt Sicherheitseinstellungen beim Erstellen des REST-API-Servers
-            \item API Key
-            \item Authentication mit Passport
-            \item explorer Test interface ?
-            \item dynamic logging
-            \item event publication over websockets
-            \item TLS enable/\-disable
-        \end{itemize}
-    \end{itemize}
+    Da momentan weder eine Standardisierung noch Best Practices von Blockchainarchitekturen existieren, wurde die Architektur des Prototypen anhand der Dokumentation des Frameworks\cite{ComposerDocs}, sowie den darin enthaltenen Beispielen ausgearbeitet. 
+    Sollte eine Beschreibung direkt auf einen der beiden Anfoderungskataloge, die in \fref{sec:prototype_func_req} und in \fref{sec:prototype_sec} gesammelt wurden beziehen, so wird diese mit der entsprechenden Referenz verdeutlicht.
     
     \subsubsection{Konzept}
-        \paragraph{\textrm{Model File}}\hspace{0cm}\smallskip\\
-            Asset Types:
+        Das Blockchain-Netzwerk für den Prototyp umfasst exakt einen Herstellerserver, ein oder mehrere Schlösser, sowie ein oder mehrere Nutzer. 
+        Sollten Alice und Bob je ein Schloss vom gleichen Hersteller für sich selbst haben, so entstehen zwei unterschiedliche Blockchain-Netzwerke, die jeweils voneinander isoliert sind. 
+        
+        \missingfigure{Bild des Prototypennetzwerks}
+        
+        \noindent Im Netzwerk gibt es drei verschiedene Teilnehmertypen, wobei für ein minimales Netzwerk mindestens Teilnehmer jedes Typs vertreten sein muss:
+        \begin{enumerate}[noitemsep]
+            \item \textbf{Hersteller/Vendor}: Zur Initialisierung, Zurücksetzung, Updates, \dots
+            \item \textbf{Schloss/Lock}: das physische Schloss, welches bei einem Nutzer installiert wird
+            \item \textbf{Nutzer/User}: öffnet/schließt ein oder mehrere Schlösser, verwaltet u.U. andere Nutzer
+        \end{enumerate}
+        Je nach Typ können durch Einschränkungen mittels der \gls{acl} nur bestimmte Operationen getätigt werden. \\
+        Die Zugriffskontrolle für den Teilnehmertyp ,,Nutzer`` erfolgt auf einer feingranulareren Ebene. 
+        Sie ist rollenbasiert und ist zu einem großen Teil an \fref{tab:rbac} angelehnt. 
+        Anders ist jedoch, dass durch die Verwendung einer Blockchain alle Teilnehmer des Netzwerkes alle Informationen, die in dieser gespeichert wurden einsehen, aber nicht verändern können. 
+        Wie in \fref{tab:prototype_rbac} verdeutlicht, gibt es die Rollen ,,Besitzer`` und ,,Gast`` mit unterschiedlichen Berechtigungen (\ref{fa:3}, \ref{fa:4}). 
+        \begin{table}[H]
+		    {\footnotesize
+		    \centering
+            \begin{tabular}{|m{0.14\textwidth}|m{0.14\textwidth}|m{0.14\textwidth}|m{0.14\textwidth}|m{0.14\textwidth}|m{0.14\textwidth}|}
+                \hline
+                \textbf{Rolle/Recht} &\textbf{Unlock}  & \textbf{Log einsehen}  & \textbf{Nutzer verwalten}  & \textbf{Rollen\-verwal\-tung} & \textbf{Schloss zurück\-setzen}  \\ \hline
+                \textbf{Owner}       & \checkmark      & \checkmark             & \checkmark                 & \checkmark                    & \checkmark                       \\ \hline
+                \textbf{Guest}       & \checkmark      & \checkmark             & ~                          & ~                             & ~                                \\ \hline
+            \end{tabular}
+            }
+            \caption[Rollenbasierte Zugangskontrolle des Prototypen]{Rollenbasierte Zugangskontrolle des Prototypen. Ist ein Haken gesetzt, so wird der Rolle in der Spalte links das Recht aus der entsprechnenden Spalte gewährt.}
+            \label{tab:prototype_rbac}
+        \end{table}
+        \noindent Die Rolle des Owners wird als Asset modelliert. 
+        Ein Nutzer, der ein OwnerAsset besitzt, hat gleichzeitig die Rolle ,,Owner`` inne.
+        \noindent Bei Initialisierung des Netzwerkes wird dem Framework gemäß eine Admin-Card erstellt, welche zunächst lediglich dazu dient dem Besitzer auch dessen Rolle zuzuweisen.
+        Im Normalfall wird die Admin-Card gar nicht weiter verwendet. \todo[color=cyan]{weiter ausfüren}
+        \medskip\\
+        \noindent Schlüssel werden als Asset repräsentiert und von Nutzern verwendet, um ein Schloss zu öffnen(\ref{fa:2}). 
+        Optional können die Schlüssel mit einem Ablaufzeitpunkt zeitlich eingeschränkt sein(\ref{fa:5}). 
+        Es wird ein Schlüssel je Nutzer und Schloss ausgestellt. 
+        Somit gäbe es beispielsweise bei zwei Schlössern \colorbox{light-gray}{\lstinline{L1,L2}} und einem Nutzer \colorbox{light-gray}{\lstinline{U1}} im Netzwerk zwei Schlüssel: \colorbox{light-gray}{\lstinline{U1arwL1,U1arwL2}}. \\
+        Beim Öffnen des Schlosses wird das Schlüsselasset mittels einer Funktion ,,Schloss öffnen`` an Schloss gesendet.
+        Wird das Schloss wieder verriegelt, so sendet das Schloss das Asset wieder an den Nutzer zurück, der es geöffnet hat. \\
+        Hiermit kann einerseits sichergestellt werden, dass das Schloss geschlossen ist, wenn dieses keine Schlüsselassets besitzt, andererseits wird jegliche Nutzung des Schlosses auf der Blockchain dokumentiert. 
+        \medskip\\
+        \noindent Folgende Informationen werden nach disem Konzept also in der Blockchain gespeichert:
+        \begin{itemize}[noitemsep]
+            \item Wann von wem welches Schloss geöffnet wurde
+            \item Welche Person welche Rolle inne hat und vom diese gewährt wurde
+        \end{itemize}
+        
+    \subsubsection{Implementierungs- und Konfigurationsdetails}
+        \paragraph{\textrm{Models}}\hspace{0cm}\smallskip\\
+            Participant Types:
+            \begin{lstlisting}[caption={Participant Types},label=prototype_pariticipants,captionpos=b]
+participant User identified by userId {
+    o String userId
+    o String firstName
+    o String lastName
+	o UserRole role
+}
+
+participant Vendor identified by vendorServerId {
+	o String vendorServerId
+	o DateTime lastUpdate
+	o Version version
+}
+
+participant Lock identified by lockId {
+    o String lockId
+    o String name
+    o DateTime[] unlockLog
+	o LockState state
+	o Version Version
+	--> Vendor vendorId
+}
+        \end{lstlisting}
+            
             \begin{itemize}[noitemsep]
-                \item Ein Asset repräsentiert einen Schlüssel, um das Schloss zu öffnen (kann zeitlich beschränkt sein). 
-                    Beim Öffnen des Schlosses wird das Asset mittels der Funktion ,,Schloss öffnen`` an Schloss gesendet.
-                    Wird das Schloss wieder verriegelt, so sendet das Schloss den Token wieder an Nutzer zurück.
-                    Somit kann sichergestellt werden, dass das Schloss geschlossen ist, wenn dieses 0 Token besitzt.
-                \item Token, der die Rolle repräsentiert?
+                \item Ein Asset-Typ eines Schlüssels, welcher je Nutzer und Schloss ausgestellt wird
                 \item Um \gls{dos} zu vermeiden, etwas ähnliches wie Mutex-Token? z.B. wenn Tür offen ist, dann hat sie genau diesen einen Token
-                \item Assets können auch zu anderen Assets oder Teilnehmern eine Beziehung haben\cite{ComposerDocs}
+                \item Transaktionen bekommen aus dem Systemnamespace schon einen Timestamp udn eine ID
             \end{itemize}
             
-            Participant Types:
-            \begin{itemize}[noitemsep]
-                \item Manufacturer
-                \item Owner
-                \item Guest
-            \end{itemize}
+            Asset Types:
+            \begin{lstlisting}[caption={Asset Types},label=prototype_assets,captionpos=b]
+asset LockKey identified by keyId {
+    o String keyId
+    o DateTime expirationDate
+    o DateTime[] useLog
+    --> Lock lockId
+    --> User owner
+    --> User issuer
+}
+
+asset AdminToken identified by adminId {
+	o String adminId
+	o DateTime granted
+	o DateTime revoked
+	o AdminTokenState state
+	--> User issuer
+    --> User grantee
+}
+            \end{lstlisting}
         
-            Transaction Types (entpricht den Funktionen, die man je nach Rolle ausführen darf):
+            Transaction Types:
+            \begin{lstlisting}[caption={Relevante Transaktionen},label=prototype_transactions,captionpos=b]
+transaction Unlock {
+    --> LockKey lockKey
+    --> Lock lock
+}
+
+transaction GrantUnlock {
+    --> LockKey lockKey //Key asset
+    --> Lock lock //Lock on which the key can be used
+	o DateTime expirationDate optional
+    --> User issuer
+    --> User grantee
+}
+
+transaction RevokeUnlock {
+    --> LockKey lockKey //Key asset
+    --> Lock lock //Lock on which the key can be used
+    --> User issuer
+    --> User revokee
+}
+
+transaction GrantAdmin {
+    --> User issuer
+    --> User grantee
+}
+
+transaction RevokeAdmin {
+    --> User issuer
+    --> User revokee
+}
+            \end{lstlisting}
+            
             \begin{itemize}[noitemsep]
                 \item OpenDoor
                 \item User (AddUser, DeleteUser, ChangeUserRole)
@@ -56,7 +155,20 @@
     
     \paragraph{Query Definitions}
     
-    Rollenbasiertes Zugriffskonzept
+
+    Notizen für den Prototypen:
     \begin{itemize}[noitemsep]
-        \item 
+        \item How to ensure a consistent state across all entities?...
+        \item keine Anonymisierung, da der Access Log auditable sein muss
+        \item Hyperledger bietet CA für Identitäten, Authentifizierung \textrightarrow\ wie ist das bei Composer?
+        \item \begin{itemize}
+            \item erlaubt Sicherheitseinstellungen beim Erstellen des REST-API-Servers
+            \item API Key
+            \item Authentication mit Passport
+            \item explorer Test interface ?
+            \item dynamic logging
+            \item event publication over websockets
+            \item TLS enable/\-disable
+        \end{itemize}
     \end{itemize}
+    
