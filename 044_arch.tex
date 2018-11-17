@@ -43,6 +43,7 @@
         Optional können die Schlüssel mit einem Ablaufzeitpunkt zeitlich eingeschränkt sein(\ref{fa:5}). 
         Es wird ein Schlüssel je Nutzer und Schloss ausgestellt. 
         Somit gäbe es beispielsweise bei zwei Schlössern \colorbox{light-gray}{\lstinline{L1,L2}} und einem Nutzer \colorbox{light-gray}{\lstinline{U1}} im Netzwerk zwei Schlüssel: \colorbox{light-gray}{\lstinline{U1arwL1,U1arwL2}}. \\
+        Schlüssel sind nach Erstellung nicht modifizierbar und werden, falls ein Ablaufzeitpunkt angegeben wurde gelöscht. \\
         Beim Öffnen des Schlosses wird das Schlüsselasset mittels einer Funktion ,,Schloss öffnen`` an Schloss gesendet.
         Wird das Schloss wieder verriegelt, so sendet das Schloss das Asset wieder an den Nutzer zurück, der es geöffnet hat. \\
         Hiermit kann einerseits sichergestellt werden, dass das Schloss geschlossen ist, wenn dieses keine Schlüsselassets besitzt, andererseits wird jegliche Nutzung des Schlosses auf der Blockchain dokumentiert. 
