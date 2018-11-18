@@ -1,25 +1,35 @@
-\newpage
 \subsection{Architektur, Funktionsweise und Implementierung}
 \label{sec:prototype_arch} 
     Da momentan weder eine Standardisierung noch Best Practices von Blockchainarchitekturen existieren, wurde die Architektur des Prototypen anhand der Dokumentation des Frameworks\cite{ComposerDocs}, sowie den darin enthaltenen Beispielen ausgearbeitet. 
     Sollte eine Beschreibung direkt auf einen der beiden Anfoderungskataloge, die in \fref{sec:prototype_func_req} und in \fref{sec:prototype_sec} gesammelt wurden beziehen, so wird diese mit der entsprechenden Referenz verdeutlicht.
     
     \subsubsection{Konzept}
-        Das Blockchain-Netzwerk für den Prototyp umfasst exakt einen Herstellerserver, ein oder mehrere Schlösser, sowie ein oder mehrere Nutzer. 
-        Sollten Alice und Bob je ein Schloss vom gleichen Hersteller für sich selbst haben, so entstehen zwei unterschiedliche Blockchain-Netzwerke, die jeweils voneinander isoliert sind. 
-        
-        \missingfigure{Bild des Prototypennetzwerks}
-        
-        \noindent Im Netzwerk gibt es drei verschiedene Teilnehmertypen, wobei für ein minimales Netzwerk mindestens Teilnehmer jedes Typs vertreten sein muss:
+        Das Blockchain-Netzwerk für den Prototypen umfasst ein oder mehrere Herstellerserver, ein oder mehrere Schlösser, sowie ein oder mehrere Nutzer und basiert auf einer private/permissioined Blockchain. 
+        Sollten Alice und Bob je ein Schloss vom gleichen Hersteller haben, aber nicht im gleichen ,,Haus`` wohnen, so entstehen zwei unterschiedliche Blockchain-Netzwerke, die jeweils voneinander isoliert sind.
+        \smallskip\\
+        \noindent Im Modell des Prototypen gibt es demnach drei verschiedene Teilnehmertypen, wobei für ein minimales funktionales Netzwerk mindestens Teilnehmer jedes Typs vertreten sein muss. 
+        In dem Netzwerk kann jeder Teilnehmer mit allen anderen Teilnehmern kommunizieren.
         \begin{enumerate}[noitemsep]
             \item \textbf{Hersteller/Vendor}: Zur Initialisierung, Zurücksetzung, Updates, \dots
             \item \textbf{Schloss/Lock}: das physische Schloss, welches bei einem Nutzer installiert wird
             \item \textbf{Nutzer/User}: öffnet/schließt ein oder mehrere Schlösser, verwaltet u.U. andere Nutzer
         \end{enumerate}
-        Je nach Typ können durch Einschränkungen mittels der \gls{acl} nur bestimmte Operationen getätigt werden. \\
-        Die Zugriffskontrolle für den Teilnehmertyp ,,Nutzer`` erfolgt auf einer feingranulareren Ebene. 
-        Sie ist rollenbasiert und ist zu einem großen Teil an \fref{tab:rbac} angelehnt. 
-        Anders ist jedoch, dass durch die Verwendung einer Blockchain alle Teilnehmer des Netzwerkes alle Informationen, die in dieser gespeichert wurden einsehen, aber nicht verändern können. 
+        
+        \noindent In \fref{fig:pt_network} ist ein Beispiel mit zwei verschiedenen Herstellern \colorbox{light-gray}{\lstinline{V1,V2}}, drei Schlössern \colorbox{light-gray}{\lstinline{L1,L2,L3}} und drei Nutzern \colorbox{light-gray}{\lstinline{U1,U2}}. 
+        Insgesamt wurden vier Schlüssel \colorbox{light-gray}{\lstinline{K1-K4}} ausgestellt.
+        \colorbox{light-gray}{\lstinline{L1}} und \colorbox{light-gray}{\lstinline{L2}} sind von Hersteller \colorbox{light-gray}{\lstinline{V1}}, \colorbox{light-gray}{\lstinline{L3}} stammt von Hersteller \colorbox{light-gray}{\lstinline{H2}}. 
+        \colorbox{light-gray}{\lstinline{U1}} hat mit den beiden Schlüsseln \colorbox{light-gray}{\lstinline{K1,K2}} die Möglichkeit \colorbox{light-gray}{\lstinline{L1}} und \colorbox{light-gray}{\lstinline{?3}} zu öffnen. 
+        Der Nutzer \colorbox{light-gray}{\lstinline{U2}} kann mit \colorbox{light-gray}{\lstinline{K3}} und \colorbox{light-gray}{\lstinline{K4}} die Schlösser \colorbox{light-gray}{\lstinline{L2}} und \colorbox{light-gray}{\lstinline{L3}} öffnen.
+        \begin{figure}[H]
+    		\centering
+    		\includegraphics[width=\textwidth]{graphics/pt_network.png}
+    		\caption[Beispiel eines von Beziehungen im Prototypen-Netzwerk]{Beispiel von Beziehungen eines Netzwerks, welches aus der Definition des Prototypen entstehen könnte}
+    		\label{fig:pt_network}
+    	\end{figure}
+        \noindent Je nach Teilnehmertyp werden erlaubte Operationen innehalb des Netzwerkes mittels der \gls{acl} eingeschränkt. 
+        Die Zugriffskontrolle für den Teilnehmertyp ,,Nutzer`` erfolgt zusätzlich auf einer feingranulareren Ebene über ein dafür angelegtes Attribut \colorbox{light-gray}{\lstinline{UserRole}} mit dem in \fref{tab:prototype_rbac} dargestellten Berechtigungskonzept. 
+        Es ist rollenbasiert und ist zu einem großen Teil an \fref{tab:rbac} angelehnt. 
+        Anders ist jedoch, dass angelehnt an öffentliche Netzwerke, alle Nutzer des Netzwerkes alle Informationen, die in dieser gespeichert wurden einsehen, aber nicht verändern können. 
         Wie in \fref{tab:prototype_rbac} verdeutlicht, gibt es die Rollen ,,Besitzer`` und ,,Gast`` mit unterschiedlichen Berechtigungen (\ref{fa:3}, \ref{fa:4}). 
         \begin{table}[H]
 		    {\footnotesize
