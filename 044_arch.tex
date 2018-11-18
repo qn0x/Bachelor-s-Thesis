@@ -18,7 +18,7 @@
         \noindent In \fref{fig:pt_network} ist ein Beispiel mit zwei verschiedenen Herstellern \colorbox{light-gray}{\lstinline{V1,V2}}, drei Schlössern \colorbox{light-gray}{\lstinline{L1,L2,L3}} und drei Nutzern \colorbox{light-gray}{\lstinline{U1,U2}}. 
         Insgesamt wurden vier Schlüssel \colorbox{light-gray}{\lstinline{K1-K4}} ausgestellt.
         \colorbox{light-gray}{\lstinline{L1}} und \colorbox{light-gray}{\lstinline{L2}} sind von Hersteller \colorbox{light-gray}{\lstinline{V1}}, \colorbox{light-gray}{\lstinline{L3}} stammt von Hersteller \colorbox{light-gray}{\lstinline{H2}}. 
-        \colorbox{light-gray}{\lstinline{U1}} hat mit den beiden Schlüsseln \colorbox{light-gray}{\lstinline{K1,K2}} die Möglichkeit \colorbox{light-gray}{\lstinline{L1}} und \colorbox{light-gray}{\lstinline{?3}} zu öffnen. 
+        \colorbox{light-gray}{\lstinline{U1}} hat mit den beiden Schlüsseln \colorbox{light-gray}{\lstinline{K1,K2}} die Möglichkeit \colorbox{light-gray}{\lstinline{L1}} und \colorbox{light-gray}{\lstinline{L3}} zu öffnen. 
         Der Nutzer \colorbox{light-gray}{\lstinline{U2}} kann mit \colorbox{light-gray}{\lstinline{K3}} und \colorbox{light-gray}{\lstinline{K4}} die Schlösser \colorbox{light-gray}{\lstinline{L2}} und \colorbox{light-gray}{\lstinline{L3}} öffnen.
         \begin{figure}[H]
     		\centering
@@ -28,7 +28,7 @@
     	\end{figure}
         \noindent Je nach Teilnehmertyp werden erlaubte Operationen innehalb des Netzwerkes mittels der \gls{acl} eingeschränkt. 
         Die Zugriffskontrolle für den Teilnehmertyp ,,Nutzer`` erfolgt zusätzlich auf einer feingranulareren Ebene über ein dafür angelegtes Attribut \colorbox{light-gray}{\lstinline{UserRole}} mit dem in \fref{tab:prototype_rbac} dargestellten Berechtigungskonzept. 
-        Es ist rollenbasiert und ist zu einem großen Teil an \fref{tab:rbac} angelehnt. 
+        Es ist rollenbasiert und ist wurde analog zu \fref{tab:rbac} entworfen. 
         Anders ist jedoch, dass angelehnt an öffentliche Netzwerke, alle Nutzer des Netzwerkes alle Informationen, die in dieser gespeichert wurden einsehen, aber nicht verändern können. 
         Wie in \fref{tab:prototype_rbac} verdeutlicht, gibt es die Rollen ,,Besitzer`` und ,,Gast`` mit unterschiedlichen Berechtigungen (\ref{fa:3}, \ref{fa:4}). 
         \begin{table}[H]
@@ -44,111 +44,124 @@
             \caption[Rollenbasierte Zugangskontrolle des Prototypen]{Rollenbasierte Zugangskontrolle des Prototypen. Ist ein Haken gesetzt, so wird der Rolle in der Spalte links das Recht aus der entsprechnenden Spalte gewährt.}
             \label{tab:prototype_rbac}
         \end{table}
-        \noindent Die Rolle des Owners wird als Asset modelliert. 
-        Ein Nutzer, der ein OwnerAsset besitzt, hat gleichzeitig die Rolle ,,Owner`` inne.
-        \noindent Bei Initialisierung des Netzwerkes wird dem Framework gemäß eine Admin-Card erstellt, welche zunächst lediglich dazu dient dem Besitzer auch dessen Rolle zuzuweisen.
-        Im Normalfall wird die Admin-Card gar nicht weiter verwendet. \todo[color=cyan]{weiter ausfüren}
-        \medskip\\
         \noindent Schlüssel werden als Asset repräsentiert und von Nutzern verwendet, um ein Schloss zu öffnen(\ref{fa:2}). 
         Optional können die Schlüssel mit einem Ablaufzeitpunkt zeitlich eingeschränkt sein(\ref{fa:5}). 
         Es wird ein Schlüssel je Nutzer und Schloss ausgestellt. 
         Somit gäbe es beispielsweise bei zwei Schlössern \colorbox{light-gray}{\lstinline{L1,L2}} und einem Nutzer \colorbox{light-gray}{\lstinline{U1}} im Netzwerk zwei Schlüssel: \colorbox{light-gray}{\lstinline{U1arwL1,U1arwL2}}. \\
-        Schlüssel sind nach Erstellung nicht modifizierbar und werden, falls ein Ablaufzeitpunkt angegeben wurde gelöscht. \\
-        Beim Öffnen des Schlosses wird das Schlüsselasset mittels einer Funktion ,,Schloss öffnen`` an Schloss gesendet.
-        Wird das Schloss wieder verriegelt, so sendet das Schloss das Asset wieder an den Nutzer zurück, der es geöffnet hat. \\
-        Hiermit kann einerseits sichergestellt werden, dass das Schloss geschlossen ist, wenn dieses keine Schlüsselassets besitzt, andererseits wird jegliche Nutzung des Schlosses auf der Blockchain dokumentiert. 
+        Schlüssel sind nach Erstellung nicht modifizierbar und werden, falls ein Ablaufzeitpunkt angegeben wurde gelöscht. 
+        Beim Öffnen des Schlosses geprüft, ob der öffende Nutzer das entsprechende Schlüsselasset besitzt und im Schloss eine Referenz auf den Schloss gespeichert. 
+        Wird das Schloss wieder verriegelt, so wird die Referenz wieder gelöscht. 
+        Hiermit kann einerseits sichergestellt werden, dass das Schloss geschlossen ist, wenn dieses keine Referenzen auf Schlüsselassets besitzt, andererseits wird jegliche Nutzung des Schlosses auf der Blockchain dokumentiert. 
         \medskip\\
-        \noindent Folgende Informationen werden nach disem Konzept also in der Blockchain gespeichert:
+        \noindent Mittels der in \fref{sec:prototype_composer} vorgestellten Mechanik des Historians werden nach diesem Konzept folgende Informationen also in der Blockchain gespeichert:
         \begin{itemize}[noitemsep]
-            \item Wann von wem welches Schloss geöffnet wurde
-            \item Welche Person welche Rolle inne hat und vom diese gewährt wurde
+            \item Erstellen, Modifizieren und Löschen von Ressourcen (Vendor, Lock, User, Key)
+            \item Wann von wem welches Schloss geöffnet wurde und welchen Zustand dieses hat
+            \item Welche Person welche Rolle inne hat und von wem diese gewährt wurde
+            \item Jegliche erfolgreich abgeschlossenen Transaktionen
         \end{itemize}
         
     \subsubsection{Implementierungs- und Konfigurationsdetails}
-        \paragraph{\textrm{Models}}\hspace{0cm}\smallskip\\
-            Participant Types:
-            \begin{lstlisting}[caption={Participant Types},label=prototype_pariticipants,captionpos=b]
+        Die drei Teilnehmertypen werden jeweils als \colorbox{light-gray}{\lstinline{participant}}-Ressourcen modelliert und können somit von Entitäten, die an dem Netzwerk teilnehmen wollen (beispielsweise eine Person mit Smartphone-App, ein Smart Lock-Gerät oder ein Server des Herstellers), dafür genutzt werden. 
+        \medskip\\
+        Im Framework werden alle Ressourcen auch über eine \colorbox{light-gray}{\lstinline{ID}} identifiziert, welche bei der Erstellung dieser selbst gewählt werden muss. 
+        Generierte \colorbox{light-gray}{\lstinline{IDs}} sind insofern sicherheitsrelevant, dass sie, durch beispielsweise automatisch hochzählende Werte, anfällig für eine Enumerationschwachstelle sind. 
+        Für diesen Prototypen werden jegliche \colorbox{light-gray}{\lstinline{IDs}} mittels der Crypto-\gls{api}, welche von der JavaSript-Laufzeitumgebung bereitgestellt wird, erstellt.
+        \medskip
+        \begin{lstlisting}[caption={Repräsantation eines Nutzers},label=prototype_user,captionpos=b]
 participant User identified by userId {
     o String userId
     o String firstName
     o String lastName
-	o UserRole role
+    o String email
+    o UserRole role
+    --> LockKey[] keys optional
 }
-
-participant Vendor identified by vendorServerId {
-	o String vendorServerId
-	o DateTime lastUpdate
-	o Version version
+        \end{lstlisting}
+        
+        \noindent Weitere Attribute einer Repräsentation eines Nutzers in Listing \ref{prototype_user} sind Vor- und Nachname, E-Mailadresse und, falls vorhanden, ein Array mit Referenzen auf Schlüssel, die der Nutzer besitzt. 
+        Die Rolle des Nutzers kann dem Berechtigungskonzept nach lediglich die Werte \colorbox{light-gray}{\lstinline{GUEST}} und \colorbox{light-gray}{\lstinline{OWNER}} annehmen. 
+        \medskip
+        \begin{lstlisting}[caption={Repräsantation eines Herstellers},label=prototype_vendor,captionpos=b]
+participant Vendor identified by vendorId {
+    o String vendorId
+    --> Lock[] locks
 }
-
+        \end{lstlisting}
+        Ein Hersteller (vgl. Listing \ref{prototype_vendor}) hat im Prototypen zusätzlich zur zugewiesenen \colorbox{light-gray}{\lstinline{ID}} eine Liste registierter Schlösser.
+        \medskip
+        \begin{lstlisting}[caption={Repräsantation eines Schlosses},label=prototype_lock,captionpos=b]
 participant Lock identified by lockId {
     o String lockId
     o String name
-    o DateTime[] unlockLog
-	o LockState state
-	o Version Version
-	--> Vendor vendorId
+    o LockState state
+    --> LockKey[] keyInUse
+    --> Vendor vendor
 }
         \end{lstlisting}
-            
-            \begin{itemize}[noitemsep]
-                \item Ein Asset-Typ eines Schlüssels, welcher je Nutzer und Schloss ausgestellt wird
-                \item Um \gls{dos} zu vermeiden, etwas ähnliches wie Mutex-Token? z.B. wenn Tür offen ist, dann hat sie genau diesen einen Token
-                \item 
-            \end{itemize}
+        Um die Benutzerfreundlichkeit zu gewährleisten hat jedes Schloss einen beliebig wählbaren Namen zusätzlich zur \colorbox{light-gray}{\lstinline{ID}}, dessen Zustand (\colorbox{light-gray}{\lstinline{UNLOCKED}},\colorbox{light-gray}{\lstinline{LOCKED}}) und der Referenz auf den Hersteller. 
+        Ein Array, welches, sofern das Schloss geöffnet ist, eine Referenz auf den zum Öffnen verwendeten Schlüssel enthält, wird stets so validiert, dass es lediglich 0 oder 1 Elemente enthält.
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
             Asset Types:
             \begin{lstlisting}[caption={Asset Types},label=prototype_assets,captionpos=b]
 asset LockKey identified by keyId {
     o String keyId
-    o DateTime expirationDate
-    o DateTime[] useLog
-    --> Lock lockId
+    o DateTime expirationDate optional
+    --> Lock lock
     --> User owner
     --> User issuer
-}
-
-asset AdminToken identified by adminId {
-	o String adminId
-	o DateTime granted
-	o DateTime revoked
-	o AdminTokenState state
-	--> User issuer
-    --> User grantee
 }
             \end{lstlisting}
         
             Transaction Types:
             \begin{lstlisting}[caption={Relevante Transaktionen},label=prototype_transactions,captionpos=b]
+transaction ResetLock {
+    --> Lock lock
+}
+
+transaction RemoveLock {
+    --> Lock lock
+}
+
+transaction RegisterLock {
+    --> Lock lock
+}
+
+transaction InitializeNetwork {
+    o String firstName
+    o String lastName
+}
+
 transaction Unlock {
-    --> LockKey lockKey
+    --> Lock lock
+}
+
+transaction CloseLock {
     --> Lock lock
 }
 
 transaction GrantUnlock {
-    --> LockKey lockKey //Key asset
-    --> Lock lock //Lock on which the key can be used
-	o DateTime expirationDate optional
-    --> User issuer
+    --> Lock lock
+    o DateTime expirationDate optional
     --> User grantee
 }
 
 transaction RevokeUnlock {
-    --> LockKey lockKey //Key asset
-    --> Lock lock //Lock on which the key can be used
-    --> User issuer
+    --> Lock lock
     --> User revokee
 }
 
-transaction GrantAdmin {
-    --> User issuer
+transaction GrantOwner {
     --> User grantee
 }
 
-transaction RevokeAdmin {
-    --> User issuer
+transaction RevokeOwner {
     --> User revokee
 }
+
+
             \end{lstlisting}
             
             \begin{itemize}[noitemsep]
@@ -167,11 +180,48 @@ transaction RevokeAdmin {
         Eine ausführliche auflistung aller Regeln befindet sich im Anhang\todo[color=orange]{Referenz einfügen}. 
         Beispielsweise:
         \missingfigure{Komplettes Regelwerk für eine Ressource als Beispiel}
-        
-        Zusammenfassung der implementierten regeln auflisten.
-        \begin{itemize}[noitemsep]
-            \item 
-        \end{itemize}
+        \begin{lstlisting}[caption={Relevante Transaktionen},label=prototype_acl,captionpos=b]
+// Asset: LockKey
+rule OwnerCanIssueLockKey {
+    description: "owners can issue lock keys to users"
+    participant(u): "de.hftl.user.User"
+    operation: CREATE
+    resource(k): "de.hftl.lock.LockKey"
+    transaction(tx): "de.hftl.permissions.GrantUnlock"
+    condition: (
+        u.role == "OWNER"
+    )
+    action: ALLOW
+}
+
+rule OwnerCanDeleteLockKey {
+    description: "owners can delete lock keys"
+    participant(u): "de.hftl.user.User"
+    operation: DELETE
+    resource(k): "de.hftl.lock.LockKey"
+    transaction(tx): "de.hftl.permissions.RevokeUnlock"
+    condition: (
+        u.role == "OWNER"
+    )
+    action: ALLOW
+}
+
+rule AnyoneCanSeeTheKeys {
+    description: "any participant can see all keys"
+    participant: "de.hftl.**"
+    operation: READ
+    resource: "de.hftl.lock.LockKey"
+    action: ALLOW
+}
+
+rule DenyKeyModifications {
+    description: "no one can modify or delete keys"
+    participant: "de.hftl.**"
+    operation: CREATE,UPDATE, DELETE
+    resource: "de.hftl.lock.LockKey"
+    action: DENY
+}
+        \end{lstlisting}
         
     \paragraph{Query Definitions}
     
