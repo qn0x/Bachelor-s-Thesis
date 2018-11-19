@@ -62,13 +62,14 @@
         \end{itemize}
         
     \subsubsection{Implementierungs- und Konfigurationsdetails}
-        Die drei Teilnehmertypen werden jeweils als \colorbox{light-gray}{\lstinline{participant}}-Ressourcen modelliert und können somit von Entitäten, die an dem Netzwerk teilnehmen wollen (beispielsweise eine Person mit Smartphone-App, ein Smart Lock-Gerät oder ein Server des Herstellers), dafür genutzt werden. 
-        \medskip\\
-        Im Framework werden alle Ressourcen auch über eine \colorbox{light-gray}{\lstinline{ID}} identifiziert, welche bei der Erstellung dieser selbst gewählt werden muss. 
-        Generierte \colorbox{light-gray}{\lstinline{IDs}} sind insofern sicherheitsrelevant, dass sie, durch beispielsweise automatisch hochzählende Werte, anfällig für eine Enumerationschwachstelle sind. 
-        Für diesen Prototypen werden jegliche \colorbox{light-gray}{\lstinline{IDs}} mittels der Crypto-\gls{api}, welche von der JavaSript-Laufzeitumgebung bereitgestellt wird, erstellt.
-        \medskip
-        \begin{lstlisting}[caption={Repräsantation eines Nutzers},label=prototype_user,captionpos=b]
+        \paragraph{\textrm{Modelle der Teilnehmer}}\hspace{0cm}\\
+            Die drei Teilnehmertypen werden jeweils als \colorbox{light-gray}{\lstinline{Participant}}-Ressourcen modelliert und können somit von Entitäten, die an dem Netzwerk teilnehmen wollen (beispielsweise eine Person mit Smartphone-App, ein Smart Lock-Gerät oder ein Server des Herstellers), dafür genutzt werden. 
+            \medskip\\
+            Im Framework werden alle Ressourcen über eine \colorbox{light-gray}{\lstinline{ID}} identifiziert, welche bei den Typen \colorbox{light-gray}{\lstinline{Participant}} und \colorbox{light-gray}{\lstinline{Asset}} selbst gewählt werden muss. 
+            Generierte \colorbox{light-gray}{\lstinline{IDs}} sind insofern sicherheitsrelevant, dass sie, durch beispielsweise automatisch hochzählende Werte, anfällig für eine Enumerationschwachstelle sind. 
+            Für diesen Prototypen werden jegliche \colorbox{light-gray}{\lstinline{IDs}} mittels der Crypto-\gls{api}, welche von der JavaSript-Laufzeitumgebung bereitgestellt wird, erstellt.
+            \medskip
+            \begin{lstlisting}[caption={Repräsantation eines Nutzers},label=prototype_user,captionpos=b]
 participant User identified by userId {
     o String userId
     o String firstName
@@ -77,20 +78,19 @@ participant User identified by userId {
     o UserRole role
     --> LockKey[] keys optional
 }
-        \end{lstlisting}
-        
-        \noindent Weitere Attribute einer Repräsentation eines Nutzers in Listing \ref{prototype_user} sind Vor- und Nachname, E-Mailadresse und, falls vorhanden, ein Array mit Referenzen auf Schlüssel, die der Nutzer besitzt. 
-        Die Rolle des Nutzers kann dem Berechtigungskonzept nach lediglich die Werte \colorbox{light-gray}{\lstinline{GUEST}} und \colorbox{light-gray}{\lstinline{OWNER}} annehmen. 
-        \medskip
-        \begin{lstlisting}[caption={Repräsantation eines Herstellers},label=prototype_vendor,captionpos=b]
+            \end{lstlisting}
+            \noindent Weitere Attribute einer Repräsentation eines Nutzers in Listing \ref{prototype_user} sind Vor- und Nachname, E-Mailadresse und, falls vorhanden, ein Array mit Referenzen auf Schlüssel, die der Nutzer besitzt. 
+            Die Rolle des Nutzers kann dem Berechtigungskonzept nach lediglich die Werte \colorbox{light-gray}{\lstinline{GUEST}} und \colorbox{light-gray}{\lstinline{OWNER}} annehmen. 
+            \medskip
+            \begin{lstlisting}[caption={Repräsantation eines Herstellers},label=prototype_vendor,captionpos=b]
 participant Vendor identified by vendorId {
     o String vendorId
     --> Lock[] locks
 }
-        \end{lstlisting}
-        Ein Hersteller (vgl. Listing \ref{prototype_vendor}) hat im Prototypen zusätzlich zur zugewiesenen \colorbox{light-gray}{\lstinline{ID}} eine Liste registierter Schlösser.
-        \medskip
-        \begin{lstlisting}[caption={Repräsantation eines Schlosses},label=prototype_lock,captionpos=b]
+            \end{lstlisting}
+            Ein Hersteller (vgl. Listing \ref{prototype_vendor}) hat im Prototypen zusätzlich zur zugewiesenen \colorbox{light-gray}{\lstinline{ID}} eine Liste registierter Schlösser.
+            \medskip
+            \begin{lstlisting}[caption={Repräsantation eines Schlosses},label=prototype_lock,captionpos=b]
 participant Lock identified by lockId {
     o String lockId
     o String name
@@ -98,14 +98,17 @@ participant Lock identified by lockId {
     --> LockKey[] keyInUse
     --> Vendor vendor
 }
-        \end{lstlisting}
-        Um die Benutzerfreundlichkeit zu gewährleisten hat jedes Schloss einen beliebig wählbaren Namen zusätzlich zur \colorbox{light-gray}{\lstinline{ID}}, dessen Zustand (\colorbox{light-gray}{\lstinline{UNLOCKED}},\colorbox{light-gray}{\lstinline{LOCKED}}) und der Referenz auf den Hersteller. 
-        Ein Array, welches, sofern das Schloss geöffnet ist, eine Referenz auf den zum Öffnen verwendeten Schlüssel enthält, wird stets so validiert, dass es lediglich 0 oder 1 Elemente enthält.
-        
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \end{lstlisting}
+            Um die Benutzerfreundlichkeit zu gewährleisten hat jedes Schloss (s. Listing \ref{prototype_lock}) zusätzlich zur \colorbox{light-gray}{\lstinline{ID}} einen beliebig wählbaren Namen. 
+            Gespeichert wird grundsätzlich der aktuelle Zustand (\colorbox{light-gray}{\lstinline{UNLOCKED}},\colorbox{light-gray}{\lstinline{LOCKED}}), eine Referenz auf den Hersteller, sowie ein Array, welches, sofern das Schloss geöffnet ist, eine Referenz auf den zum Öffnen verwendeten Schlüssel enthält. 
+            Das Array wird bei jeder Transaktion, die zur Folge hat, dass das Schloss seinen Zustand verändert  validert, sodass es stets 0 oder 1 Elemente enthält, also jeweils genau ein oder kein Schlüssel für das Schloss verwendet werden kann.
             
-            Asset Types:
-            \begin{lstlisting}[caption={Asset Types},label=prototype_assets,captionpos=b]
+        \paragraph{\textrm{Modelle der Assets}}\hspace{0cm}\\
+            Einziges Asset in der Blockchain sind Schlüssel. 
+            Sie enthalten eine \colorbox{light-gray}{\lstinline{ID}}, sowie Referenzen auf das Schloss, das geöffnet werden kann, den Besitzer des Schlüssels und des Aussteller des Schlüssels. 
+            Optional kann ein Ablaufdatum angegeben werden, an welchem der Schlüssel ungültig wird.
+            \medskip
+            \begin{lstlisting}[caption={Repräsantation eines Schlüssels},label=prototype_key,captionpos=b]
 asset LockKey identified by keyId {
     o String keyId
     o DateTime expirationDate optional
@@ -115,130 +118,152 @@ asset LockKey identified by keyId {
 }
             \end{lstlisting}
         
-            Transaction Types:
-            \begin{lstlisting}[caption={Relevante Transaktionen},label=prototype_transactions,captionpos=b]
-transaction ResetLock {
-    --> Lock lock
-}
-
-transaction RemoveLock {
-    --> Lock lock
-}
-
-transaction RegisterLock {
-    --> Lock lock
-}
-
-transaction InitializeNetwork {
-    o String firstName
-    o String lastName
-}
-
+        \paragraph{\textrm{Transaktionen}}\hspace{0cm}\\
+            Insgesamt enthält der Prototyp zehn explizit definierte Transaktionen, von denen eine vorgestellt wird. Einige ausgewählte Beispiele befinden sich im Anhang.\todo[color=orange]{Referenz auf Anhang einfügen}\\
+            Transaktionen werden zusammen mit den Modellen der Teilnehmer und Assets definiert, aber gesondert implementiert. 
+            Bei der Definition werden die Parameter, die zur Vearbeitung der Transaktion nötig sind, angegeben. 
+            Wird eine Transaktion eingereicht, so werden ,,Transaction Processor Functions`` aufgerufen, welche Smart Contracts entsprechen und die Business Logic des Netzwerkes ausmachen.
+            Transaktionen bekommen automatisch einen Timestamp und eine ID zugewiesen und werden auf der Blockchain gespeichert. 
+            \medskip
+            \begin{lstlisting}[caption={Definition der \colorbox{light-gray}{\lstinline{Unlock}} Transaktion},label=prototype_tx_def_unlock,captionpos=b]
 transaction Unlock {
     --> Lock lock
 }
+            \end{lstlisting}
+            Das in Listing \ref{prototype_tx_def_unlock} dargestellte Modell der Transaktion \colorbox{light-gray}{\lstinline{Unlock}} benötigt, um vom Netzwerk als valide anerkannt zu werden einen Parameter mit Referenz auf das Schloss, das geöffnet werden soll.\\
+            Wird beispielsweise eine valide \colorbox{light-gray}{\lstinline{Unlock}}-Transaktion eingereicht, so wird die in Listing \ref{prototype_tx_impl_unlock} gezeigte verarbeitende Funktion \colorbox{light-gray}{\lstinline{unlock(tx)}} ausgeführt. 
+            Die Implementierung der Funktionen folgt stets dem gleichen Schema. 
+            \begin{enumerate}
+                \item Zusätzliche Validierung(en) der Transaktion.\smallskip\\
+                    Dazu gehört im Beispiel einerseits die Voraussetzung, dass ein Nutzer auch einen gültigen Schlüssel für das Schloss, das geöffnet werden soll, hat (Zeile 8-13). 
+                    Andererseits wird überprüft, ob das Schloss geöffnet ist und/oder in dem Moment ein anderer Schlüssel verwendet wird (Zeile 16-18), also der Zustand nach der Transaktion auch zulässig ist.
+                \item Aktualisieren der betroffenen Ressourcen.\smallskip\\
+                    Beim öffnen des Schlosses werden zwei Attribute modifiziert: der Zustand des Schlosses (\colorbox{light-gray}{\lstinline{lock.state}}) wird auf \colorbox{light-gray}{\lstinline{UNLOCKED}} gesetzt und eine Referenz des genutzten Schlüssels wird mittels eines neuen Eintrags in \colorbox{light-gray}{\lstinline{lock.keyInUse}} gesetzt (Zeile 19-24).
+                \item Einfügen der Änderungen in die Blockchain.\smallskip\\
+                    Zuletzt werden noch jegliche Änderungen an \colorbox{light-gray}{\lstinline{Participants}} oder \colorbox{light-gray}{\lstinline{Assets}} in die Blockchain eingefügt (Zeile 27-30).
+            \end{enumerate}
+            \medskip
+            \begin{lstlisting}[
+                caption={Verarbeitung der \colorbox{light-gray}{\lstinline{Unlock}} Transaktion},
+                label=prototype_tx_impl_unlock
+                ,captionpos=b
+                ,numbers=left
+                ,language=JavaScript
+                ,numbersep=-1mm
+                ]
+  function unlock(tx) {
+      var lock = tx.lock;
+ 
+      // check if the user has a valid key that fits the lock 
+      var key;
+      var user = getCurrentParticipant();
 
-transaction CloseLock {
-    --> Lock lock
+      user.keys.forEach(lockKey => {
+          if (lockKey.lock.getIdentifier() == lock.getIdentifier()
+                  && !isExpired(lockKey.expirationDate)) {
+              key = lockKey;
+          }
+      });
+
+      // check if lock is open and if there are any other keys in use
+      if (lock.state == "LOCKED"
+            && lock.keyInUse.length < 1
+            && key != null) {
+          lock.state = "UNLOCKED";
+ 
+          if (lock.keyInUse == null) {
+             lock.keyInUse = new Array();
+          }
+          lock.keyInUse.push(key);
+
+          // update the lock state
+          return getAssetRegistry('de.hftl.lock.Lock')
+              .then(function (assetRegistry) {
+                  return assetRegistry.update(lock);
+              });
+      }
+  }
+            \end{lstlisting}
+            \bigskip
+            Folgende weitere Transaktionen wurden definiert:
+            \begin{itemize}
+                \item \colorbox{light-gray}{\lstinline{CloseLock}}: Schließt ein offenes Schloss.
+                \item \colorbox{light-gray}{\lstinline{ResetLock}}: Setzt ein Schloss wieder in den Anfangszustand zurück.
+                    Dabei wird der Zustand des Schlosses auf \colorbox{light-gray}{\lstinline{LOCKED}} gesetzt und zum besagen Schloss gehörende Schlüssel wieder entzogen.
+                \item \colorbox{light-gray}{\lstinline{RemoveLock}}: Entfernt ein Schloss aus dem Netzwerk.
+                    Zugehörige Schlüssel werden ebenfalls entfernt.
+                \item \colorbox{light-gray}{\lstinline{RegisterLock}}: Registriert ein Schloss bei einem Hersteller. 
+                \item \colorbox{light-gray}{\lstinline{InitializeNetwork}}: Initialisiert ein ,,neues`` Netzwerk.
+                    Dabei wird ein initialer Nutzer mit gegeben Daten (Vor-/Nachname, E-Mailadresse) erstellt, der die Rolle \colorbox{light-gray}{\lstinline{OWNER}} inne hat.
+                \item \colorbox{light-gray}{\lstinline{GrantUnlock}}: Stellt für bestimmten einen Nutzer ein neues Schlüsselasset mit optionalem Ablaufdatum aus. 
+                \item \colorbox{light-gray}{\lstinline{RevokeUnlock}}: Analog zu \item \colorbox{light-gray}{\lstinline{GrantUnlock}} wird einem bestimmten Nutzer der Schlüssel für ein bestimmtes Schloss wieder entzogen.
+                \item \colorbox{light-gray}{\lstinline{GrantOwner}}: Weist einem bestimmten Nutzer die Rolle \colorbox{light-gray}{\lstinline{OWNER}} zu.
+                \item \colorbox{light-gray}{\lstinline{RevokeOwner}}: Entzieht einem bestimmten Nutzer die Rolle \colorbox{light-gray}{\lstinline{OWNER}}.
+                Somit ist dessen Rolle \colorbox{light-gray}{\lstinline{GUEST}}.
+            \end{itemize}
+    
+        \paragraph{\textrm{Access Control Rules}}\hspace{0cm}\\
+            Die Vorgehensweise bei der Definition der \gls{acl}s ist sogenanntes ,,Whitelisting``. 
+            Es werden also grundsätzlich alle Operationen auf alle Ressourcen verboten und nur einzelne bestimmte Aktionen von bestimmten Teilnehmern, teilweise nur unter bestimmten Bedinungen erlaubt. 
+            Da in Hyperledger Composer die einzelnen Regeln geordnet nacheinander evaluiert werden, müssen zunächst alle erlaubten Aktionen definiert und zum Schluss nochmals alle verweigert werden. 
+            Eine ausführliche auflistung aller Regeln befindet sich im Anhang\todo[color=orange]{Referenz einfügen}. \\
+            Da Transaktionen wie Objekte gehandhabt werden, es also möglich ist diese nicht nur zu erstellen, sondern auch zu lesen, modifizieren und löschen, ist es nötig sie ebenfalls mit entsprechenden Regeln zu versehen.\\
+            Ebenfalls gibt es ein 
+            Es ist es nötig nicht nur die erstellten Ressourcen im Namespace des Prototypen (\colorbox{light-gray}{\lstinline{de.hftl}}), sondern bei der Zugangskontrolle auch die Systemressourcen \colorbox{light-gray}{\lstinline{org.hyperledger.composer}} zu betrachten.
+            \medskip
+            Beispielszenario: Ein Nutzer möchte ein Schloss mit dem passenden gültigen Schlüssel öffnen.
+            Dazu initiiert dieser die Transaktion \colorbox{light-gray}{\lstinline{Unlock}} und gibt dabei die Referenz des Schlosses an.
+            Es wird temporär ein Transaktionsobjekt vom Typ \colorbox{light-gray}{\lstinline{Unlock}} erstellt, welches nach Abarbeitung der Verarbeitungsfunktion in der Blockchain gespeichert wird. 
+            Bei der Verarbeitung wird der Zustand des Schlosses und die Referenz auf den aktiv genutzten Schlüssel geändert. 
+            Somit benötigt der Nutzer die Berechtigungen
+            \begin{enumerate}[noitemsep]
+                \item ein Transaktionsobjekt (über das Framework) zu erstellen
+                \item die Schlossressource zu verändern.
+            \end{enumerate}
+            \medskip
+            \begin{lstlisting}[caption={Auszug aus den Regeln für die Ressource \colorbox{light-gray}{\lstinline{Lock}}},label=prototype_rule_lock,captionpos=b]
+rule AnyoneCanSeeTheLocks {
+    description: "anyone in the network can see all locks"
+    participant: "de.hftl.**"
+    operation: READ
+    resource: "de.hftl.lock.Lock"
+    action: ALLOW
 }
 
-transaction GrantUnlock {
-    --> Lock lock
-    o DateTime expirationDate optional
-    --> User grantee
+rule KeyHoldersCanUpdateTheLockUnlock {
+    description: "key holders can update the lock while unlocking"
+    participant(u): "de.hftl.user.User"
+    operation: UPDATE
+    resource(l): "de.hftl.lock.Lock"
+    transaction(tx): "de.hftl.lock.Unlock"
+    condition: (
+        tx.lockKey.lock.getIdentifier() == tx.lock.getIdentifier()
+        && tx.lock.getIdentifier() == l.getIdentifier()
+        && l.state == "LOCKED"
+        && u.keys.some(function (lockKey) {
+            return lockKey.lock.getIdentifier() === l.getIdentifier();
+        })
+    )
+    action: ALLOW
+}
+            \end{lstlisting}
+            \begin{lstlisting}[caption={Auszug aus den Regeln für die Transaktion \colorbox{light-gray}{\lstinline{Unlock}}},label=prototype_rule_unlock,captionpos=b]
+rule AnyUserCanSubmitUnlockTransactions {
+    description: "anyone in the network can submit an unlock-transactions"
+    participant: "de.hftl.user.User"
+    operation: CREATE
+    resource: "de.hftl.lock.Unlock"
+    action: ALLOW
 }
 
-transaction RevokeUnlock {
-    --> Lock lock
-    --> User revokee
+rule AnyoneCanSeeUnlockTransactions {
+    description: "anyone in the network can see unlock-transactions"
+    participant: "de.hftl.**"
+    operation: READ
+    resource: "de.hftl.lock.Unlock"
+    action: ALLOW
 }
-
-transaction GrantOwner {
-    --> User grantee
-}
-
-transaction RevokeOwner {
-    --> User revokee
-}
-
 
             \end{lstlisting}
             
-            \begin{itemize}[noitemsep]
-                \item Transaktionen bekommen aus dem Systemnamespace schon einen Timestamp und eine ID
-                \item OpenDoor
-                \item User (AddUser, DeleteUser, ChangeUserRole)
-                \item TimeSlot (AddTimeSlot, DeleteTimeSlot, ChangeGuestTimeSlot)
-            \end{itemize}
-    
-    \paragraph{\textrm{Transaction Functions}}
-    
-    \paragraph{\textrm{Access Control Rules}}\hspace{0cm}\\
-        Die Vorgehensweise bei der Definition der \gls{acl}s ist sogenanntes ,,Whitelisting``. 
-        Es werden also grundsätzlich alle Operationen auf alle Ressourcen verboten und nur einzelne bestimmte Aktionen von bestimmten Teilnehmern, teilweise nur unter bestimmten Bedinungen erlaubt. 
-        Da in Hyperledger Composer die einzelnen Regeln geordnet nacheinander evaluiert werden, müssen zunächst alle erlaubten Aktionen definiert und zum Schluss alle verweigert werden. 
-        Eine ausführliche auflistung aller Regeln befindet sich im Anhang\todo[color=orange]{Referenz einfügen}. 
-        Beispielsweise:
-        \missingfigure{Komplettes Regelwerk für eine Ressource als Beispiel}
-        \begin{lstlisting}[caption={Relevante Transaktionen},label=prototype_acl,captionpos=b]
-// Asset: LockKey
-rule OwnerCanIssueLockKey {
-    description: "owners can issue lock keys to users"
-    participant(u): "de.hftl.user.User"
-    operation: CREATE
-    resource(k): "de.hftl.lock.LockKey"
-    transaction(tx): "de.hftl.permissions.GrantUnlock"
-    condition: (
-        u.role == "OWNER"
-    )
-    action: ALLOW
-}
-
-rule OwnerCanDeleteLockKey {
-    description: "owners can delete lock keys"
-    participant(u): "de.hftl.user.User"
-    operation: DELETE
-    resource(k): "de.hftl.lock.LockKey"
-    transaction(tx): "de.hftl.permissions.RevokeUnlock"
-    condition: (
-        u.role == "OWNER"
-    )
-    action: ALLOW
-}
-
-rule AnyoneCanSeeTheKeys {
-    description: "any participant can see all keys"
-    participant: "de.hftl.**"
-    operation: READ
-    resource: "de.hftl.lock.LockKey"
-    action: ALLOW
-}
-
-rule DenyKeyModifications {
-    description: "no one can modify or delete keys"
-    participant: "de.hftl.**"
-    operation: CREATE,UPDATE, DELETE
-    resource: "de.hftl.lock.LockKey"
-    action: DENY
-}
-        \end{lstlisting}
-        
-    \paragraph{Query Definitions}
-    
-
-    Notizen für den Prototypen:
-    \begin{itemize}[noitemsep]
-        \item How to ensure a consistent state across all entities?...
-        \item keine Anonymisierung, da der Access Log auditable sein muss
-        \item Hyperledger bietet CA für Identitäten, Authentifizierung \textrightarrow\ wie ist das bei Composer?
-        \item \begin{itemize}
-            \item erlaubt Sicherheitseinstellungen beim Erstellen des REST-API-Servers
-            \item API Key
-            \item Authentication mit Passport
-            \item explorer Test interface ?
-            \item dynamic logging
-            \item event publication over websockets
-            \item TLS enable/\-disable
-        \end{itemize}
-    \end{itemize}
-    
+            Evtl: Beispiel für die Ressource LockKey \colorbox{light-gray}{\lstinline{Unlock}}?\todo[color=cyan]{evtl. weiteres Bsp?}
