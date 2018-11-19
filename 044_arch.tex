@@ -209,7 +209,7 @@ transaction Unlock {
             Eine ausführliche auflistung aller Regeln befindet sich im Anhang\todo[color=orange]{Referenz einfügen}. \\
             Da Transaktionen wie Objekte gehandhabt werden, es also möglich ist diese nicht nur zu erstellen, sondern auch zu lesen, modifizieren und löschen, ist es nötig sie ebenfalls mit entsprechenden Regeln zu versehen.\\
             Ebenfalls gibt es ein 
-            Es ist es nötig nicht nur die erstellten Ressourcen im Namespace des Prototypen (\colorbox{light-gray}{\lstinline{de.hftl}}), sondern bei der Zugangskontrolle auch die Systemressourcen \colorbox{light-gray}{\lstinline{org.hyperledger.composer}} zu betrachten.
+            Es ist es nötig nicht nur die erstellten Ressourcen im Namespace des Prototypen (\colorbox{light-gray}{\lstinline{de.hftl}}), sondern bei der Zugangskontrolle auch die Systemressourcen (\colorbox{light-gray}{\lstinline{org.hyperledger.composer}}) zu betrachten.
             \medskip
             Beispielszenario: Ein Nutzer möchte ein Schloss mit dem passenden gültigen Schlüssel öffnen.
             Dazu initiiert dieser die Transaktion \colorbox{light-gray}{\lstinline{Unlock}} und gibt dabei die Referenz des Schlosses an.
@@ -217,9 +217,31 @@ transaction Unlock {
             Bei der Verarbeitung wird der Zustand des Schlosses und die Referenz auf den aktiv genutzten Schlüssel geändert. 
             Somit benötigt der Nutzer die Berechtigungen
             \begin{enumerate}[noitemsep]
-                \item ein Transaktionsobjekt (über das Framework) zu erstellen
-                \item die Schlossressource zu verändern.
+                \item ein Transaktionsobjekt (über das Framework) zu erstellen und
+                \item die Schlossressource zu verändern,
             \end{enumerate}
+            da nach dem ,,Whitelist``-Prinzip zunächst niemand etwas darf.
+            \medskip
+            \begin{lstlisting}[caption={Auszug aus den Regeln für die Transaktion \colorbox{light-gray}{\lstinline{Unlock}}},label=prototype_rule_unlock,captionpos=b]
+rule AnyUserCanSubmitUnlockTransactions {
+    description: "anyone in the network can submit an unlock-transactions"
+    participant: "de.hftl.user.User"
+    operation: CREATE
+    resource: "de.hftl.lock.Unlock"
+    action: ALLOW
+}
+
+rule AnyoneCanSeeUnlockTransactions {
+    description: "anyone in the network can see unlock-transactions"
+    participant: "de.hftl.**"
+    operation: READ
+    resource: "de.hftl.lock.Unlock"
+    action: ALLOW
+}
+            \end{lstlisting}
+            Wie auch die beiden Regeln in Listing \ref{prototype_rule_unlock} folgen alle Regeln dem selben Aufbau: Zunächst wird die Regel mit Worten geschildert. 
+            Danach werden der betroffene Teilnehmer, die Operation und die Ressource angegeben.
+            Als letztes wird festgelegt, ob die Regel das Beschriebene erlaubt oder verweigert werden soll. 
             \medskip
             \begin{lstlisting}[caption={Auszug aus den Regeln für die Ressource \colorbox{light-gray}{\lstinline{Lock}}},label=prototype_rule_lock,captionpos=b]
 rule AnyoneCanSeeTheLocks {
@@ -247,23 +269,10 @@ rule KeyHoldersCanUpdateTheLockUnlock {
     action: ALLOW
 }
             \end{lstlisting}
-            \begin{lstlisting}[caption={Auszug aus den Regeln für die Transaktion \colorbox{light-gray}{\lstinline{Unlock}}},label=prototype_rule_unlock,captionpos=b]
-rule AnyUserCanSubmitUnlockTransactions {
-    description: "anyone in the network can submit an unlock-transactions"
-    participant: "de.hftl.user.User"
-    operation: CREATE
-    resource: "de.hftl.lock.Unlock"
-    action: ALLOW
-}
-
-rule AnyoneCanSeeUnlockTransactions {
-    description: "anyone in the network can see unlock-transactions"
-    participant: "de.hftl.**"
-    operation: READ
-    resource: "de.hftl.lock.Unlock"
-    action: ALLOW
-}
-
-            \end{lstlisting}
+            Wie in Listing \ref{prototype_rule_lock} erkennbar, ist es zusätzlich möglich eine bestimmte Transaktionsart anzugeben, für welche die Regel gilt. 
+            Ebenfalls kann verlangt werden, dass eine explizite Bedingung erfüllt wird. 
+            Diese kann mittels eines beliebigen Ausdrucks formuliert werden.
+            
+            Weitere relevante Regeln sind im Anhang zu finden.
             
             Evtl: Beispiel für die Ressource LockKey \colorbox{light-gray}{\lstinline{Unlock}}?\todo[color=cyan]{evtl. weiteres Bsp?}
