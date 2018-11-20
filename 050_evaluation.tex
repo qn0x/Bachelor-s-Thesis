@@ -1,8 +1,9 @@
 \section{Evaluation des Prototypen}
 \label{sec:evaluation}
+    Mittels des Frameworks wird eine \gls{rest}-\gls{api} generiert, die für die Evauluation des Prototypen bei Bedarf verwendet wird. 
+    Diese wird so konfiguiert, dass deren Verwendung eine Authentifizierung voraussetzt, sowie jeglicher Nachrichtenaustausch mittels \gls{tls} verschlüsselt wird.
 
-    \subsection{Vulnerability Assessment des Prototypen}
-
+    \subsection{Vulnerability Assessment}
         \begin{itemize}[noitemsep]
             \item Evaluierung nach \cite{Miessler}, aber Fokus auf die in \fref{sec:prototype_requirements} ausgewählten Schwachstellen. 
             \item Vorgehen für jeden Punkt bei der Evaluierung beschreiben und Ergebnisse festhalten. 
@@ -17,88 +18,90 @@
         \end{itemize}
     
         \subsubsection*{I1: Insecure Web Interface}
-           \begin{itemize}[leftmargin=0cm,label={}]
-                \item \emph{Insecure API: User Enumeration}\label{vuln:prototype_userenum}\\
-                    Stuff.
-           \end{itemize} 
+            Da der Prototyp kein Webinterface hat, kann dieser Aspekt für die Evauluation nicht betrachtet werden.
            
         \subsubsection*{I2: Insecure Authentification/Authorization}
             \begin{itemize}[leftmargin=0cm,label={}]
                 \item \emph{Insufficient Password Protection}\label{vuln:prototype_pwdprot}\\
         	        Stuff.
+    	        \item Authentifizierung zur Nutzung der \gls{rest}-\gls{api}
             \end{itemize}
             
         \subsubsection*{I3: Insecure Network Services}
             \begin{itemize}[leftmargin=0cm,label={}]
-                \item \emph{Denial of Service via Commands}\label{vuln:prototype_doscmd}\\
-        	        Stuff.
+                \item \emph{Denial of Service via \gls{rest}-Server}\label{vuln:prototype_dos}\\
+        	        Jeder Knoten kann einen \gls{rest}-Server für seine Nutzer bereitstellen. 
+        	        Jedoch wird bei der Authentifizierung kein Rate-Limiting angewendet. 
+        	        Bei Knoten, die entsprechend wenig Rechenleistung bieten kann kann dies unter Umständen zu einem \gls{dos} führen. 
+        	        Zwar wird dadurch dem Nutzer der Zugriff zum Service verweigert, das Netzwerk an sich bleibt jedoch, wenn genug weitere Knoten nicht betroffen sind, funktional in Betrieb.
             \end{itemize}
             
         \subsubsection*{I4: Lack of Transport Encryption/Integrity Verification}
-            \begin{itemize}[leftmargin=0cm,label={}]
-                \item \emph{Insecure Password Transmission}\label{vuln:prototype_pwdtrns}\\
-                    sfaf
-            \end{itemize}
+            Für diese Kategorie wurden keine Schwachstellen gefunden. 
+            Die Kommunikation mit zwischen den Knoten, sowie dem Client und Knoten via \gls{rest}-Server kann mittels \gls{tls} gesichert werden. 
+            Es werden jeweils Zertifikate dafür verwendet.
             
         \subsubsection*{I5: Privacy Concerns}
             \begin{itemize}[leftmargin=0cm,label={}]
                 \item \emph{Unprotected User Information}\label{vuln:prototype_userdata}\\
                     Im Prototypen müssen für die validierung der Transaktionen alle Nutzer alle anderen Nutzer sehen. 
-                    Dazu muss in den \gls{acl}-Regeln die Operatrion \colorbox{light-gray}{\lstinline{READ}} auf alle Teilnehmertypen für alle Teilnehmer erlaubt sein. 
+                    Dazu muss in den \gls{acl}-Regeln die Operation \colorbox{light-gray}{\lstinline{READ}} auf alle Teilnehmertypen für alle Teilnehmer erlaubt sein. 
                     Der Mechanismus der Regeln im Hyperledger Composer Framework erlaubt es jedoch nicht Regeln für die einzelnen Attribute jeder Ressource festzulegen. 
-                    Dazu gehören im Fall des Typs \colorbox{light-gray}{\lstinline{User}} auch personenbezogene Daten wie Vor- und Nachname und E-Mailadresse. 
-                    Betrachtet man das Beispielnetzwerk in \fref{fig:pt_network} aus \fref{sec:prototype_arch_concept}, so könnte der Hersteller \colorbox{light-gray}{\lstinline{Vendor 1}} auch die Daten der Kunden von \colorbox{light-gray}{\lstinline{Vendor 2}} einsehen und speichern.
+                    Dazu gehören im Fall des Typs \colorbox{light-gray}{\lstinline{User}} auch personenbezogene Daten wie Vor- und Nachname und E-Mailadresse.\\
+                    Betrachtet man das Beispielnetzwerk in \fref{fig:pt_network} aus \fref{sec:prototype_arch_concept}, so könnte der Hersteller \colorbox{light-gray}{\lstinline{Vendor 1}} auch die Daten der Kunden von \colorbox{light-gray}{\lstinline{Vendor 2}}, in diesem Fall \colorbox{light-gray}{\lstinline{User 2}} einsehen und speichern.
             \end{itemize}
             
         \subsubsection*{I6: Insecure Cloud Interface}
+            Als Cloud Interface wird hier die Verbindung von einem Peer zum anderen betrachtet.
+            Die Daten aus den Transaktionen werden werden sozusagen ,,hochgeladen`` und der Nutzer kann nicht genau sagen auf welchem Server bzw. Knoten diese letztendlich auch gespeichert werden-
             \begin{itemize}[leftmargin=0cm,label={}]
-                \item 
+                \item \emph{Participant Enumeration}\label{vuln:prototype_enum_part}
+                    Erstellt ein autorisierter Nutzer einen neuen Teilnehmer (der Typ des Nutzers ist irrelevant), so wird diesem automatisch eine ID zugewiesen. 
+                    Diese ID besteht standardmäßig aus lediglich vier Ziffern und ist somit für einen Angreifer einfach zu erraten.
+                \item \emph{Asset Enumeration}\label{vuln:prototype_enum_asset}
+                    Wie auch bei der Participant Enumeration werrd bei der Erstellung von Assets die IDs automatisch vergeben. 
+                    Auch hier besteht die ID lediglich aus viel Ziffern.
             \end{itemize}
             
         \subsubsection*{I7: Insecure Mobile Interface}
-            \begin{itemize}[leftmargin=0cm,label={}]
-                \item \emph{Stolen User Settings}\label{vuln:prototype_usersettings}\\
-                    sadfasdf
-            \end{itemize}
+            Da der Prototyp kein mobiles Interface hat, kann dieser Aspekt nicht betrachtet werden.
             
         \subsubsection*{I8: Insufficient Security Configurability}
-            Nicht mittels \gls{cvss} bewertbar
+            \begin{itemize}[leftmargin=0cm,label={}]
+    	        \item \emph{Unencrypted Data Storage}\label{vuln:prototype_db}\\
+                    Die Speicherung der jeweiligen Kopie der Blockchain auf den Knoten erfolgt über eine unverschlüsselte Datenbank. 
+                    Hat ein Angreifer Zugriff auf den Knoten und die Datenbank (der Angreifer muss dafür nicht zwingend Teilnehmer im Netzwerk sein), so ist es für ihn möglich an alle Daten, die auf der Blockchain gepeichert sind, zu kommen. 
+                    Da der Prototyp mit dem Konzept einer privaten Blockchain funktioniert, sollten die dort gespeicherten Daten auch nicht an Außenstehende gelangen.
+            \end{itemize}
             
         \subsubsection*{I9:Insecure Software/Firmware}
             \begin{itemize}[leftmargin=0cm,label={}]
-    	        \item \emph{Hardcoded Firmware Key}\label{vuln:prototype_firmwarekey}\\
-                    asdfasdf
+    	        \item \emph{Single Point of Failure}\label{vuln:prototype_spf}\\
+                    In Composer gibt es zwei unterschiedliche Arten von Adminsitratoren: den Business Network Administrator (je einen pro Business Network) und den Peer Administrator (je einen pro Hyperledger Fabric Instanz)
             \end{itemize}
             
         \subsubsection*{I10: Poor Physical Security}
             Wird auch hier wie in \fref{sec:problem_limit} erwähnt, nicht betrachtet.
     
+    \sloppy\url{https://www.ibm.com/developerworks/cloud/library/cl-deploy-interact-extend-local-blockchain-network-with-hyperledger-composer/index.html}\\
+    \sloppy\url{https://wiki.hyperledger.org/_media/security/technical_report_linux_foundation_fabric_august_2017_v1.1.pdf}\\
+    \sloppy\url{https://wiki.hyperledger.org/_media/security/management_report_linux_foundation_fabric_august_2017_v1.1.pdf}
     
     \subsection{Bewertung nach CVSS}
-    	\todo[color=yellow]{not sure...}\noindent In die Tabelle die Strings oder einzelne Spalten mit den Faktoren etc.?\\
-    	{\large\textsc{Tabelle unfertig, nur provisorisch}}
-        %\begin{sidewaystable}[H]
-          {\centering
-            \begin{table}[H]
-            {\small
-            \begin{tabular}{|>{\raggedright}p{0.28\textwidth}|m{0.56\textwidth}|m{0.05\textwidth}|}
-                \hline
-                \textbf{}                                      & \textbf{Vector String}                        & \textbf{Score}   \\ \hline
-                \rowcolor{light-gray}
-                \textbf{API: User Enumeration}                 & CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H  & 5.3              \\ \hline
-                \textbf{Insufficient Password Protection}      & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:N  & 6.5              \\ \hline
-                \rowcolor{light-gray}
-                \textbf{API: Privilege Escalation}             & CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L  & 8.5              \\ \hline
-                \textbf{Insecure Password Policy}              & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:N/A:H  & 7.5              \\ \hline
-                \rowcolor{light-gray}
-                \textbf{Phishing}                              & CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:N/A:H  & 6.9              \\ \hline
-                \textbf{Replay}                                & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
-                \rowcolor{light-gray}
-                \textbf{Device Spoofing}                       & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
-                \textbf{Missing 2-Factor Authentication}       & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:L  & 5.4
-                \label{tab:evaluation_bewertung}\\ \hline
+    	\begin{table}[H]
+            \centering
+            \begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|}
+            \hline
+            \textbf{Rating}   & \textbf{\gls{cvss} Score}   \\ \hline
+            \rowcolor{light-gray}
+            None              & 0.0                         \\ \hline
+            Low               & 0.1 - 3.9                   \\ \hline
+            \rowcolor{light-gray}
+            Medium            & 4.0 - 6.9                   \\ \hline
+            High              & 7.0 - 8.9                   \\ \hline
+            \rowcolor{light-gray}
+            Critical          & 9.0 - 10.0                  \\ \hline
             \end{tabular}
-            }
-            \end{table}}
-          %\caption{Nach \gls{cvss} bewertete Schwachstellen aus \fref{sec:analysis_vulns}}
-        %\end{sidewaystable}
+            \caption[CVSS Scores des Prototypen]{CVSS Scores des Prototypen}
+            \label{tab:eval_cvss}
+        \end{table}

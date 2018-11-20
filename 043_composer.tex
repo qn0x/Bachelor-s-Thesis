@@ -6,7 +6,8 @@
         \medskip\\
         \noindent Für die Entwicklung der Transaktionslogik von Business Networks wird die Sprache JavaScript verwendet. 
         Zusätzlich werden domainspezifische Sprachen für die Modellierung der Akteure im Netzwerk, sowie der Zugriffskontrolle und Anfragen and die Blockchcain eingesetzt.
-        Als Datenbank kann LevelDB oder CouchCB verwendet werden. 
+        Als Datenbank kann LevelDB oder CouchCB verwendet werden.
+        Betrieben wird die Applikation innerhalb eines Docker-Containers.
         
         \noindent Für den Prototypen relevante Eigenschaften des Hyperledger Composer Frameworks:
         \begin{itemize}[noitemsep]
@@ -36,9 +37,9 @@
     	\end{figure}
         
         \begin{itemize}[noitemsep]
-            \item Möglichkeit eine REST-\gls{api} pro Business Network Card mit folgenden Features zu generieren
+            \item Möglichkeit eine \gls{rest}-\gls{api} pro Business Network Card mit folgenden Features zu generieren
                 \begin{itemize}[noitemsep]
-                    \item Nutzung von API-Keys für die Sicherung der REST-\gls{api}
+                    \item Nutzung von API-Keys für die Sicherung der \gls{rest}-\gls{api}
                     \item Authentifizierung via Passport auf Linux-Maschinen
                     \item ,,Explorer Test Interface``, welches automatisch generiert wird und essentiell eine Dokumentation der \gls{api} darstellt mit der zusätzlichen Möglichkeit die \gls{api}-Calls zu testen.
                     \item Key für dynamisches Logging
@@ -69,7 +70,7 @@
             \item How to ensure a consistent state across all entities?...
             \item Hyperledger bietet CA für Identitäten, Authentifizierung \textrightarrow\ wie ist das bei Composer?
             \item \begin{itemize}
-                \item erlaubt Sicherheitseinstellungen beim Erstellen des REST-API-Servers
+                \item erlaubt Sicherheitseinstellungen beim Erstellen des \gls{rest}-\gls{api}-Servers
                 \item API Key
                 \item Authentication mit Passport
                 \item explorer Test interface ?
@@ -113,3 +114,5 @@ Business networks may contain a set of access control rules. Access control rule
 \medskip
 Historian registry\\
 The historian is a specialised registry which records successful transactions, including the participants and identities that submitted them. The historian stores transactions as HistorianRecord assets, which are defined in the Hyperledger Composer system namespace.
+\medskip
+The Hyperledger Composer Historian is a specialised registry which records successful transactions, including the participants and identities that submitted them. The historian stores transactions as HistorianRecord assets, which are defined in the Hyperledger Composer system namespace.

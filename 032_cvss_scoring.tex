@@ -2,37 +2,29 @@
 \label{sec:analysis_cvss}
     Da die Arbeit sich um die Verwendung einer Blockchain-Technologie dreht, werden zunächst alle Schwachstellen gefiltert, die prinzipiell nicht durch deren Verwendung behoben werden können.
     Dazu gehören beispielsweise die Übertragung per Bluetooth (unsichere Pairing-Mechanismen und Session Keys), sowie physische Sicherheit und blabla\todo[color=cyan]{weitere auflisten}
-    In der \fref{tab:bewertung_vulns} werden somit nur die Schwachstellen berwertet, die potentiell verhindert werden können und später am Prototypen getestet werden.
+    In der \fref{tab:vulns_cvss_short} werden somit nur die Schwachstellen berwertet, die potentiell verhindert werden können und später am Prototypen getestet werden.
     Die Bewertung wird mittels des online bereitgestellten Rechners\cite{CvssCalc} durchgeführt.
 	Grundlage hierfür ist der in \fref{sec:sota_sa_cvss} vorgestellte Base Score.
 	\footnote{Ein Scope Change wird in der Bewertung als solcher angesehen, sobald von den in \fref{fig:sl_arch} dargestellten Komponenten mindestens eine Zusätzliche betroffen ist.}
 	Darin wurden ähnliche Angriffe zusammengefasst und die \gls{cvss}-Vector Strings zur Nachverfolgung hintelegt, um die Nachverfolgung der Bewertung einzelner Faktoren zu gewährleisten.
 	
-	\todo[color=yellow]{not sure...}\noindent In die Tabelle die Strings oder einzelne Spalten mit den Faktoren etc.?\\
+	\todo[color=yellow]{kleine Tabelle hier einfügen}\
+	noindent In die Tabelle die Strings oder einzelne Spalten mit den Faktoren etc.?\\
 	{\large\textsc{Tabelle unfertig, nur provisorisch}}
-    %\begin{sidewaystable}[H]
-      {\centering
-        \begin{table}[H]
-        {\small
-        \begin{tabular}{|>{\raggedright}p{0.28\textwidth}|m{0.56\textwidth}|m{0.05\textwidth}|}
-            \hline
-            \textbf{}                                      & \textbf{Vector String}                        & \textbf{Score}   \\ \hline
-            \rowcolor{light-gray}
-            \textbf{API: User Enumeration}                 & CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H  & 5.3              \\ \hline
-            \textbf{Insufficient Password Protection}      & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:N  & 6.5              \\ \hline
-            \rowcolor{light-gray}
-            \textbf{API: Privilege Escalation}             & CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L  & 8.5              \\ \hline
-            \textbf{Insecure Password Policy}              & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:N/A:H  & 7.5              \\ \hline
-            \rowcolor{light-gray}
-            \textbf{Phishing}                              & CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:N/A:H  & 6.9              \\ \hline
-            \textbf{Replay}                                & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
-            \rowcolor{light-gray}
-            \textbf{Device Spoofing}                       & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
-            \textbf{Missing 2-Factor Authentication}       & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:L  & 5.4
-            \label{tab:bewertung_vulns}\\ \hline
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|}
+        \hline
+        \textbf{Rating}   & \textbf{\gls{cvss} Score}   \\ \hline
+        \rowcolor{light-gray}
+        None              & 0.0                         \\ \hline
+        Low               & 0.1 - 3.9                   \\ \hline
+        \rowcolor{light-gray}
+        Medium            & 4.0 - 6.9                   \\ \hline
+        High              & 7.0 - 8.9                   \\ \hline
+        \rowcolor{light-gray}
+        Critical          & 9.0 - 10.0                  \\ \hline
         \end{tabular}
-        }
-        \end{table}}
-      %\caption{Nach \gls{cvss} bewertete Schwachstellen aus \fref{sec:analysis_vulns}}
-      \label{tab:test}
-    %\end{sidewaystable}
+        \caption[CVSS Scores des Prototypen]{CVSS Scores des Prototypen. Eine detailliertere Tabelle mit den einzeln bewerteten Faktoren befindet sich im Anhang}
+        \label{tab:vulns_cvss_short}
+    \end{table}
