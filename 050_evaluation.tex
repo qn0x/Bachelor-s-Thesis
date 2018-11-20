@@ -1,19 +1,15 @@
 \section{Evaluation des Prototypen}
 \label{sec:evaluation}
+    Wie auch in \fref{sec:analysis} bei der Analyse der Schwachstellen von aktuellen Produkten, wird auch die Analyse des Prototypen nach \cite{Miessler} gemacht. 
+    Aufgrund dessen, dass das evaluierte System noch im Status eines minimalen Prototypen ist, fallen die Möglichkeiten eine Web- oder Mobileoberfläche zu testen weg. 
+    Ebenfalls ist es nicht möglich die physische Sicherheit zu testen.
+    \medskip\\
     Mittels des Frameworks wird eine \gls{rest}-\gls{api} generiert, die für die Evauluation des Prototypen bei Bedarf verwendet wird. 
     Diese wird so konfiguiert, dass deren Verwendung eine Authentifizierung voraussetzt, sowie jeglicher Nachrichtenaustausch mittels \gls{tls} verschlüsselt wird.
 
     \subsection{Vulnerability Assessment}
         \begin{itemize}[noitemsep]
-            \item Evaluierung nach \cite{Miessler}, aber Fokus auf die in \fref{sec:prototype_requirements} ausgewählten Schwachstellen. 
-            \item Vorgehen für jeden Punkt bei der Evaluierung beschreiben und Ergebnisse festhalten. 
-            \item Falls zusätzliche Schwachstellen auffallen, diese auch mit einbeziehen.
-        \end{itemize}
-        
-        \begin{itemize}[noitemsep]
-            \item Speicher vollaufen lassen, indem viele Transaktionen getätigt werden \textrightarrow\ Fehlerzustand?
             \item Bei Initialisierung manipulieren der Daten, um die Besitzerrolle zu erlangen
-            \item Enumeration, da im aktuellen Zustand alle IDs von Hand erstellt werden können \textrightarrow\ kann über API ausgenutzt werden oder über Webseite: wenn Erstellen nicht möglich, dann hat man als Angreifer eine ID, die auch genutzt wird und somit Informationen gewonnen
             \item als vendor ausgeben und netzwerk zurücksetzen
         \end{itemize}
     

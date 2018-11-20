@@ -4,6 +4,7 @@
 [ ] Schluss schreiben
 [ ] Anforderungen an den Prototypen anpassen
 [ ] Beschreibung des Frameworks ordentlich schreiben
+=======================================================
 [ ] Sicherheitsanalyse nochmal durchgehen
 [ ] Evtl. kurzen Teil zu \gls{iot} bei den Grundlagen?
 [ ] Source Code Listings stylen
