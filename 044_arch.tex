@@ -4,6 +4,7 @@
     Sollte eine Beschreibung direkt auf einen der beiden Anfoderungskataloge, die in \fref{sec:prototype_func_req} und in \fref{sec:prototype_sec} gesammelt wurden beziehen, so wird diese mit der entsprechenden Referenz verdeutlicht.
     
     \subsubsection{Konzept}
+    \label{sec:prototype_arch_concept} 
         Das Blockchain-Netzwerk für den Prototypen umfasst ein oder mehrere Herstellerserver, ein oder mehrere Schlösser, sowie ein oder mehrere Nutzer und basiert auf einer private/permissioined Blockchain. 
         Sollten Alice und Bob je ein Schloss vom gleichen Hersteller haben, aber nicht im gleichen ,,Haus`` wohnen, so entstehen zwei unterschiedliche Blockchain-Netzwerke, die jeweils voneinander isoliert sind.
         \smallskip\\
@@ -62,6 +63,7 @@
         \end{itemize}
         
     \subsubsection{Implementierungs- und Konfigurationsdetails}
+    \label{sec:prototype_arch_impl}
         \paragraph{\textrm{Modelle der Teilnehmer}}\hspace{0cm}\\
             Die drei Teilnehmertypen werden jeweils als \colorbox{light-gray}{\lstinline{Participant}}-Ressourcen modelliert und können somit von Entitäten, die an dem Netzwerk teilnehmen wollen (beispielsweise eine Person mit Smartphone-App, ein Smart Lock-Gerät oder ein Server des Herstellers), dafür genutzt werden. 
             \medskip\\

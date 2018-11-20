@@ -1,15 +1,104 @@
 \section{Evaluation des Prototypen}
 \label{sec:evaluation}
 
-    \begin{itemize}[noitemsep]
-        \item Evaluierung nach \cite{Miessler}, aber Fokus auf die in \fref{sec:prototype_requirements} ausgewählten Schwachstellen. 
-        \item Vorgehen für jeden Punkt bei der Evaluierung beschreiben und Ergebnisse festhalten. 
-        \item Falls zusätzliche Schwachstellen auffallen, diese auch mit einbeziehen.
-    \end{itemize}
+    \subsection{Vulnerability Assessment des Prototypen}
+
+        \begin{itemize}[noitemsep]
+            \item Evaluierung nach \cite{Miessler}, aber Fokus auf die in \fref{sec:prototype_requirements} ausgewählten Schwachstellen. 
+            \item Vorgehen für jeden Punkt bei der Evaluierung beschreiben und Ergebnisse festhalten. 
+            \item Falls zusätzliche Schwachstellen auffallen, diese auch mit einbeziehen.
+        \end{itemize}
+        
+        \begin{itemize}[noitemsep]
+            \item Speicher vollaufen lassen, indem viele Transaktionen getätigt werden \textrightarrow\ Fehlerzustand?
+            \item Bei Initialisierung manipulieren der Daten, um die Besitzerrolle zu erlangen
+            \item Enumeration, da im aktuellen Zustand alle IDs von Hand erstellt werden können \textrightarrow\ kann über API ausgenutzt werden oder über Webseite: wenn Erstellen nicht möglich, dann hat man als Angreifer eine ID, die auch genutzt wird und somit Informationen gewonnen
+            \item als vendor ausgeben und netzwerk zurücksetzen
+        \end{itemize}
     
-    \begin{itemize}[noitemsep]
-        \item Speicher vollaufen lassen, indem viele Transaktionen getätigt werden \textrightarrow\ Fehlerzustand?
-        \item Bei Initialisierung manipulieren der Daten, um die Besitzerrolle zu erlangen
-        \item Enumeration, da im aktuellen Zustand alle IDs von Hand erstellt werden können \textrightarrow\ kann über API ausgenutzt werden oder über Webseite: wenn Erstellen nicht möglich, dann hat man als Angreifer eine ID, die auch genutzt wird und somit Informationen gewonnen
-        \item als vendor ausgeben und netzwerk zurücksetzen
-    \end{itemize}
+        \subsubsection*{I1: Insecure Web Interface}
+           \begin{itemize}[leftmargin=0cm,label={}]
+                \item \emph{Insecure API: User Enumeration}\label{vuln:prototype_userenum}\\
+                    Stuff.
+           \end{itemize} 
+           
+        \subsubsection*{I2: Insecure Authentification/Authorization}
+            \begin{itemize}[leftmargin=0cm,label={}]
+                \item \emph{Insufficient Password Protection}\label{vuln:prototype_pwdprot}\\
+        	        Stuff.
+            \end{itemize}
+            
+        \subsubsection*{I3: Insecure Network Services}
+            \begin{itemize}[leftmargin=0cm,label={}]
+                \item \emph{Denial of Service via Commands}\label{vuln:prototype_doscmd}\\
+        	        Stuff.
+            \end{itemize}
+            
+        \subsubsection*{I4: Lack of Transport Encryption/Integrity Verification}
+            \begin{itemize}[leftmargin=0cm,label={}]
+                \item \emph{Insecure Password Transmission}\label{vuln:prototype_pwdtrns}\\
+                    sfaf
+            \end{itemize}
+            
+        \subsubsection*{I5: Privacy Concerns}
+            \begin{itemize}[leftmargin=0cm,label={}]
+                \item \emph{Unprotected User Information}\label{vuln:prototype_userdata}\\
+                    Im Prototypen müssen für die validierung der Transaktionen alle Nutzer alle anderen Nutzer sehen. 
+                    Dazu muss in den \gls{acl}-Regeln die Operatrion \colorbox{light-gray}{\lstinline{READ}} auf alle Teilnehmertypen für alle Teilnehmer erlaubt sein. 
+                    Der Mechanismus der Regeln im Hyperledger Composer Framework erlaubt es jedoch nicht Regeln für die einzelnen Attribute jeder Ressource festzulegen. 
+                    Dazu gehören im Fall des Typs \colorbox{light-gray}{\lstinline{User}} auch personenbezogene Daten wie Vor- und Nachname und E-Mailadresse. 
+                    Betrachtet man das Beispielnetzwerk in \fref{fig:pt_network} aus \fref{sec:prototype_arch_concept}, so könnte der Hersteller \colorbox{light-gray}{\lstinline{Vendor 1}} auch die Daten der Kunden von \colorbox{light-gray}{\lstinline{Vendor 2}} einsehen und speichern.
+            \end{itemize}
+            
+        \subsubsection*{I6: Insecure Cloud Interface}
+            \begin{itemize}[leftmargin=0cm,label={}]
+                \item 
+            \end{itemize}
+            
+        \subsubsection*{I7: Insecure Mobile Interface}
+            \begin{itemize}[leftmargin=0cm,label={}]
+                \item \emph{Stolen User Settings}\label{vuln:prototype_usersettings}\\
+                    sadfasdf
+            \end{itemize}
+            
+        \subsubsection*{I8: Insufficient Security Configurability}
+            Nicht mittels \gls{cvss} bewertbar
+            
+        \subsubsection*{I9:Insecure Software/Firmware}
+            \begin{itemize}[leftmargin=0cm,label={}]
+    	        \item \emph{Hardcoded Firmware Key}\label{vuln:prototype_firmwarekey}\\
+                    asdfasdf
+            \end{itemize}
+            
+        \subsubsection*{I10: Poor Physical Security}
+            Wird auch hier wie in \fref{sec:problem_limit} erwähnt, nicht betrachtet.
+    
+    
+    \subsection{Bewertung nach CVSS}
+    	\todo[color=yellow]{not sure...}\noindent In die Tabelle die Strings oder einzelne Spalten mit den Faktoren etc.?\\
+    	{\large\textsc{Tabelle unfertig, nur provisorisch}}
+        %\begin{sidewaystable}[H]
+          {\centering
+            \begin{table}[H]
+            {\small
+            \begin{tabular}{|>{\raggedright}p{0.28\textwidth}|m{0.56\textwidth}|m{0.05\textwidth}|}
+                \hline
+                \textbf{}                                      & \textbf{Vector String}                        & \textbf{Score}   \\ \hline
+                \rowcolor{light-gray}
+                \textbf{API: User Enumeration}                 & CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H  & 5.3              \\ \hline
+                \textbf{Insufficient Password Protection}      & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:N  & 6.5              \\ \hline
+                \rowcolor{light-gray}
+                \textbf{API: Privilege Escalation}             & CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L  & 8.5              \\ \hline
+                \textbf{Insecure Password Policy}              & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:N/A:H  & 7.5              \\ \hline
+                \rowcolor{light-gray}
+                \textbf{Phishing}                              & CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:N/A:H  & 6.9              \\ \hline
+                \textbf{Replay}                                & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
+                \rowcolor{light-gray}
+                \textbf{Device Spoofing}                       & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
+                \textbf{Missing 2-Factor Authentication}       & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:L  & 5.4
+                \label{tab:evaluation_bewertung}\\ \hline
+            \end{tabular}
+            }
+            \end{table}}
+          %\caption{Nach \gls{cvss} bewertete Schwachstellen aus \fref{sec:analysis_vulns}}
+        %\end{sidewaystable}
