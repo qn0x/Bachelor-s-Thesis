@@ -18,9 +18,11 @@
            
         \subsubsection*{I2: Insecure Authentification/Authorization}
             \begin{itemize}[leftmargin=0cm,label={}]
-                \item \emph{Insufficient Password Protection}\label{vuln:prototype_pwdprot}\\
+                \item \emph{Privilege Escalation}\label{vuln:prototype_pe}\\
         	        Stuff.
-    	        \item Authentifizierung zur Nutzung der \gls{rest}-\gls{api}
+    	        \item \emph{ID-Card theft}
+    	        \item \emph{Single Point of Failure}\label{vuln:prototype_spf}\\
+                    In Composer gibt es zwei unterschiedliche Arten von Adminsitratoren: den Business Network Administrator (je einen pro Business Network) und den Peer Administrator (je einen pro Hyperledger Fabric Instanz)
             \end{itemize}
             
         \subsubsection*{I3: Insecure Network Services}
@@ -35,7 +37,6 @@
         \subsubsection*{I4: Lack of Transport Encryption/Integrity Verification}
             Für diese Kategorie wurden keine Schwachstellen gefunden. 
             Die Kommunikation mit zwischen den Knoten, sowie dem Client und Knoten via \gls{rest}-Server kann mittels \gls{tls} gesichert werden. 
-            Es werden jeweils Zertifikate dafür verwendet.
             
         \subsubsection*{I5: Privacy Concerns}
             \begin{itemize}[leftmargin=0cm,label={}]
@@ -71,15 +72,15 @@
             \end{itemize}
             
         \subsubsection*{I9:Insecure Software/Firmware}
+            Als Firmware wird das unter Hyperledger Composer liegende Fabric-Framework aufgefasst. 
+            
             \begin{itemize}[leftmargin=0cm,label={}]
-    	        \item \emph{Single Point of Failure}\label{vuln:prototype_spf}\\
-                    In Composer gibt es zwei unterschiedliche Arten von Adminsitratoren: den Business Network Administrator (je einen pro Business Network) und den Peer Administrator (je einen pro Hyperledger Fabric Instanz)
+    	        \item die Fabric
             \end{itemize}
             
         \subsubsection*{I10: Poor Physical Security}
             Wird auch hier wie in \fref{sec:problem_limit} erwähnt, nicht betrachtet.
     
-    \sloppy\url{https://www.ibm.com/developerworks/cloud/library/cl-deploy-interact-extend-local-blockchain-network-with-hyperledger-composer/index.html}\\
     \sloppy\url{https://wiki.hyperledger.org/_media/security/technical_report_linux_foundation_fabric_august_2017_v1.1.pdf}\\
     \sloppy\url{https://wiki.hyperledger.org/_media/security/management_report_linux_foundation_fabric_august_2017_v1.1.pdf}
     
