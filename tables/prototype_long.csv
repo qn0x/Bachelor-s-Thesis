@@ -1,0 +1,11 @@
+﻿Schwachstelle/Bewertungskriterien;AV;AC;PR;UI;S;C;I;A;Score
+[I2] ID-Card Theft ;A;H;N;N;C;H;H;L;8.2
+[I2] Single Point of Failure;L;H;L;N;U;L;H;L;5.8
+[I3] DoS via REST-Server;L;H;N;N;U;N;N;L;2.9
+[I5] Unprotected User Information;L;H;L;N;U;H;N;N;4.7
+[I6] Participant Enumeration;L;L;L;N;U;L;N;N;3.3
+[I6] Asset Enumeration;L;L;L;N;U;L;N;N;3.3
+[I8] Unencrypted Data Storage;L;L;L;N;U;H;N;N;5.5
+[I9] Insufficient Sandboxing;L;L;H;N;U;L;L;L;4.2
+[I9] Log Injection;L;L;L;N;U;N;L;N;3.3
+[I9] Code Injection;L;L;L;N;U;N;L;N;3.3

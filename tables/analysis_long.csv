@@ -1,0 +1,20 @@
+﻿Schwachstelle/Bewertungskriterien;AV;AC;PR;UI;S;C;I;A;Score
+[I1] Insecure API;P;L;N;N;C;N;H;N;5.3
+[I2] Insufficient Password Prototection;N;H;N;R;C;L;H;N;6.9
+[I2] API: Privilege Escalation;N;L;N;N;C;L;H;N;9.3
+[I2] Insecure Password Policy;N;H;N;N;U;L;L;N;4.8
+[I2] Phishing;L;H;N;R;C;N;H;N;5.5
+[I2] Replay;L;H;N;R;C;H;N;N;5.5
+[I2] Device Spoofing;N;H;N;N;U;H;L;L;7.0
+[I2] Missing 2-Factor Authentication;P;H;L;N;C;H;H;N;6.7
+[I3] DoS via Commands;A;H;H;N;U;N;N;H;4.2
+[I3] DoS via Manufacturer;N;H;N;N;U;N;N;H;5.9
+[I3] DoS via Blueooth;A;L;N;N;U;N;N;H;6.5
+[I3] Access Log Evasion;A;L;L;N;U;N;H;N;5.7
+[I4] Insecure Password Transmission;A;L;N;R;U;N;L;N;3.5
+[I4] Revocation Evasion;A;L;L;N;U;N;H;N;6.5
+[I4] Decompiling APKs;A;H;N;R;U;H;H;N;6.4
+[I5] Extracted User Data;L;H;H;N;U;H;H;L;6.0
+[I7] Stolen User Settings;L;H;H;N;U;H;H;L;6.0
+[I7] Insecure Bluetooth Pairing;A;H;N;R;C;H;H;L;7.8
+[I9] Fuzzing;A;H;N;R;U;H;H;H;7.1
