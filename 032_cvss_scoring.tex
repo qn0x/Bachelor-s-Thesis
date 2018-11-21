@@ -1,30 +1,45 @@
 \subsection{Bewertung nach CVSS}
 \label{sec:analysis_cvss}
-    Da die Arbeit sich um die Verwendung einer Blockchain-Technologie dreht, werden zunächst alle Schwachstellen gefiltert, die prinzipiell nicht durch deren Verwendung behoben werden können.
-    Dazu gehören beispielsweise die Übertragung per Bluetooth (unsichere Pairing-Mechanismen und Session Keys), sowie physische Sicherheit und blabla\todo[color=cyan]{weitere auflisten}
-    In der \fref{tab:vulns_cvss_short} werden somit nur die Schwachstellen berwertet, die potentiell verhindert werden können und später am Prototypen getestet werden.
-    Die Bewertung wird mittels des online bereitgestellten Rechners\cite{CvssCalc} durchgeführt.
+    Die Bewertung der \fref{tab:vulns_cvss_short} wird mittels des online bereitgestellten Rechners\cite{CvssCalc} durchgeführt.
 	Grundlage hierfür ist der in \fref{sec:sota_sa_cvss} vorgestellte Base Score.
 	\footnote{Ein Scope Change wird in der Bewertung als solcher angesehen, sobald von den in \fref{fig:sl_arch} dargestellten Komponenten mindestens eine Zusätzliche betroffen ist.}
-	Darin wurden ähnliche Angriffe zusammengefasst und die \gls{cvss}-Vector Strings zur Nachverfolgung hintelegt, um die Nachverfolgung der Bewertung einzelner Faktoren zu gewährleisten.
-	
-	\todo[color=yellow]{kleine Tabelle hier einfügen}\
-	noindent In die Tabelle die Strings oder einzelne Spalten mit den Faktoren etc.?\\
-	{\large\textsc{Tabelle unfertig, nur provisorisch}}
+	In der detallierten \fref{tab:analysis_cvss_long}, welche sich im Anhang befindet, werden sämtliche einzelne Faktoren gelistet, um die Nachverfolgung der Bewertung einzelner Faktoren zu gewährleisten.
+
     \begin{table}[H]
         \centering
-        \begin{tabular}{|m{0.2\textwidth}|m{0.2\textwidth}|}
+        \begin{tabular}{|l|l|}
         \hline
-        \textbf{Rating}   & \textbf{\gls{cvss} Score}   \\ \hline
-        \rowcolor{light-gray}
-        None              & 0.0                         \\ \hline
-        Low               & 0.1 - 3.9                   \\ \hline
-        \rowcolor{light-gray}
-        Medium            & 4.0 - 6.9                   \\ \hline
-        High              & 7.0 - 8.9                   \\ \hline
-        \rowcolor{light-gray}
-        Critical          & 9.0 - 10.0                  \\ \hline
+\textbf{Schwachstelle}                      & \textbf{Score} \\ \hline
+\rowcolor{light-gray}
+{[}I1{]} Insecure API                       & \cellcolor{orange}5.3            \\ \hline
+{[}I2{]} Insufficient Password Prototection & \cellcolor{orange}6.9            \\ \hline
+\rowcolor{light-gray}
+{[}I2{]} API: Privilege Escalation          & \cellcolor{red}9.3            \\ \hline
+{[}I2{]} Insecure Password Policy           & \cellcolor{orange}4.8            \\ \hline
+\rowcolor{light-gray}
+{[}I2{]} Phishing                           & \cellcolor{orange}5.5            \\ \hline
+{[}I2{]} Replay                             & \cellcolor{orange}5.5            \\ \hline
+\rowcolor{light-gray}
+{[}I2{]} Device Spoofing                    & \cellcolor{redorange}7.0            \\ \hline
+{[}I2{]} Missing 2-Factor Authentication    & \cellcolor{orange}6.7            \\ \hline
+\rowcolor{light-gray}
+{[}I3{]} DoS via Commands                   & \cellcolor{orange}4.2            \\ \hline
+{[}I3{]} DoS via Manufacturer               & \cellcolor{orange}5.9            \\ \hline
+\rowcolor{light-gray}
+{[}I3{]} DoS via Blueooth                   & \cellcolor{orange}6.5            \\ \hline
+{[}I3{]} Access Log Evasion                 & \cellcolor{orange}5.7            \\ \hline
+\rowcolor{light-gray}
+{[}I4{]} Insecure Password Transmission     & \cellcolor{yellow}3.5            \\ \hline
+{[}I4{]} Revocation Evasion                 & \cellcolor{orange}6.5            \\ \hline
+\rowcolor{light-gray}
+{[}I4{]} Decompiling APKs                   & \cellcolor{orange}6.4            \\ \hline
+{[}I5{]} Extracted User Data                & \cellcolor{orange}6.0            \\ \hline
+\rowcolor{light-gray}
+{[}I7{]} Stolen User Settings               & \cellcolor{orange}6.0            \\ \hline
+{[}I7{]} Insecure Bluetooth Pairing         & \cellcolor{redorange}7.8            \\ \hline
+\rowcolor{light-gray}
+{[}I9{]} Fuzzing                            & \cellcolor{redorange}7.1            \\ \hline
         \end{tabular}
-        \caption[CVSS Scores des Prototypen]{CVSS Scores des Prototypen. Eine detailliertere Tabelle mit den einzeln bewerteten Faktoren befindet sich im Anhang}
+        \caption[CVSS Scores des Prototypen]{CVSS Scores der in \fref{sec:analysis_vulns} vorgestellten schwachstellen}
         \label{tab:vulns_cvss_short}
     \end{table}

@@ -77,6 +77,7 @@
                 \item dynamic logging
                 \item event publication over websockets
                 \item TLS enable/\-disable
+                \item Chaincode erklären
             \end{itemize}
         \end{itemize}
     
@@ -118,3 +119,7 @@ The historian is a specialised registry which records successful transactions, i
 The Hyperledger Composer Historian is a specialised registry which records successful transactions, including the participants and identities that submitted them. The historian stores transactions as HistorianRecord assets, which are defined in the Hyperledger Composer system namespace.
 \medskip
 An ID card (or card for short) is a collection of files that contains all the information necessary to allow a participant to connect to a business network. The card is referred to as an identity. Before it can be used, it must be issued to the user, allowing him or her to be authenticated and authorized to use the network. Cards are a very handy way of securing access to a Hyperledger Fabric network. Rather than keeping up with a password (called a secret in Hyperledger Composer terminology), you import the card into a collection of cards in the Hyperledger Fabric called a wallet. From that point on, you can just reference the card to authenticate that identi
+\begin{enumerate}
+    \item PeerAdmin ist für Hyperledger Instanz verantwortlich, stellt ID cards für BNA aus und entzieht dieser auch wieder, deployed business networks
+    \item BNA: update network, create, issue and revoke ID cards for participants
+\end{enumerate}
