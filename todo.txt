@@ -1,11 +1,11 @@
-[ ] Evaluation machen
-[ ] Scoring der Analyse machen
+[x] Evaluation machen
+[x] Scoring der Analyse machen
 [ ] Vergleich schreiben
 [ ] Schluss schreiben
 [ ] Anforderungen an den Prototypen anpassen
 [ ] Beschreibung des Frameworks ordentlich schreiben
 =======================================================
-[ ] Sicherheitsanalyse nochmal durchgehen
+[x] Sicherheitsanalyse nochmal durchgehen
 [ ] Evtl. kurzen Teil zu \gls{iot} bei den Grundlagen?
 [ ] Source Code Listings stylen
 [ ] Anhänge schreiben

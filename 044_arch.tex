@@ -61,6 +61,12 @@
             \item Welche Person welche Rolle inne hat und von wem diese gewährt wurde
             \item Jegliche erfolgreich abgeschlossenen Transaktionen
         \end{itemize}
+        Bei der Initialisierung des Netzwerks geschieht folgendes:
+        \begin{enumerate}
+            \item Von Herstellerseite aus deployed der PeerAdmin das Netzwerk für den neuen Kunden.
+            \item Der PeerAdmin stellt außerdem eine ID-Card für den Business Network Admin aus, welcher ebenfalls vom der Hersteller aus genutzt wird.
+            \item Der Business Network Admin erstellt einen Teilnehmer vom Typ \colorbox{light-gray}{\lstinline{Vendor}} und einen ersten Teilnehmer vom Typ \colorbox{light-gray}{\lstinline{User}}, welcher dem Kunden mit der Rolle \colorbox{light-gray}{\lstinline{OWNER}} zugewiesen wird. 
+        \end{enumerate}
         
     \subsubsection{Implementierungs- und Konfigurationsdetails}
     \label{sec:prototype_arch_impl}

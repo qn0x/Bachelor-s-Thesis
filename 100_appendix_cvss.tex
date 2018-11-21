@@ -2,30 +2,65 @@
     Put this shit here.\todo[color=cyan]{Details einfügen}
 \newpage
 \section{CVSS-Score Tabellen}
-     %\begin{sidewaystable}[H]
-      {\centering
-        \begin{table}[H]
-        {\small
-        \begin{tabular}{|>{\raggedright}p{0.28\textwidth}|m{0.56\textwidth}|m{0.05\textwidth}|}
-            \hline
-            \textbf{}                                      & \textbf{Vector String}                        & \textbf{Score}   \\ \hline
-            \rowcolor{light-gray}
-            \textbf{API: User Enumeration}                 & CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H  & 5.3              \\ \hline
-            \textbf{Insufficient Password Protection}      & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:N  & 6.5              \\ \hline
-            \rowcolor{light-gray}
-            \textbf{API: Privilege Escalation}             & CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L  & 8.5              \\ \hline
-            \textbf{Insecure Password Policy}              & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:N/A:H  & 7.5              \\ \hline
-            \rowcolor{light-gray}
-            \textbf{Phishing}                              & CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:N/A:H  & 6.9              \\ \hline
-            \textbf{Replay}                                & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
-            \rowcolor{light-gray}
-            \textbf{Device Spoofing}                       & CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L  & 4.9              \\ \hline
-            \textbf{Missing 2-Factor Authentication}       & CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:L  & 5.4
-            \label{tab:bewertung_vulns}\\ \hline
-        \end{tabular}
-        }
-        \end{table}}
-      %\caption{Nach \gls{cvss} bewertete Schwachstellen aus \fref{sec:analysis_vulns}}
-      \label{tab:test}
-    %\end{sidewaystable}
+    Die verwendeten Abkürzungen aus den in \fref{sec:sota_sa_cvss} vorgestellen Variablen:
+    \begin{itemize}[noitemsep]
+        \item Attack Vector(AV): Network(N), Adjacent(A), Local(L), Physical(P)
+        \item Attack Complexity(AC)
+        \item Privileges Required(PR)
+        \item User Interaction
+        \item usw. \todo[color=orange]{ausfüllen}
+    \end{itemize}
+
+\begin{sidewaystable}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|X|X|X|X|l|}
+\hline
+                                                     & \textbf{AV} & \textbf{AC} & \textbf{PR} & \textbf{UI} & \textbf{S} & \textbf{C} & \textbf{I} & \textbf{A} & \textbf{Score} \\ \hline
+\textbf{{[}I1{]} Insecure API}                       & P           & L           & N           & N           & C          & N          & H          & N          & 5.3            \\ \hline
+\textbf{{[}I2{]} Insufficient Password Prototection} & N           & H           & N           & R           & C          & L          & H          & N          & 6.9            \\ \hline
+\textbf{{[}I2{]} API: Privilege Escalation}          & N           & L           & N           & N           & C          & L          & H          & N          & 9.3            \\ \hline
+\textbf{{[}I2{]} Insecure Password Policy}           & N           & H           & N           & N           & U          & L          & L          & N          & 4.8            \\ \hline
+\textbf{{[}I2{]} Phishing}                           & L           & H           & N           & R           & C          & N          & H          & N          & 5.5            \\ \hline
+\textbf{{[}I2{]} Replay}                             & L           & H           & N           & R           & C          & H          & N          & N          & 5.5            \\ \hline
+\textbf{{[}I2{]} Device Spoofing}                    & N           & H           & N           & N           & U          & H          & L          & L          & 7.0            \\ \hline
+\textbf{{[}I2{]} Missing 2-Factor Authentication}    & P           & H           & L           & N           & C          & H          & H          & N          & 6.7            \\ \hline
+\textbf{{[}I3{]} DoS via Commands}                   & A           & H           & H           & N           & U          & N          & N          & H          & 4.2            \\ \hline
+\textbf{{[}I3{]} DoS via Manufacturer}               & N           & H           & N           & N           & U          & N          & N          & H          & 5.9            \\ \hline
+\textbf{{[}I3{]} DoS via Blueooth}                   & A           & L           & N           & N           & U          & N          & N          & H          & 6.5            \\ \hline
+\textbf{{[}I3{]} Access Log Evasion}                 & A           & L           & L           & N           & U          & N          & H          & N          & 5.7            \\ \hline
+\textbf{{[}I4{]} Insecure Password Transmission}     & A           & L           & N           & R           & U          & N          & L          & N          & 3.5            \\ \hline
+\textbf{{[}I4{]} Revocation Evasion}                 & A           & L           & L           & N           & U          & N          & H          & N          & 6.5            \\ \hline
+\textbf{{[}I4{]} Decompiling APKs}                   & A           & H           & N           & R           & U          & H          & H          & N          & 6.4            \\ \hline
+\textbf{{[}I5{]} Extracted User Data}                & L           & H           & H           & N           & U          & H          & H          & L          & 6.0            \\ \hline
+\textbf{{[}I7{]} Stolen User Settings}               & L           & H           & H           & N           & U          & H          & H          & L          & 6.0            \\ \hline
+\textbf{{[}I7{]} Insecure Bluetooth Pairing}         & A           & H           & N           & R           & C          & H          & H          & L          & 7.8            \\ \hline
+\textbf{{[}I9{]} Fuzzing}                            & A           & H           & N           & R           & U          & H          & H          & H          & 7.1            \\ \hline
+\end{tabularx}
+\caption{Detaillierte Ergebnisse der Bewertung in \fref{sec:analysis_cvss}}
+\label{tab:analysis_cvss_long}
+\end{sidewaystable}
+\newpage
+
+
+\begin{sidewaystable}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|X|X|X|X|l|}
+\hline
+\textbf{}                                      & \textbf{AV} & \textbf{AC} & \textbf{PR} & \textbf{UI} & \textbf{S} & \textbf{C} & \textbf{I} & \textbf{A} & \textbf{Score} \\ \hline
+\textbf{{[}I2{]} ID-Card Theft}                & A           & H           & N           & N           & C          & H          & H          & L          & 8.2            \\ \hline
+\textbf{{[}I2{]} Single Point of Failure}      & L           & H           & L           & N           & U          & L          & H          & L          & 5.8            \\ \hline
+\textbf{{[}I3{]} DoS via REST-Server}          & L           & H           & N           & N           & U          & N          & N          & L          & 2.9            \\ \hline
+\textbf{{[}I5{]} Unprotected User Information} & L           & H           & L           & N           & U          & H          & N          & N          & 4.7            \\ \hline
+\textbf{{[}I6{]} Participant Enumeration}      & L           & L           & L           & N           & U          & L          & N          & N          & 3.3            \\ \hline
+\textbf{{[}I6{]} Asset Enumeration}            & L           & L           & L           & N           & U          & L          & N          & N          & 3.3            \\ \hline
+\textbf{{[}I8{]} Unencrypted Data Storage}     & L           & L           & L           & N           & U          & H          & N          & N          & 5.5            \\ \hline
+\textbf{{[}I9{]} Insufficient Sandboxing}      & L           & L           & H           & N           & U          & L          & L          & L          & 4.2            \\ \hline
+\textbf{{[}I9{]} Log Injection}                & L           & L           & L           & N           & U          & N          & L          & N          & 3.3            \\ \hline
+\textbf{{[}I9{]} Code Injection}               & L           & L           & L           & N           & U          & N          & L          & N          & 3.3            \\ \hline
+\end{tabularx}
+\caption{Detaillierte Ergebnisse der Bewertung in \fref{sec:evaluation_cvss}}
+\label{tab:eval_cvss_long}
+\end{sidewaystable}
+
+
 \newpage
