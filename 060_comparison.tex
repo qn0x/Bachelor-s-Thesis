@@ -1,17 +1,48 @@
 \section{Vergleich des Prototypen mit den Analyseergebnissen}
 \label{sec:comparison}
     Als Grundlage für den Vergleich des Prototypen mit den Analyseergebnissen dienen die Tabellen \ref{tab:vulns_cvss_short} und \ref{tab:eval_cvss_short}.
-    Da sich die Problemstellung auf die Verwendung einer Blockchain-Technologie im Anwendungsfall eines Smart Locks bezieht, werden zunächst von den Analyseergebnissen die Schwachstellen gefiltert, die prinzipiell nicht durch deren Verwendung behoben werden können. 
+    Da sich die Problemstellung auf die Verwendung einer Blockchain-Technologie im Anwendungsfall eines Smart Locks bezieht, werden für den Vergleich die Schwachstellen nicht betrachetet, die prinzipiell nicht durch die Verwendung einer Blockchain, spezifischen dem verwendeten Blockchain-Framework behoben werden könnten. 
     Dazu gehören beispielsweise Schwachstellen, die die Übertragung per Bluetooth betreffen, sowie Schwachstellen der Mobilen- und Webkomponenten, als auch die physische Sicherheit. 
-    \medskip\\
-    Auch bei der Evaluation des Prototypen befinden sich unter den gefundenen Schwachstellen einige, die nicht aufgrund einer Blockchain bestehen. 
-    \medskip\\
-    Nachdem alle irrelevanten Schwachstellen aus dem Vergleich genommen worden sind, bleibel Folgende:
-    \missingfigure{2 Tabellen mit den übrig gebliebenen Schwachstellen}
     \bigskip\\
-    Allgemeiner Vergleich der Scores
-    \medskip\\
-    Vergleich anhand er Kategorien
-    \bigskip\\
-    Die Probleme der Proxy-Architektur wären damit beseitigt, aber jedoch bleiben die Probleme der direkten Architektur erhalten.
+    Nach der der Entwicklung des Prototypen konnten folgende in \fref{sec:analysis_vulns} vorgestellte (teilweise) Schwachstellen behoben werden:
+    \begin{itemize}[leftmargin=0cm,label={}]
+        \item \textbf{[A1] Insecure API:} Die generierte REST-API kann über das Framework mit einer Authentifizierung versehen werden. 
+        Die Authentifizierung wird mittels einer externen Library umgesetzt, welche eine große Auswahl von Authentifizierungsmethoden bietet. 
+        Die verwendete Library (passport.js) ist Open Source und weit verbreitet, was die Wahrscheinlichkeit von nicht entdeckten Sicherheitslücken mehr einschränkt als eine eigene Implementierung. 
+        \item \textbf{[A2] Insufficient Password Prototection:} Das Framework bietet keine Möglichkeit zur Rücksetzung eines Passwortes. 
+        Damit wird zwar der Funktionsumfang eingeschränkt, doch aus Sicht der Sicherheit wird somit die daraus entstandene Schwachstelle gemieden.
+        \item \textbf{[A2] Phishing:} Da die Credentials für das Netzwerk in Form einer ID-card abgelegt und vom Nutzer nicht jedes Mal eingegeben werden müssen, könnte ein Angreifer nur begrenzt an Informationen kommen.
+        \item \textbf{[A2] Replay:} Möchte ein Nutzer ein Schloss öffnen, wird kein konventioneller Befehl an ein Gerät gesendet, sondern eine Transaktion in ein Blockchain-Netzwerk eingereicht. 
+        Bei der ,,Generierung`` einer Transaktion wird vom Framework dieser eine einzigartige ID vergeben. 
+        Somit würde kann ein Angreifer bei einem einfachen Wiederabspielen des gesendeten Pakets scheitern. 
+        \item \textbf{[A2] Device Spoofing:} Hier gilt das selbe wie bei [I1] Insecure API. 
+        \item \textbf{[A3] Access Log Evasion:} Transaktionen werden erst dann ausgeführt, wenn diese validiert wurde und damit unveränderbar in die Blockchain geschrieben werden. 
+        Somit ist es einem Angreifer nicht möglich beispielsweise einen Öffnen-Befehl erfolgreich auszuführen und dabei unbemerkt zu bleiben.
+        \item \textbf{[A4] Insecure Password Transmission:} Jegliche Kommunikation zwischen den Knoten wird über das Framework mittels \gls{tls} abgesichert.
+        \item \textbf{[A4] Revocation Evasion:} Die Berechtigung eines Nutzers ein Schloss öffnen zu können wird in Form von Assets abgelegt. 
+        Wird einem Nutzer die Berechtung entzogen, so wird auch das entsprechende Asset gelöscht, wobei der Nutzer während des Prozesses nicht online sein muss. 
+        Somit hätte der Angreifer auch keine Möglichkeit diesem Prozess zu umgehen.
+        \item \textbf{[A4] Decompiling APKs:} Der Prototyp folgt dem Kerckhoffs'schen Prinzip
+        \!\footnote{Das Kerckhoffs'sche Prinzip besagt, dass die Sicherheit einer Verschlüsselung nicht von der Geheimhaltung des Verfahrens, sondern von der Geheimhaltung des Schlüssels abhängt.}. 
+        Da auch keine hardcoded Secrets abgelegt sind, ist es somit auch nicht möglich aus dem Source Code Sicherheitskritische Informationen zu gewinnen.
+        \item \textbf{[A9] Fuzzing:} Da jegliche im Prototypen verwendete Protokolle des Frameworks vollständig und wohldefiniert sind, sowie keinen eigenen Protokolle dafür entwickelt wurden, ist es einem Angreifer nicht möglich das Netzwerk oder das System in einen undefinierten oder Fehlerzustand zu bringen.
+    \end{itemize}
+    \bigskip
+    Folgende Schwachstellen bleiben allerdings (in ähnlicher Form) weiter erhalten:
+    \begin{itemize}[leftmargin=0cm,label={}]
+        \item \textbf{[A5] Extracted User Data:} findet sich in [P5] Unprotected User Information wieder.
+        \item \textbf{[A7] Stolen User Settings:} findest sich in [P2] ID-Card Theft wieder.
+        \item \textbf{[A3] DoS (allgemein):} Durch das dezentrale Konzept ist die Wahrscheinlichkeit eines erfolgreiche \gls{dos} ist deutlich geringer als bei konventionellen Smart Locks. 
+        Dennoch ist es wie in [P3] DoS via REST-Server trotzdem möglich zumindest einen Knoten dazu zu bringen keinen Service mehr bieten zu könnnen.
+    \end{itemize}
+    \bigskip
+    Auch bei der Evaluation des Prototypen befinden sich unter den gefundenen Schwachstellen einige, die nicht aufgrund einer Blockchain bestehen oder von einem Entwickler über das Framework beeinflusst werden können. 
+    Werden diese herausgefiltert, so bleiben folgende im Falle des Prototypen nicht behebbare Schwachstellen:
+    \begin{itemize}[noitemsep]
+        \item {[P2]} ID-Card Theft
+        \item {[P2]} Single Point of Failure
+        \item {[P5]} Unprotected User Information
+        \item {[P6]} Participant Enumeration
+        \item {[P6]} Asset Enumeration
+    \end{itemize}
     

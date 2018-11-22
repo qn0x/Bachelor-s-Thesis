@@ -2,11 +2,11 @@
 \label{sec:analysis_vulns}
     Es werden nach Literaturrecherche hier einige Schwachstellen und Angreiffe vorgestellt. 
     Eine Kategorisierung wird nach den \gls{owasp} Top Ten \gls{iot} Vulnerabilities\cite{Miessler2015} vorgenommen. 
-    Sollte eine Schwachstelle in mehrere Kategorien passen, so wird sie in jene eingeordnet, in der der größte Schaden im Falle eines Angriffs entsteht.\todo[color=yellow]{besser formulieren}
+    Sollte sich eine Schwachstelle in mehrere Kategorien einordnen lassen, so wird sie in jene eingeordnet, in der der größte Schaden im Falle eines Angriffs entstehen würde. 
     Für weitere Details zu den im Folgenden beschriebenen Schwachstellen wird auf die jeweiligen Quellen verwiesen.
     \todo[color=orange]{\cite{Tierney2018}\cite{Stykas2018}}
     
-    \subsubsection*{I1: Insecure Web Interface}
+    \subsubsection*{A1: Insecure Web Interface}
        \begin{itemize}[leftmargin=0cm,label={}]
             \item \emph{Insecure \gls{api}}\cite{Fuller2017,Lariviere2015}\label{vuln:userenum}\\
                 Produkt: August Smart Lock\\
@@ -17,7 +17,7 @@
                 Diese kann wiederrum durch das Nutzen einer Funktion in der Smartphone-App, welche nach Smart Locks in Reichweite sucht, erlangt werden. 
        \end{itemize} 
        
-    \subsubsection*{I2: Insecure Authentification/Authorization}
+    \subsubsection*{A2: Insecure Authentification/Authorization}
         \begin{itemize}[leftmargin=0cm,label={}]
             \item \emph{Insufficient Password Protection}\cite{Ye2017}\label{vuln:pwdprot}\\
     	        Produkt: QuickLock Smart Lock\\ 
@@ -63,7 +63,7 @@
                 \end{enumerate}
         \end{itemize}
         
-    \subsubsection*{I3: Insecure Network Services}
+    \subsubsection*{A3: Insecure Network Services}
         \begin{itemize}[leftmargin=0cm,label={}]
             \item \emph{Denial of Service via Commands}\cite{Ye2017}\label{vuln:doscmd}\\
     	        Produkt: August Smart Lock \\ 
@@ -89,7 +89,7 @@
                 Da diese Informationen auch nachdem Alice mit dem Schloss interagiert nicht über ihr Gerät an den Server weitergeleitet werden, kann Bob als Owner nicht sehen, dass Mallory das Schloss geöffenet oder geschlossen hat.
         \end{itemize}
         
-    \subsubsection*{I4: Lack of Transport Encryption/Integrity Verification}
+    \subsubsection*{A4: Lack of Transport Encryption/Integrity Verification}
         \begin{itemize}[leftmargin=0cm,label={}]
             \item \emph{Insecure Password Transmission}\cite{Rose2016}\label{vuln:pwdtrns}\\
                 Produkt: Quicklock, iBluLock, Pantraco Phantomlock\\
@@ -112,17 +112,17 @@
                 Somit behält Mallory Zugang für das Schloss.\\
                 Eine weitere Möglichkeit: in Angreifer mit einem in der Zukunft auf Zeit limitierten Gastzugang ändert die Zeiteinstellung auf seinem Gerät, um zu einem anderen Zeitpunkt Zugriff zum Schloss zu erhalten.
             \item \emph{Decompiling APKs}\cite{Rose2016}\label{vuln:decompile}\\
-                Produkt: Poly-Control Danalock Doorlock\\
+                Produkt: Poly-Control Danalock Doorlock
                 \begin{enumerate}[noitemsep]
     	            \item APKs vom Android-Gerät holen
     	            \item .dex zu .jar konvertieren
     	            \item .jar dekompilieren
     	            \item Der Quellcode enthält Informationen über die verwendete Verschlüsselungsmethode, sowie ein hardcoded Secret aus dem Schlüssel für die Bluetoothkommunikation generiert werden.
-    	            \item Da lediglich eine Operation durchgeführt, um einen Schlüssel zu generieren (\colorbox{light-gray}{\lstinline{XOR(passwort, secret)}}) ist es also einfach an das Passwort zu kommen und ein Entschlüsseln der Kommunikation zwischen Smartphone und Schloss ist möglich.
+    	            \item Da lediglich eine Operation durchgeführt, um einen Schlüssel zu generieren (\sloppy\colorbox{light-gray}{\lstinline{XOR(passwort, secret)}}) ist es also einfach an das Passwort zu kommen und ein Entschlüsseln der Kommunikation zwischen Smartphone und Schloss ist möglich.
     	        \end{enumerate}
         \end{itemize}
         
-    \subsubsection*{I5: Privacy Concerns}
+    \subsubsection*{A5: Privacy Concerns}
         \begin{itemize}[leftmargin=0cm,label={}]
             \item \emph{Extracted User Data}\cite{Lariviere2015,Ye2017}\label{vuln:userdata}\\
                 Produkt: August Smart Lock\\ 
@@ -132,10 +132,10 @@
     		    Allerdings muss der Zugriff auf das Smartphone mit root-Rechten möglich sein.
         \end{itemize}
         
-    \subsubsection*{I6: Insecure Cloud Interface}
+    \subsubsection*{A6: Insecure Cloud Interface}
         Keine Swachsstellen bekannt.
         
-    \subsubsection*{I7: Insecure Mobile Interface}
+    \subsubsection*{A7: Insecure Mobile Interface}
         \begin{itemize}[leftmargin=0cm,label={}]
             \item \emph{Stolen User Settings}\cite{Ye2017}\label{vuln:usersettings}\\
                 Produkt: August Smart Lock\\ 
@@ -152,10 +152,10 @@
                 Tapplock: Der Key für das Bluetooth-Pairing ist ein MD5-Hash, welcher aus der Konkatenierung der \gls{ble}-Mac-Adresse und der Seriennummer berechnet wird.
         \end{itemize}
         
-    \subsubsection*{I8: Insufficient Security Configurability}
+    \subsubsection*{A8: Insufficient Security Configurability}
         Keine Schwachstellen bekannt.
         
-    \subsubsection*{I9:Insecure Software/Firmware}
+    \subsubsection*{A9:Insecure Software/Firmware}
         \begin{itemize}[leftmargin=0cm,label={}]
             \item \emph{Fuzzing}\cite{Rose2016}\label{vuln:fuzzing}\\
                 Produkt: Okidokey Smart Doorlock\\
@@ -168,6 +168,6 @@
     	        \end{enumerate} 
         \end{itemize}
         
-    \subsubsection*{I10: Poor Physical Security}
+    \subsubsection*{A10: Poor Physical Security}
         Wird wie in \fref{sec:problem_limit} erwähnt, nicht betrachtet.
     
