@@ -1,0 +1,16 @@
+﻿Mitigated:
+[I1] Insecure API
+[I2] Insufficient Password Prototection
+[I2] Phishing
+[I2] Replay
+[I2] Device Spoofing
+[I3] DoS via Commands
+[I3] Access Log Evasion
+[I4] Insecure Password Transmission
+[I4] Revocation Evasion
+[I4] Decompiling APKs
+[I9] Fuzzing
+
+Still active:
+[I5] Extracted User Data
+[I7] Stolen User Settings
