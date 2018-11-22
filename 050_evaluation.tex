@@ -8,10 +8,10 @@
     Diese wird so konfiguiert, dass deren Verwendung eine Authentifizierung voraussetzt, sowie jeglicher Nachrichtenaustausch mittels \gls{tls} verschlüsselt wird.
 
     \subsection{Vulnerability Assessment}
-        \subsubsection*{I1: Insecure Web Interface}
+        \subsubsection*{P1: Insecure Web Interface}
             Da der Prototyp kein Webinterface hat, kann dieser Aspekt für die Evauluation nicht betrachtet werden.
            
-        \subsubsection*{I2: Insecure Authentification/Authorization}
+        \subsubsection*{P2: Insecure Authentification/Authorization}
             \begin{itemize}[leftmargin=0cm,label={}]
     	        \item \emph{ID-Card Theft on Network Initialization}\label{vuln:prototype_id_theft}\\
     	            Wird ein neues Netzwerk für den Prototypen initlialisiert, so wird der erste Netzwerkteilnehmer, der nicht der initialisierende Hersteller ist zum \colorbox{light-gray}{\lstinline{OWNER}}. 
@@ -22,7 +22,7 @@
                     Wird der Wallet des Kunden auf diesem Gerät komprommitiert, hat ein Angreifer die Möglichkeit die ID-Card des PeerAdmins zu stehlen. 
             \end{itemize}
             
-        \subsubsection*{I3: Insecure Network Services}
+        \subsubsection*{P3: Insecure Network Services}
             \begin{itemize}[leftmargin=0cm,label={}]
                 \item \emph{Denial of Service via \gls{rest}-Server}\label{vuln:prototype_dos}\\
         	        Jeder Knoten kann einen \gls{rest}-Server für seine Nutzer bereitstellen. 
@@ -31,11 +31,11 @@
         	        Zwar wird dadurch dem Nutzer der Zugriff zum Service verweigert, das Netzwerk an sich bleibt jedoch, wenn genug weitere Knoten nicht betroffen sind, funktional in Betrieb.
             \end{itemize}
             
-        \subsubsection*{I4: Lack of Transport Encryption/Integrity Verification}
+        \subsubsection*{P4: Lack of Transport Encryption/Integrity Verification}
             Für diese Kategorie wurden keine Schwachstellen gefunden. 
             Die Kommunikation mit zwischen den Knoten, sowie dem Client und Knoten via \gls{rest}-Server kann mittels \gls{tls} gesichert werden.
             
-        \subsubsection*{I5: Privacy Concerns}
+        \subsubsection*{P5: Privacy Concerns}
             \begin{itemize}[leftmargin=0cm,label={}]
                 \item \emph{Unprotected User Information}\label{vuln:prototype_userdata}\\
                     Im Prototypen müssen für die validierung der Transaktionen alle Nutzer alle anderen Nutzer sehen. 
@@ -45,7 +45,7 @@
                     Betrachtet man das Beispielnetzwerk in \fref{fig:pt_network} aus \fref{sec:prototype_arch_concept}, so könnte der Hersteller \colorbox{light-gray}{\lstinline{Vendor 1}} auch die Daten der Kunden von \colorbox{light-gray}{\lstinline{Vendor 2}}, in diesem Fall \colorbox{light-gray}{\lstinline{User 2}} einsehen und speichern.
             \end{itemize}
             
-        \subsubsection*{I6: Insecure Cloud Interface}
+        \subsubsection*{P6: Insecure Cloud Interface}
             Als Cloud Interface wird hier die Verbindung von einem Peer zum anderen mit Übertragung über das Internet betrachtet.
             Die Daten aus den Transaktionen werden werden sozusagen hochgeladen und der Nutzer kann nicht genau sagen auf welchem Server bzw. Knoten diese letztendlich auch gespeichert werden.
             \begin{itemize}[leftmargin=0cm,label={}]
@@ -57,10 +57,10 @@
                     Auch hier besteht die ID lediglich aus vier Ziffern.
             \end{itemize}
             
-        \subsubsection*{I7: Insecure Mobile Interface}
+        \subsubsection*{P7: Insecure Mobile Interface}
             Da der Prototyp kein mobiles Interface hat, kann dieser Aspekt nicht betrachtet werden.
             
-        \subsubsection*{I8: Insufficient Security Configurability}
+        \subsubsection*{P8: Insufficient Security Configurability}
             \begin{itemize}[leftmargin=0cm,label={}]
     	        \item \emph{Unencrypted Data Storage}\label{vuln:prototype_db}\\
                     Die Speicherung der jeweiligen Kopie der Blockchain auf den Knoten erfolgt über eine unverschlüsselte Datenbank. 
@@ -68,7 +68,7 @@
                     Da der Prototyp mit dem Konzept einer privaten Blockchain funktioniert, sollten die dort gespeicherten Daten auch nicht an Außenstehende gelangen.
             \end{itemize}
             
-        \subsubsection*{I9:Insecure Software/Firmware}
+        \subsubsection*{P9:Insecure Software/Firmware}
             Als Firmware wird das unter Hyperledger Composer liegende Fabric-Framework aufgefasst, welches bereits ein Audit\cite{Shaw2017} durchgeführt wurde. 
             Folgende Schwachstellen wurden gefunden:
             \begin{itemize}[leftmargin=0cm,label={}]
@@ -84,7 +84,7 @@
     	            Da die Zeichenklasse, die in dem String kopiert auf sichtbare Zeichen beschränkt, ist es einem Angreifer also nicht möglich in einer neuen Zeile beliebige Befehle auszuführen.
             \end{itemize}
             
-        \subsubsection*{I10: Poor Physical Security}
+        \subsubsection*{P10: Poor Physical Security}
             Wird auch wie in \fref{sec:problem_limit} erwähnt, nicht betrachtet.
     
     \subsection{Bewertung nach CVSS}
@@ -99,20 +99,20 @@
             \hline
 \textbf{Schwachstelle}                & \textbf{Score} \\ \hline
 \rowcolor{light-gray}
-{[}I2{]} ID-Card Theft                & \cellcolor{redorange}8.2            \\ \hline
-{[}I2{]} Single Point of Failure      & \cellcolor{orange}5.8            \\ \hline
+{[}P2{]} ID-Card Theft                & \cellcolor{redorange}8.2            \\ \hline
+{[}P2{]} Single Point of Failure      & \cellcolor{orange}5.8            \\ \hline
 \rowcolor{light-gray}
-{[}I3{]} DoS via REST-Server          & \cellcolor{yellow}2.9            \\ \hline
-{[}I5{]} Unprotected User Information & \cellcolor{orange}4.7            \\ \hline
+{[}P3{]} DoS via REST-Server          & \cellcolor{yellow}2.9            \\ \hline
+{[}P5{]} Unprotected User Information & \cellcolor{orange}4.7            \\ \hline
 \rowcolor{light-gray}
-{[}I6{]} Participant Enumeration      & \cellcolor{yellow}3.3            \\ \hline
-{[}I6{]} Asset Enumeration            & \cellcolor{yellow}3.3            \\ \hline
+{[}P6{]} Participant Enumeration      & \cellcolor{yellow}3.3            \\ \hline
+{[}P6{]} Asset Enumeration            & \cellcolor{yellow}3.3            \\ \hline
 \rowcolor{light-gray}
-{[}I8{]} Unencrypted Data Storage     & \cellcolor{orange}5.5            \\ \hline
-{[}I9{]} Insufficient Sandboxing      & \cellcolor{orange}4.2            \\ \hline
+{[}P8{]} Unencrypted Data Storage     & \cellcolor{orange}5.5            \\ \hline
+{[}P9{]} Insufficient Sandboxing      & \cellcolor{orange}4.2            \\ \hline
 \rowcolor{light-gray}
-{[}I9{]} Log Injection                & \cellcolor{yellow}3.3            \\ \hline
-{[}I9{]} Code Injection               & \cellcolor{yellow}3.3            \\ \hline
+{[}P9{]} Log Injection                & \cellcolor{yellow}3.3            \\ \hline
+{[}P9{]} Code Injection               & \cellcolor{yellow}3.3            \\ \hline
             \end{tabular}
             \caption[CVSS Scores des Prototypen]{CVSS Scores des Prototypen}
             \label{tab:eval_cvss_short}
