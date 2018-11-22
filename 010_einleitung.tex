@@ -1,7 +1,5 @@
-\section{Einleitung}\todo[color=cyan]{Vorwort und Abstract schreiben}
+\section{Einleitung}
 \label{sec:intro}
-%in neuerern Automodellen: das Gerät merkt, wenn ein legitimer Nutzer die Tür öffenen will.\cite{Ho2016}
-
     Mit stetig zunehmender Vernetzung des Lebens ist davon auch häufig der eigene Wohnraum betroffen. 
     Der Trend zu sogenannten Smart Homes ist klar erkennbar. 
     Von Küchengeräten über Beleuchtung, Sprinkleranlagen im Garten und Ga\-ra\-gen\-tü\-ren - immer mehr Geräte werden mit einem Netzwerk und gar mit dem Internet zu einem sogenannten \gls{iot} verbunden. 
@@ -15,65 +13,40 @@
     Ebenfalls im Trend liegt die Technologie der Blockchain, welche mit dem Erfolg der Kryptowährung Bitcoin nun auch in anderen Gebieten wie im Internet of Things und im Smart Home Anwendung findet.
     Da im Smart Home häufig auch kritische Daten, wie beispielsweise personenbezogene Daten ausgetauscht werden, ist deren Sicherheit zu garantieren wichtig.
     Ein zentrales Merkmal der Blockchain ist die Dezentralisierung der ,,Buchführung`` von Transaktionen.
-    \newline
-    
-    \noindent Aufgrund vermehrter Berichte über Sicherheitsvorfälle bei \gls{iot}-Geräten ist es umso nötiger die Sicherheit der im \gls{iot} verarbeiteten Daten und die Funktion der vernetzten Geräte zu gewährleisten.
+    \medskip\\
+    Aufgrund vermehrter Berichte über Sicherheitsvorfälle bei \gls{iot}-Geräten ist es umso nötiger die Sicherheit der im \gls{iot} verarbeiteten Daten und die Funktion der vernetzten Geräte zu gewährleisten.
     Diese Berichte umfassen Schwachstellen wie hardcoded Schlüssel, im Klartext gespeicherte Passwörter, Möglichkeit für Replay-Angriffe, Device-Spoofing\cite{Rose2016} und ungesicherte APIs beim Kommunikation mit der Cloud\cite{Stykas2018}. 
     Als eine der schwerwiegensten Schwachstellen wird außerdem die Zentralisierung von \gls{iot}-Geräten vor allem in der Cloud beschrieben\cite{Kshetri2017}.
-    
-    \subsection*{Motivation}
-    \textsc{wie wissenschaftlich soll die Motivation geschrieben sein?}
-    \noindent Nachdem dem vorangegangenen Hype\todo[color=yellow]{nein.} um die Kryptowährung Bitcoin sich das Konzept der Blockchain als potentiell zukunftsweisende herauskristallisiert hatte, wird derzeit in verschiedenen Anwendungsszenarien damit experimentiert. 
-    Einige Plattformen wie Slock.it bieten eine Plattform \gls{iot}-Applikationen mit Blockchain-Backend zu bauen. 
-    In \cite{Kshetri2017} werden einige Herausforderungen, die durch eine Blockchain möglicherweise gelöst werden könnten, beschrieben. 
-    Spezielle sicherheitsrelevante Aspekte werden hervorgehoben, wie mangelhafte Architektur (jede Entität im \gls{iot} kann zum Bottleneck werden), Cloud Server Downtime bzw. Nichterreichbarkeit von Services (Cloud Server ist bspw. durch einen Denial Of Service- Angriff nicht erreichbar) und Manipulationsmöglichkeiten der im \gls{iot} verarbeiteten Informationen \todo[color=yellow]{anders formulieren} und deren potentielle Lösungen werdem vorgestellt. 
-    Es werden häufig nur die funktionellen Aspekte betrachtet. 
-    Smart Locks sind als Repräsentant für das \gls{iot} gut geeignet.
+    In Abhandlungen wie \cite{Kshetri2017} werden einige Herausforderungen, die durch eine Blockchain möglicherweise gelöst werden könnten, beschrieben und potentielle Lösungsansätze werden vorgestellt.\\
+    Gerade bei Smart Locks ist es unbedingt nötig die vorhandenen Schwachstellen zu unterbinden.
+    Durch das dezentrale Konzept der Blockchain\cite{Nakamoto2008} lohnt es sich diese Technologie im Kontext des \gls{iot}, am Beispiel des Anwendungsfalls von Smart Locks zu untersuchen.
     
 \section{Problemstellung}
 \label{sec:problem}
-    %Anhand welcher Theorien, Methoden und Vorgehensweisen erledigt die Bachelorarbeit diese Aufgabe?
-    Gerade bei Smart Locks ist es unbedingt nötig diese Schwachstellen zu unterbinden.
-    Durch das oben erwähnte dezentrale Konzept der Blockchain\cite{Nakamoto2008} lohnt es sich diese Technologie im Kontext des \gls{iot}, am Beispiel von Smart Locks zu untersuchen.
-    Zudem verspricht man sich auch im Bereich des Identitäts- und Zugriffsmanagements von dem Konzept Blockchain Angriffe wie Device-Spoofing durch das Speichern von Gerätesignaturen zu unterbinden\cite{Kshetri2017}.
-    \newline
-    \noindent Als Ziel der Arbeit soll die Frage erörtern ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks (und erweitert im Bereich Smart Home und \gls{iot}) eingesetzt zu werden.
-    Dies soll mit Hilfe eines Prototypen eines Smart Locks untersucht werden, dessen Anforderungen aus bekannten Sicherheitslücken abgeleitet werden.
-    
-    \todo[color=cyan]{Teil aus überblick hier hin?}
+    Als Ziel der Arbeit soll die Frage erörtern ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks eingesetzt zu werden.
+    Dies soll mit Hilfe eines Prototypen eines Smart Locks untersucht werden.
     
     \subsection{Abgrenzung}
     \label{sec:problem_limit}
     	\begin{itemize}
-    		\item Fokussierung rein auf Implementierung und Software, mit Ausnahme der Bluetooth-Kommunikation
-    		\item Der Fokus des Prototypen soll dabei aber nicht auf der Umsetzung der Hardware liegen, sondern auf der Nutzung eines aktuell vorhandenen Frameworks, also auf aktuell plausiblen Implementierungen. 
-    		\item Beispiel für Smart Locks: August Smart Lock
+    		\item Der Fokus des Prototypen soll nicht auf der Umsetzung der Hardware liegen, sondern auf der Nutzung eines aktuell vorhandenen Frameworks, also auf aktuell plausiblen Implementierungen.
+    		Somit wird im Ergebnis auch keine Aussage über physische Aspekte von Smart Locks gemacht.
+    		\item Als Beispiel für herkömmliche Smart Lock Systeme dient, soweit nicht anders erwähnt, das August Smart Lock.
     	\end{itemize}
 
     \subsection{Methodik}
     \label{sec:problem_methods}
         Zunächst sollen bekannte Schwachstellen aktueller Produkte analysiert werden.
-        Als roter Faden der Analyse werden; die \gls{owasp}-Top10 für das \gls{iot}\cite{Miessler2015a} verwendet.
-        Im Anschluss wird als erstes ein passendes Framework ausgewählt, welches theoretisch die in der Analyse gefundenen Lücken schließen könnte.
-        Auf Basis dieses Frameworks wird dann der Prototyp entworfen und umgesetzt.
-        Der Prototyp soll ebenfalls anhand der \gls{owasp}-Top10 evaluiert werden.
+        Als roter Faden der Analyse werden die \gls{owasp}-Top10 für das \gls{iot}\cite{Miessler2015a} verwendet.
+        Im Anschluss wird als erstes ein passendes Framework nach bestimmten Aspekten ausgewählt.
+        Auf Basis dieses Frameworks wird ein Prototyp mit minimalen Funktionsumfang entworfen und umgesetzt.
+        Der Prototyp wird ebenfalls anhand der \gls{owasp}-Top10 evaluiert.
         Danach wird zwsichen den beim Prototyp gefundenen und den zuvor bei aktuellen Produkten analysierten Schwachstellen verglichen.
-        Dies geschieht mit Hilfe des \gls{cvss}-Bewertungsschemas, welches eine Vergleichbarkeit zwischen den gefundenen Lücken schaffen soll.
+        Der Vergleich wird mittels \gls{cvss}-Bewertungsschema gestützt, welches eine Vergleichbarkeit zwischen den gefundenen Lücken schafft.
         Abschließend wird die Problemstellung mittels des Vergleichs erörtert.
     
     \subsection{Vorhandene Arbeiten}
     \label{sec:problem_relatedWork}
         In \cite{Han2017} wird ein Konzept eines Smart Locks mit Blockchain-Technologie vorgestellt. 
-        Dort wird allerdings eine öffentliche Blockchain verwendet und der Fokus eher anders gelegt. 
-        
-        Vorangegangene Sicherheitsuntersuchungen, welche sich auf verschiedene Komponenten (Bluetooth\cite{Rose2016}) oder nur bestimmte Produkte (August Smart Lock\cite{Fuller2017,Ho2016,Ye2017} konzentrieren.
-    \todo[color=cyan]{Zum Schluss schreiben}
-
-	\vspace{3em}    
-	\iffalse
-	\noindent In \fref{sec:sota} werden zunächst die Grundlagen für diese Arbeit vorgestellt, darunter das Konzept einer Blockchain in \fref{sec:sota_blockchain_introduction}, das Double-Spending Problem in \fref{sec:sota_doublespend} und einige Sicherheitsaspekte in \fref{sec:sota_blockchain_security}.
-	Weiterhin werden \gls{iot}%(\fref{sec:sota_iot})
-	und Smart Locks(\fref{sec:sota_smart_locks}) erklärt\todo[color=orange]{wdh}.
-	Auf Sichereitsanalysen im \gls{iot} wird ausführlicher eingegangen.
-	\todo[color=yellow]{Überblick aktualisieren}
-    \fi
+        Dort wird allerdings eine öffentliche Blockchain verwendet und der Fokus auf die Frage des Konsens innerhalb des Netzwerkes gelegt. \\
+        Es existieren zudem vorangegangene Sicherheitsuntersuchungen von Smart Locks, welche sich auf verschiedene Komponenten wie beispielsweise \gls{ble}(\cite{Rose2016}) oder nur einzelne Produkte (August Smart Lock\cite{Fuller2017,Ho2016,Ye2017}) betrachten.

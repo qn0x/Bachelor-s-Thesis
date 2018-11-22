@@ -6,8 +6,7 @@
     Die Geräte haben zudem meist nur geringe Rechenleistung, sind aber dennoch untereinander stark vernetzt, wodurch sich die für einen Angreifer möglichen Angriffsvektoren vervielfacht und es erschwert traditionelle Sicherheitesmechanismen anzuwenden.\cite{Sicari2015}
     
     Um mögliche Schwachstellen in diesen komplexen Ökosystemen zu finden und zu vermeiden wurden vom \gls{owasp} mehrere Ressourcen veröffentlicht.
-    Darunter befinden sich ein Dokument mit den Top 10 gefundenen Sicherheitslücken in \gls{iot}-Geräten\cite{Miessler2015}, sowie ein Testing Guide\cite{Miessler}, um ein Gerät systematisch zu untersuchen.
-    
+    Darunter befinden sich ein Dokument mit den Top 10 Kategorien entdeckter Sicherheitslücken in \gls{iot}-Geräten\cite{Miessler2015}, sowie ein Testing Guide\cite{Miessler}, um Geräte systematisch zu untersuchen.
     
     Die gefundenen Schwachstellen werden als solche bezeichnet, sobald sie eines der klassischen Ziele\cite{Perrin2008} in der Informationssicherheit bedrohen. 
     Zu den Zielen gehören:
@@ -29,12 +28,10 @@
 	
 \subsubsection{Common Vulnerability Scoring System (CVSS)}
 \label{sec:sota_sa_cvss}
-    \todo[color=cyan]{System kurz erklären}
-    The Common Vulnerability Scoring System (CVSS) provides a way to capture the principal characteristics of a vulnerability, and produce a numerical score reflecting its severity, as well as a textual representation of that score. The numerical score can then be translated into a qualitative representation (such as low, medium, high, and critical) to help organizations properly assess and prioritize their vulnerability management processes.
-    Vorteile: standardized vulnerability scores, open framework, enables prioritized risk\cite{CVSSspec}
-    
-    
-    \noindent Der Base Score besteht aus zwei Subscores, Exploitability Score und Impact Score, welche wie folgt in Listing \ref{eq:cvss_basescore} verrechnet werden:
+    Das \gls{cvss} bietet eine Möglichkeit wesentliche Charakteristiken einer Schwachstelle festzuhalten und einen numerischen Score zu errechnen, welcher die Schwere jener Schwachstelle reflektiert. 
+    Zudem kann der numerische Score in eine qualitave Repräsentation (low, medium, high und critical) überführt werden, welcher bei der Priorisierung gefundenen Schwachstellen hilft.\cite{CVSSspec}
+    \medskip\\
+    Der Base Score besteht aus zwei Subscores, Exploitability Score und Impact Score, welche wie folgt in Listing \ref{eq:cvss_basescore} verrechnet werden:
     \begin{lstlisting}[caption={Berechnung des BaseScore \cite{CVSSspec}},label=eq:cvss_basescore,captionpos=b,mathescape=true]
 if (ImpactSubScore <= 0)
     BaseScore = 0

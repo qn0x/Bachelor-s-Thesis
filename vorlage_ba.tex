@@ -106,7 +106,7 @@
 
 % eigene Listentypen für die Anfoderungen an den Prototypen
 \newlist{FA}{enumerate}{1}
-\setlist[FA]{label=\textsf\textbf{{FA-\arabic*}},leftmargin=*,labelindent=0.4cm} % align=left,
+\setlist[FA]{label=\textsf\textbf{{FA-\arabic*}},leftmargin=*,labelindent=0.4cm,labelwidth=\widthof{\ref{fa:12}}} % align=left,
 
 \newlist{SA}{enumerate}{1}
 \setlist[SA]{label=\textsf\textbf{{SA-\arabic*}},leftmargin=*,labelindent=0.4cm} % align=left
@@ -262,16 +262,16 @@
 	%########################################################################################################
 	%!!!!!!!!!!!!!!!!!!!!!!!!AB HIER ARBEITEN!!!!!!!!!!!!!!!!!!!!!!!!
 
-    \listoftodos
-    \newpage
-    \input{998_fragen}
-    \newpage
+    %\listoftodos
+    %\newpage
+    %\input{998_fragen}
+    %\newpage
     \input{010_einleitung}
     \newpage
     \input{020_state_of_the_art}
     \input{021_doublespend}
     \input{022_blockchain}
-    \input{023_iot}
+    %\input{023_iot}
     \input{024_smart_locks}
     \input{025_security_analysis}
     \newpage

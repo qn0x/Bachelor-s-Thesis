@@ -1,27 +1,24 @@
 \subsection{Auswahl des Frameworks}
 \label{sec:prototype_framework}
-    Ein (kurzer) Abschnitt der Arbeit soll die Auswahl des genutzen Frameworks für den Prototypen darstellen, da dies eine wesentliche Entscheidung für die Arbeit und somit auch essentiell für die Bearbeitung der Problemstellung ist.
-    Es existieren mittlerweile diverse Frameworks mit verschiedenen Anwendungsgebieten, daher sollte das letztendlich verwendete Framework folgenden Kriterien entsprechen:
+    Da die die Wahl des Frameworks eine wesentliche Entscheidung für die Arbeit und somit auch essentiell für die Bearbeitung der Problemstellung darstellt, wird diese knapp erläutert.
+    \medskip\\
+    Es existieren diverse Frameworks mit verschiedenen Anwendungsgebieten, daher sollte das letztendlich verwendete Framework folgenden Kriterien entsprechen:
     \begin{itemize}[noitemsep]
         \item Open Source \textrightarrow\ eigene Einflussmöglichkeit
-        \item aktive Community \textrightarrow\ Unterstützung bei Schwierigkeiten
-        \item aktive Weiterentwicklung \textrightarrow\ zumindest in naher Zukunft besteht die Möglichkeit, dass das Framework auch in Produkten auf dem Markt genutzt werden könnte
+        \item aktive Community \textrightarrow\ Unterstützung bei Schwierigkeiten während der Entwicklung
+        \item aktive Weiterentwicklung \textrightarrow\ es besteht die Möglichkeit, dass das Framework auch in Produkten auf dem Markt genutzt werden könnte
         \item Auswahl an Sicherheitsmechanismen \textrightarrow\ Evaluierung von verschiedenen Konfigurationen möglich
-        \item Theoretische Möglichkeit des Schließens von den in der Analyse erarbeiteten Sicherheitslücken
-        \item private Blockchain, da der Teilnehmerkreis im Anwendungsfall von Smart Locks eher klein ist und keine Anonymität erfordert
     \end{itemize}
     \medskip
     \textbf{Auswahl verfügbarer Frameworks nach erster Recherche}
     \begin{itemize}[noitemsep]
         \item Hyperledger (Auswahl an verschiedenen Projekten mit unteschiedlichen Einsatzszenarien):
             \begin{itemize}[noitemsep]
-                \item Iroha: simpel, auf auch auf mobile Devices verfügbar, Automatisierung über Kubernetes, major Release noch in Beta
-                \item Sawtooth: Businesslogik in Transaktionen ist von dem Konsenslayer getrennt
-                \item Fabric: Bekanntestes und am weitesten entwickeltes Framework, sehr viele verschiedene Features, auf Enterprise Use ausgelegt, viele Konfigurationsmöglichkeiten
-                \item Composer: Abstrahierung des Fabric Frameworks, für rapid Development geeignet, explizite rollenbasierte Zugriffskontrolle
+                \item Iroha: einfaches Framework, das auch auf mobilen Geräten ist, Automatisierung über Kubernetes, hat jedoch noch kein major Release
+                \item Fabric: Bekanntestes und am weitesten entwickeltes Framework, sehr viele verschiedene Features, auf Enterpriseanwendung ausgelegt, viele Konfigurationsmöglichkeiten, komplex
+                \item Composer: Abstrahierung des Fabric Frameworks, für schnelle Entwicklung geeignet, explizite rollenbasierte Zugriffskontrolle
             \end{itemize}
         \item Exonum: private permissioned Blockchains, enthält einen Client, erweiterbar, noch ohne major Release, kein secure Storage für private Keys auf einem Knoten
         \item Quorum: basiert auf Ethereum, permissioned
-        \item Multichain
     \end{itemize}
-    Die Auswahl des Frameworks für den Prototypen fiel auf Hyperledger Composer.\todo[color=yellow]{Begründung benötigt?}
+    Die Auswahl des Frameworks für den Prototypen fiel auf Hyperledger Composer.

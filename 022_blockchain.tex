@@ -2,7 +2,6 @@
 \label{sec:sota_blockchain}
     Eine Blockchain ist in ihrer Essenz eine immer länger werdende, unveränderbare, öffentliche Kette von Transaktionen, die dezentral gespeichert wird (s. \fref{fig:bc_highlvl}). 
     \smallskip
-    \todo[color=yellow]{Transaktionen in m umbenennen (zu Hause}
     \begin{figure}[H]
     	\centering
     	\includegraphics[width=\textwidth]{graphics/bc_highlvl.png}
@@ -49,11 +48,12 @@
     \!\footnote{Nächste Nachbarn sind jene Knoten, die einen Sprung im \gls{p2p}-Netzwerk voneinander entfernt sind.}.
     Die Nachbarn überprüfen die Transaktion ebenfalls auf deren Validität und verbreiten diese wiederrum an ihre nächsten Nachbarn. 
     Schlussendlich kennen eine Vielzahl von Knoten im Netzwerk die Transaktion \lstinline{X}. 
+    Das hierfür verwendete Protokoll wird als ,,Gossip-Protokoll`` bezeichnet.\cite{Christidis2016}
     
     Im sogenannten ,,Mining``-Prozess, der wiederholt wird, werden valide Transaktionen, die innerhalb eines im Voraus abgestimmten Zeitintervalls gesammelt wurden, zeitlich geordnet, zu einem mit Zeitstempel versehenem ,,Candidate``-Block zusammengefügt und wieder im Netzwerk verbreitet. 
     Andere Knoten im Netzwerk stellen sicher, dass der neue Block valide Transaktionen enthält und den richtigen Hash des vorigen Blocks in der Kette enthält. 
     Bei erfolgreicher Validierung hängen die Knoten den Block jeweils an ihre Kopie der Kette an, übernehmen die darin enhaltenen Transaktionen und aktualisieren somit den aktuellen Zustand. 
-    Sollte innerhalb des Mining-Prozesses eine Validierung fehlschlagen, wird der ganze Block verworfen.
+    Sollte innerhalb des Mining-Prozesses eine Validierung fehlschlagen, wird der ganze Block verworfen.\cite{Christidis2016}
     
     Der Knoten, der diesen Prozess ausführt wird Miner genannt und von der Auswahl des Knotens und Konsensmechanismus abhängig und unter Umständen in der gleichen Situation unterschiedlich.\cite{Christidis2016}
     
@@ -94,7 +94,6 @@
                 Somit können die einzelnen Transaktionen schneller überprüft, an die Blockchain angehängt und somit ausgeführt werden als bei einer öffentlichen Blockchain.
             \item \textbf{private/permissioned}, Beispiele: Hyperledger Fabric\\
                 Ähnlich den public/permissioned Blockchains werden auch private von mindestens einer zentralen Autorität verwaltet, welche sich innerhalb einer einzelnen Organisation befindet.
-                \todo[color=yellow]{etwas mehr beschreiben?}
         \end{enumerate}
 	
     \subsubsection{Konsens und Sicherheit}

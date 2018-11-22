@@ -1,12 +1,17 @@
 [x] Evaluation machen
 [x] Scoring der Analyse machen
-[#] Vergleich schreiben
-[ ] Schluss schreiben
-[ ] Anforderungen an den Prototypen anpassen
+[x] Vergleich schreiben
+[x] Ergebis schreiben
+[x] Ausblick schreiben
+[x] Passt die Problemstellung zum Ergebnis?
+[#] Anforderungen an den Prototypen anpassen
 [ ] Beschreibung des Frameworks ordentlich schreiben
 =======================================================
 [x] Sicherheitsanalyse nochmal durchgehen
 [ ] Evtl. kurzen Teil zu \gls{iot} bei den Grundlagen?
 [ ] Source Code Listings
-[#] Anhänge schreiben
+[x] Tabellen in den Anhang tun
 [ ] Abstract schreiben
+
+======================================================
+- Wie "persönlich" darf die Motivation geschrieben sein?

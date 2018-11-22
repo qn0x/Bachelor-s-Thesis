@@ -1,27 +1,30 @@
 \subsection{Anforderungen an den Prototypen}
 \label{sec:prototype_requirements}
     Nichtfunktionale Anforderungen werden in dieser Arbeit nicht betrachtet. 
-    Die hier aufgelisteten funktionalen Anforderungen, sowie die Sicherheitsanforderungen, die als umsetzbar aufgeführt werden, werden im Prototypen umgesetzt. 
+    Die hier aufgelisteten funktionalen Anforderungen, sowie die Sicherheitsanforderungen, die als umsetzbar aufgeführt werden, werden vollständig im Prototypen umgesetzt. 
     
 \subsubsection{Funktionale Anfoderungen}
 \label{sec:prototype_func_req}
-    Aus dem Beispiel des August Smart Lock, das unter anderen in \fref{sec:sota_smart_locks} vorgestellt wurden, ergeben sich folgende funktionale Anforderungen 
-    \!\footnote{im weiteren Verlauf mit FA-<Ziffer> bezeichnet} 
-    für minimale Basisfunktionen:
+    Aus dem Beispiel des August Smart Lock, das unter anderen in \fref{sec:sota_smart_locks} vorgestellt wurden, ergeben sich folgende funktionale Anforderungen (FA) als minimale Basisfunktionen:
     \begin{FA}[noitemsep]
-        \item \label{fa:1},,Nutzer verwalten``-Funktion: Hinzufügen und Entfernen von neuen Nutzern
-        \item \label{fa:2}Schloss öffnen
-        \item \label{fa:3}Vergabe/Entzug der Berechtigung für die Funktion ,,Schloss öffnen``
-        \item \label{fa:4}Vergabe/Entzug der Berechtigung für die Funktion ,,Nutzer verwalten``
-        \item \label{fa:5}Nutzung eines Schlüssel soll optional zeitlich eingeschränkt werden können
+        \item \label{fa:1}Nutzer verwalten: Hinzufügen von neuen Nutzern
+        \item \label{fa:2}Nutzer verwalten: Entfernen von Nutzern
+        \item \label{fa:3}Schloss öffnen
+        \item \label{fa:4}Schloss schließen
+        \item \label{fa:5}Vergabe der Berechtigung für die Funktion ,,Schloss öffnen``
+        \item \label{fa:6}Entzug der Berechtigung für die Funktion ,,Schloss öffnen``
+        \item \label{fa:7}Vergabe der Berechtigung für die Funktionen unter ,,Nutzer verwalten``
+        \item \label{fa:8}Entzug der Berechtigung für die Funktionen unter ,,Nutzer verwalten``
+        \item \label{fa:9}Die Nutzung eines Schlüssels kann optional zeitlich eingeschränkt werden können
+        \item \label{fa:10}Ein Schloss soll zurückgesetzt werden können
+        \item \label{fa:11}Ein neues Schloss in das Netzwerk aufgenommen werden können
+        \item \label{fa:12}Das Netzwerk soll durch einen Hersteller initialisiert werden können
     \end{FA}
 
 \subsubsection{Sicherheitsanforderungen}
 \label{sec:prototype_sec}
-    Zusätzlich zu den funktionalen Anforderungen für den Prototypen, lassen sich aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken einige Sicherheitsnforderungen
-    \!\footnote{im weiteren Verlauf mit SA-<Ziffer> bezeichnet}
-    ableiten, welche mit Umsetzung derer dabei helfen diese zu vermeiden.
-    Die abgeleiteten Anforderungen werden nach der Möglichkeit und Unmöglichkeit der Umsetzung mittels einer Blockchain gruppiert.
+    Zusätzlich zu den funktionalen Anforderungen für den Prototypen, lassen sich aus den in \fref{sec:analysis_cvss} gefundenen Schwachstellen und Sicherheitslücken einige Sicherheitsnforderungen (SA) ableiten, welche mit deren Umsetzung dabei helfen diese zu vermeiden.
+    Die abgeleiteten Anforderungen werden nach der Möglichkeit und Unmöglichkeit der potentiellen Umsetzung mittels einer Blockchain gruppiert.
     Sollten die Anforderungen direkt auf die vermeidung einzelner vorgestellter Schwachstellen abzielen wird auf diese refernziert.
     \bigskip\\
     \noindent \textbf{Umsetzbare Sicherheitsanforderungen}:
@@ -41,15 +44,15 @@
             \textrightarrow\ \hyperref[vuln:replay]{Replay}, \hyperref[vuln:revocationevasion]{Revocation Evasion}, \hyperref[vuln:accesslogevasion]{Access Log Evasion}
         \item \label{sa:8}Consistency, Availability, Partition Tolerance (CAP-Theorem \cite{Brewer2012})\\
             \textrightarrow\ \hyperref[vuln:accesslogevasion]{Access Log Evasion}
-        \item sicheres Kommunikationsprotokoll für jegliche Übertragung von Nachrichten\cite{Miessler,Ye2017}
+        \item \label{sa:9}sicheres Kommunikationsprotokoll für jegliche Übertragung von Nachrichten\cite{Miessler,Ye2017}
+        \item \label{sa:10}keine statischen Passwörter speichern oder übertragen\cite{Rose2016}
     \end{SA}
     \medskip
     \noindent \textbf{Nicht umsetzbare Sicherheitsanforderungen}:
     \begin{itemize}[noitemsep]
         \item Sicherung der (relevanten) Daten, bevor diese auf dem Mobilgerät gespeichert werden\cite{Ye2017}\\
-            \textrightarrow\ für den Prototypen ist keine mobile Komponente vorgesehen\todo[color=yellow]{reicht als Grund aus?}
-        \item keine statischen Passwörter speichern oder übertragen\cite{Rose2016}\todo[color=yellow]{nicht sogar zu den Möglichen packen?}
-        \item 2-Factor Authentication\cite{Rose2016,Miessler2015}\\
+            \textrightarrow\ für den Prototypen ist keine mobile Komponente vorgesehen
+        \item 2-Factor Authentication, falls möglich\cite{Rose2016,Miessler2015}\\
             \textrightarrow\ der Prototyp arbeitet nur mit der generierten \gls{api}, der Authentifizierungsmechanismus wird vom Framework voregegeben?
         \item Bei Verwendung eines Nonce-Wertes: echt zufälliger Nonce-Wert mit 8-16 Bytes\cite{Rose2016}\\
             \textrightarrow\ s.o.
@@ -59,17 +62,5 @@
             \textrightarrow\ keine mobile Komponente
         \item Web Interface: keine Default-Einstellungen, Passwortrücksetzungen sichern (keine Metainformationen herausgeben, z.B. Account vorhanden/\-nicht vorhanden, keine XSS, SQLi oder CSRF, Anmeldedaten nicht im Netzwerkverkehr offenlegen, keine schwachen Passwörter zulassen, Lockout nach 3-5 Versuchen (kein Brute-Force)\cite{Miessler2015}\\
             \textrightarrow\ kein Webinterface für Nutzer des Prototypen
-        \item mehr \gls{ble}-Kram \todo[color=cyan]{Bluetooth-Kram}
     \end{itemize}
     
-    Aus \cite{Miessler2015}(\gls{owasp})
-    \begin{itemize}[noitemsep]
-        \item Authentication/\-Authorization: starke Passwörter, granulares Access Control, Anmeldedaten sichern, Passwortrücksetzung muss sicher sein, re-authentication für sensible Funktionen, Options for password controls?, Entzug der Anmeldedaten möglich, Authentifizierung für App, Gerät, Server, auf Server managen und müssen unique sein: UserID, UserDeviceID, UserAppID, Token/\-Session Key müssen immer unterschiedlich sein
-        \item Network Services: nur nötige Ports exposen, keine Buffer Overflow und Fuzzing Angriffe zulassen, kein DoS (für ein Gerät und auswirkungen auf andere Geräte), unregelmäßiger Servicerequest-Verkehr sollte beim Service-Gateway erkannt und blockiert werden
-        \item Transport Encyption: SSL/\-TLS verwenden, weitere standardisierte Verschlüsselungen verwenden (falls SSL/\-TLS nicht verfügbar), Message Payload Encryption, Secure Encryption Key Handshaking, received Data Integrity verification
-        \item Privacy: nur dringend nötige Daten des Gerätes und der Person sammeln, möglichst keine sensiblen Daten sammeln, gesammelte Daten nicht identifizierbar machen oder anonymisieren, gesammelte Daten durch Verschlüsselung schützen, Gerät und alle Komponenten zielen darauf auf ab persönliche Informationen zu schützen, nur autorisierte Entitäten haben Zugang zu persönlichen Informationen, pers. Daten werden nur für einen bestimmten Zeitraum gespeichert, Nutzer muss mit Informationen und Wahl beliefert werden falls mehr als erwartet gesammelt wird, RBAC für die Daten, analysierte Daten nicht identifizierbar
-        \item Cloud Interface: Enumeration verhindern, keine default Anmeldedaten, Lockout nach 3-5 Versuchen, kein XSS/\-SQLi/\-CSRF, Anmeldedaten nicht plain versenden, 2factor, unrelgelmäßigen Verkehr erkennen und blockieren
-        \item Mobile Interface: keine default Anmeldedaten, wie Cloud, App obfuscation, App Anti-Tampering, Memory protection, restrict Apps execution on tampered OS environment
-        \item Security Configurability: Trennung normale und Adminuser, Verschlüsselung von Daten (still oder übertragen), nur startke Pw, Logging of security events and inform user
-        \item secure update mechanism, update fiile encrypted, update via encrypted connection, update file doesn't expose senisitive data, update signed and verified, secure update server, secure boot if possible
-    \end{itemize}
