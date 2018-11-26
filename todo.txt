@@ -4,14 +4,18 @@
 [x] Ergebis schreiben
 [x] Ausblick schreiben
 [x] Passt die Problemstellung zum Ergebnis?
-[#] Anforderungen an den Prototypen anpassen
-[ ] Beschreibung des Frameworks ordentlich schreiben
-=======================================================
+[x] Anforderungen an den Prototypen anpassen
+[X] Beschreibung des Frameworks ordentlich schreiben
+======================================================
 [x] Sicherheitsanalyse nochmal durchgehen
 [ ] Evtl. kurzen Teil zu \gls{iot} bei den Grundlagen?
 [ ] Source Code Listings
+[ ] Anhang CVSS
 [x] Tabellen in den Anhang tun
 [ ] Abstract schreiben
-
+======================================================
+[ ] Korrekturlesen
+[ ] Verzeichnisse durchgehen
+[ ] ungebrauchte Abkürzungen rauswerfen
 ======================================================
 - Wie "persönlich" darf die Motivation geschrieben sein?
