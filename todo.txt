@@ -13,6 +13,8 @@
 [ ] Anhang CVSS
 [x] Tabellen in den Anhang tun
 [ ] Abstract schreiben
+[ ] Vorhandene Arbeiten einfügen
+[ ] fehlende Referenzen einfügen
 ======================================================
 [ ] Korrekturlesen
 [ ] Verzeichnisse durchgehen

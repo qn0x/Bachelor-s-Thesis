@@ -1,46 +1,48 @@
 \section{Einleitung}
 \label{sec:intro}
     Mit stetig zunehmender Vernetzung des Lebens ist davon auch häufig der eigene Wohnraum betroffen. 
-    Der Trend zu sogenannten Smart Homes ist klar erkennbar. 
+    Der Trend zu sogenannten Smart Homes ist klar erkennbar\cite{Paley2018}. 
     Von Küchengeräten über Beleuchtung, Sprinkleranlagen im Garten und Ga\-ra\-gen\-tü\-ren - immer mehr Geräte werden mit einem Netzwerk und gar mit dem Internet zu einem sogenannten \gls{iot} verbunden. 
     Gesteurert wird dies meist mit dem Smartphone entweder direkt oder über ein spezielles Hub, über das alle Informationen zentral fließen.
     So auch Smart Locks (wörtl. ,,intelligente Schlösser``).
 
-    Diese werden häufig auch bei Buchung und Vermietung von privaten Unterkünften oder im eigenen Heim an der als Türschlosser oder auch in Form von Vorhängeschlössern eingesetzt und sollen den Besitzern die Möglichkeit bieten schlüssellos und bequem mittels Smartphone das Schloss zu öffnen und zu schließen.
-    Häufig bieten Smart Locks auch Funktionen zur Administration von Berechtigungen, wie beispielsweise bestimmte Nutzer zeitweise dazu zu berechtigen das Türschloss zu öffnen und zu schließen.
-    Oft wird zur Übertragung der Signale Bluetooth Low Energy verwendet.
+    Diese werden häufig auch bei Buchung und Vermietung von privaten Unterkünften oder im eigenen Heim an der als Türschlosser oder auch in Form von Vorhängeschlössern eingesetzt und sollen den Besitzern die Möglichkeit bieten schlüssellos und bequem mittels Smartphone das Schloss zu öffnen und zu schließen.\todo[color=orange]{Referenz}
+    Häufig bieten Smart Locks auch Funktionen zur Administration von Berechtigungen, wie beispielsweise bestimmte Nutzer zeitweise dazu zu berechtigen das Türschloss zu öffnen und zu schließen.\todo[color=orange]{Referenz}
+    Oft wird zur Übertragung der Signale Bluetooth Low Energy verwendet.\todo[color=orange]{Referenz}
     
-    Ebenfalls im Trend liegt die Technologie der Blockchain, welche mit dem Erfolg der Kryptowährung Bitcoin nun auch in anderen Gebieten wie im Internet of Things und im Smart Home Anwendung findet.
+    Ebenfalls im Trend liegt die Technologie der Blockchain, welche mit dem Erfolg der Kryptowährung Bitcoin nun auch in anderen Gebieten wie im Internet of Things und im Smart Home Anwendung findet.\todo[color=orange]{Referenz}
     Da im Smart Home häufig auch kritische Daten, wie beispielsweise personenbezogene Daten ausgetauscht werden, ist deren Sicherheit zu garantieren wichtig.
     Ein zentrales Merkmal der Blockchain ist die Dezentralisierung der ,,Buchführung`` von Transaktionen.
     \medskip\\
     Aufgrund vermehrter Berichte über Sicherheitsvorfälle bei \gls{iot}-Geräten ist es umso nötiger die Sicherheit der im \gls{iot} verarbeiteten Daten und die Funktion der vernetzten Geräte zu gewährleisten.
-    Diese Berichte umfassen Schwachstellen wie hardcoded Schlüssel, im Klartext gespeicherte Passwörter, Möglichkeit für Replay-Angriffe, Device-Spoofing\cite{Rose2016} und ungesicherte APIs beim Kommunikation mit der Cloud\cite{Stykas2018}. 
+    Diese Berichte umfassen Schwachstellen wie statische Schlüssel, als Klartext gespeicherte Passwörter, die Möglichkeit für Replay-Angriffe, Device-Spoofing\cite{Rose2016} und ungesicherte APIs bei der Kommunikation mit der Cloud\cite{Stykas2018}. 
     Als eine der schwerwiegensten Schwachstellen wird außerdem die Zentralisierung von \gls{iot}-Geräten vor allem in der Cloud beschrieben\cite{Kshetri2017}.
-    In Abhandlungen wie \cite{Kshetri2017} werden einige Herausforderungen, die durch eine Blockchain möglicherweise gelöst werden könnten, beschrieben und potentielle Lösungsansätze werden vorgestellt.\\
-    Gerade bei Smart Locks ist es unbedingt nötig die vorhandenen Schwachstellen zu unterbinden.
+    In Abhandlungen wie \cite{Kshetri2017} werden einige Herausforderungen, die durch eine Blockchain möglicherweise gelöst werden könnten, beschrieben und potentielle Lösungsansätze vorgestellt.\\
+    Gerade bei Smart Locks ist es unbedingt nötig die vorhandenen Schwachstellen zu unterbinden, da sie oft wortwörtlich die ,,Eingangstür`` zum Zuhause ist.
     Durch das dezentrale Konzept der Blockchain\cite{Nakamoto2008} lohnt es sich diese Technologie im Kontext des \gls{iot}, am Beispiel des Anwendungsfalls von Smart Locks zu untersuchen.
     
 \section{Problemstellung}
 \label{sec:problem}
-    Als Ziel der Arbeit soll die Frage erörtern ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks eingesetzt zu werden.
-    Dies soll mit Hilfe eines Prototypen eines Smart Locks untersucht werden.
+    Als Ziel der Arbeit soll die Frage erörtert werden, ob die Block\-chain\--Tech\-no\-lo\-gie aus dem Aspekt der Sicherheit dafür geeignet ist, im Bereich der Smart Locks eingesetzt zu werden.
+    Dies soll mit Hilfe eines Prototypen eines Smart Locks untersucht und anhand von bereits aufgedeckten Schwachstellen verglichen werden.
     
     \subsection{Abgrenzung}
     \label{sec:problem_limit}
     	\begin{itemize}
-    		\item Der Fokus des Prototypen soll nicht auf der Umsetzung der Hardware liegen, sondern auf der Nutzung eines aktuell vorhandenen Frameworks, also auf aktuell plausiblen Implementierungen.
-    		Somit wird im Ergebnis auch keine Aussage über physische Aspekte von Smart Locks gemacht.
+    		\item Der Fokus des Prototypen liegt nicht auf der Umsetzung der Hardware, sondern auf der Nutzung eines aktuell vorhandenen Blockchain-Frameworks, also auf aktuell plausible Implementierungen.
+    		Somit wird im Ergebnis auch keine Aussage über die physische Sicherheit von Smart Locks gemacht.
+    		\item Es wird untersucht inwiefern und ob der Ersatz von herkömmlichen zentralen Komponenten durch eine Blockchain die Sicherheit erhöht. 
+    		    Periphäre Komponenten wie Smartphone-Apps oder Webapplikationen zur Verwaltung von Smart Locks werden nicht betrachtet.
     		\item Als Beispiel für herkömmliche Smart Lock Systeme dient, soweit nicht anders erwähnt, das August Smart Lock.
     	\end{itemize}
 
     \subsection{Methodik}
     \label{sec:problem_methods}
-        Zunächst sollen bekannte Schwachstellen aktueller Produkte analysiert werden.
-        Als roter Faden der Analyse werden die \gls{owasp}-Top10 für das \gls{iot}\cite{Miessler2015a} verwendet.
+        Zunächst werden bekannte Schwachstellen aktueller Produkte analysiert.
+        Als Leitfaden für die Analyse werden die \gls{owasp}-Top10 für  \gls{iot}-Geräte\cite{Miessler2015a} verwendet.
         Im Anschluss wird als erstes ein passendes Framework nach bestimmten Aspekten ausgewählt.
         Auf Basis dieses Frameworks wird ein Prototyp mit minimalen Funktionsumfang entworfen und umgesetzt.
-        Der Prototyp wird ebenfalls anhand der \gls{owasp}-Top10 evaluiert.
+        Der Prototyp wird ebenfalls anhand der für die Analyse verwendeten \gls{owasp}-Top10 für \gls{iot}-Geräte evaluiert.
         Danach wird zwsichen den beim Prototyp gefundenen und den zuvor bei aktuellen Produkten analysierten Schwachstellen verglichen.
         Der Vergleich wird mittels \gls{cvss}-Bewertungsschema gestützt, welches eine Vergleichbarkeit zwischen den gefundenen Lücken schafft.
         Abschließend wird die Problemstellung mittels des Vergleichs erörtert.
@@ -49,5 +51,5 @@
     \label{sec:problem_relatedWork}
         In \cite{Han2017} wird ein Konzept eines Smart Locks mit Blockchain-Technologie vorgestellt. 
         Dort wird allerdings eine öffentliche Blockchain verwendet und der Fokus auf die Frage des Konsens innerhalb des Netzwerkes gelegt. \\
-        Es existieren zudem vorangegangene Sicherheitsuntersuchungen von Smart Locks, welche sich auf verschiedene Komponenten wie beispielsweise \gls{ble}(\cite{Rose2016}) oder nur einzelne Produkte (August Smart Lock\cite{Fuller2017,Ho2016,Ye2017}) betrachten.
-00
+        Es existieren zudem vorangegangene Sicherheitsuntersuchungen von Smart Locks, welche mit Fokus auf verschiedene Komponenten oder Kommunikationswege wie beispielsweise \gls{ble}\cite{Rose2016} oder nur einzelne Produkte (August Smart Lock\cite{Fuller2017,Ho2016,Ye2017}) betrachten.
+       \todo[color=cyan]{weiter ausführen} 
