@@ -2,23 +2,25 @@
 \label{sec:prototype_framework}
     Da die die Wahl des Frameworks eine wesentliche Entscheidung für die Arbeit und somit auch essentiell für die Bearbeitung der Problemstellung darstellt, wird diese knapp erläutert.
     \medskip\\
-    Es existieren diverse Frameworks mit verschiedenen Anwendungsgebieten, daher sollte das letztendlich verwendete Framework folgenden Kriterien entsprechen:
+    Es existieren diverse Frameworks mit unterschiedlichem Fokus auf verschiedene Anwendungsgebiete, daher soll das letztendlich verwendete Framework folgenden Kriterien entsprechen:
     \begin{itemize}[noitemsep]
         \item Open Source \textrightarrow\ eigene Einflussmöglichkeit
-        \item aktive Community \textrightarrow\ Unterstützung bei Schwierigkeiten während der Entwicklung
-        \item aktive Weiterentwicklung \textrightarrow\ es besteht die Möglichkeit, dass das Framework auch in Produkten auf dem Markt genutzt werden könnte
-        \item Auswahl an Sicherheitsmechanismen \textrightarrow\ Evaluierung von verschiedenen Konfigurationen möglich
+        \item aktive Community \textrightarrow\ Unterstützung bei Schwierigkeiten während der Entwicklung des Prototypen
+        \item aktive Weiterentwicklung \textrightarrow\ es besteht die Möglichkeit, dass das Framework auch in zukünftigen Produkten auf dem Markt genutzt werden könnte
+        \item Auswahl an Sicherheitsmechanismen \textrightarrow\ Evaluierung von verschiedenen Konfigurationen ist möglich
+        \item ausführliche Dokumentation \textrightarrow\ Da sich die Implementierungen des Blockchain-Konzepts stark unterscheiden ist es dringend nötig, dass eine gute, ausführliche Dokumentation möglichst detailliert die verwendeten Mechanismen beschreibt.
+        \item Unterstützung von privaten Blockchains
     \end{itemize}
     \medskip
     \textbf{Auswahl verfügbarer Frameworks nach erster Recherche}
     \begin{itemize}[noitemsep]
-        \item Hyperledger (Auswahl an verschiedenen Projekten mit unteschiedlichen Einsatzszenarien):
+        \item Hyperledger (verschiedene Projekte mit unteschiedlichen Einsatzszenarien):
             \begin{itemize}[noitemsep]
                 \item Iroha: einfaches Framework, das auch auf mobilen Geräten ist, Automatisierung über Kubernetes, hat jedoch noch kein major Release
                 \item Fabric: Bekanntestes und am weitesten entwickeltes Framework, sehr viele verschiedene Features, auf Enterpriseanwendung ausgelegt, viele Konfigurationsmöglichkeiten, komplex
-                \item Composer: Abstrahierung des Fabric Frameworks, für schnelle Entwicklung geeignet, explizite rollenbasierte Zugriffskontrolle
+                \item Composer: Abstrahierung des Fabric Frameworks, für schnelle Entwicklung geeignet, explizite rollenbasierte Zugriffskontrolle und eigene Modellierungssprache für Teilnehmer, Transaktionen und Assets
             \end{itemize}
         \item Exonum: private permissioned Blockchains, enthält einen Client, erweiterbar, noch ohne major Release, kein secure Storage für private Keys auf einem Knoten
-        \item Quorum: basiert auf Ethereum, permissioned
     \end{itemize}
-    Die Auswahl des Frameworks für den Prototypen fiel auf Hyperledger Composer.
+    Die Auswahl des Frameworks für den Prototypen fiel auf Hyperledger Composer, da fast alle Frameworks, mit Ausnahme von Fabric, noch in einem sehr unreifen Entwicklungsstadium sind.
+    Fabric selbst ist für die Entwicklung eines einfachen Prototypen zu komplex.

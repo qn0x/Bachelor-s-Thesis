@@ -1,15 +1,15 @@
 \section{Evaluation des Prototypen}
 \label{sec:evaluation}
-    Wie auch in \fref{sec:analysis} bei der Analyse der Schwachstellen von aktuellen Produkten, wird auch die Analyse des Prototypen nach \cite{Miessler} gemacht. 
-    Aufgrund dessen, dass das evaluierte System noch im Status eines minimalen Prototypen ist, fallen die Möglichkeiten eine Web- oder Mobileoberfläche zu testen weg. 
-    Ebenfalls ist es nicht möglich die physische Sicherheit zu testen.
+    Wie auch in \fref{sec:analysis} bei der Analyse der Schwachstellen von aktuellen Produkten, wird auch die Analyse des Prototypen nach den \gls{owasp} Top 10\cite{Miessler} durchgefütrt. 
+    Aufgrund dessen, dass das evaluierte System im Status eines minimalen Prototypen ist, fallen die Möglichkeiten eine Web- oder Mobileoberfläche zu testen weg. 
+    Ebenfalls wird durch die Einschränkung der Problemstellung die physische Sicherheit nicht getestet.
     \medskip\\
     Mittels des Frameworks wird eine \gls{rest}-\gls{api} generiert, die für die Evauluation des Prototypen bei Bedarf verwendet wird. 
     Diese wird so konfiguiert, dass deren Verwendung eine Authentifizierung voraussetzt, sowie jeglicher Nachrichtenaustausch mittels \gls{tls} verschlüsselt wird.
 
     \subsection{Vulnerability Assessment}
         \subsubsection*{P1: Insecure Web Interface}
-            Da der Prototyp kein Webinterface hat, kann dieser Aspekt für die Evauluation nicht betrachtet werden.
+            Da der Prototyp kein Webinterface hat, wird dieser Aspekt für die Evauluation nicht betrachtet.
            
         \subsubsection*{P2: Insecure Authentification/Authorization}
             \begin{itemize}[leftmargin=0cm,label={}]
