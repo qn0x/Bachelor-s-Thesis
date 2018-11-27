@@ -1,37 +1,38 @@
 \subsection{Vulnerability Assessment im Internet of Things}
 \label{sec:sota_sa}
-    Logisch gesehen kann das \gls{iot} als Sammlung von Smart Devices gehen werden, die kollaborativ auf ein gemeinsames Ziel hinarbeiten. 
-    Technologisch gehen nutzen diese Geräte dafür unterschiedliche Kommunikationswege und -protokolle, basierend auf verschiedenen Architekturen und Mechanismen. 
+    Abstrakt betrachtet kann das \gls{iot} als Sammlung von Smart Devices gehen werden, die kollaborativ auf ein gemeinsames Ziel hinarbeiten. 
+    Technologisch nutzen diese Geräte dafür unterschiedliche Kommunikationswege und -protokolle, basierend auf verschiedenen Architekturen und Mechanismen. 
     Dies führt dazu, dass ein hohes Level an Heterogenität herrscht. 
-    Die Geräte haben zudem meist nur geringe Rechenleistung, sind aber dennoch untereinander stark vernetzt, wodurch sich die für einen Angreifer möglichen Angriffsvektoren vervielfacht und es erschwert traditionelle Sicherheitesmechanismen anzuwenden.\cite{Sicari2015}
-    
-    Um mögliche Schwachstellen in diesen komplexen Ökosystemen zu finden und zu vermeiden wurden vom \gls{owasp} mehrere Ressourcen veröffentlicht.
-    Darunter befinden sich ein Dokument mit den Top 10 Kategorien entdeckter Sicherheitslücken in \gls{iot}-Geräten\cite{Miessler2015}, sowie ein Testing Guide\cite{Miessler}, um Geräte systematisch zu untersuchen.
-    
+    Die Geräte haben zudem meist nur geringe Rechenleistung, sind aber dennoch untereinander stark vernetzt, wodurch sich die für einen Angreifer möglichen Angriffsvektoren vervielfacht und es erschwert traditionelle Sicherheitsmechanismen anzuwenden.\cite{Sicari2015}
+    \medskip\\
+    Um mögliche Schwachstellen in diesen komplexen Ökosystemen zu finden und zu vermeiden wurden vom \gls{owasp} mehrere Ressourcen für unterschiedlichste Anwendungsfälle veröffentlicht.
+    Darunter befinden sich eine regelmäßig aktualisierte Sammlung der Top 10 Kategorien entdeckter Sicherheitslücken in \gls{iot}-Geräten\cite{Miessler2015}, sowie ein Testing Guide\cite{Miessler}, um Geräte systematisch zu untersuchen und einfach zu verhindernde Schwachstellen zu vermeiden.
+    \medskip\\
     Die gefundenen Schwachstellen werden als solche bezeichnet, sobald sie eines der klassischen Ziele\cite{Perrin2008} in der Informationssicherheit bedrohen. 
     Zu den Zielen gehören:
     \begin{itemize}[noitemsep]
         \item Vertraulichkeit: Zugriff und Preisgabe von Informationen ist nur auf autorisierte Entitäten limitiert.
-        \item Integrität: Die Information ist vertrauenswürdig und integer, wurde als während einer möglichen Übertragung nicht verändert.
-        \item Verfügbarkeit: Hiermit ist die Verfügbarkeit der Informatin gemeint, die beispielsweise von auf einem Webserver liegt.
+        \item Integrität: Die Information ist vertrauenswürdig und integer, wurde als während einer möglichen Übertragung nur von autorisierten Entitäten verändert.
+        \item Verfügbarkeit: Hiermit ist die Verfügbarkeit der Information für autorisierte Entitäten gemeint, die beispielsweise von auf einem Webserver liegt.
     \end{itemize}
     
-    \noindent In \cite{Sicari2015} werden die Ziele für das \gls{iot} erweitert. 
-    Zusätzlich zu den o.g. Sicherheitszielen werden Folgende definiert:
+    \indent Zusätzlich werden die klassischen Sicherheitsziele für das \gls{iot} erweitert\cite{Sicari2015}:
     \begin{itemize}[noitemsep]
-        \item Authentifizierung: Eine Entität muss verifizieren, dass sie auch die ist, als welche sie sich indentifiziert.
+        \item Authentifizierung: Eine Entität muss verifizieren, dass sie auch die ist, deren Identität sie angibt.
         \item Zugriffskontrolle: Verschiedene Entitäten haben verschiedene Autorisierungen, um verschiedene Informationen zu lesen oder schreiben.
-        \item Non-Repudiation: Jegliche Änderungen an einer Information müssen auf die ändernde Entität zurückverfolgbar sein.
+        \item Non-Repudiation: Jegliche Änderungen an einer Information können von einer Entität nicht abgestritten werden.
     \end{itemize}
 	
 	\noindent Um existierende Schwachstellen zu bewerten, kann ein Standard, wie das \gls{cvss} verwendet werden.
 	
+\newpage
 \subsubsection{Common Vulnerability Scoring System (CVSS)}
 \label{sec:sota_sa_cvss}
-    Das \gls{cvss} bietet eine Möglichkeit wesentliche Charakteristiken einer Schwachstelle festzuhalten und einen numerischen Score zu errechnen, welcher die Schwere jener Schwachstelle reflektiert. 
+    Das \gls{cvss} bietet eine Möglichkeit wesentliche Charakteristiken einer Schwachstelle festzuhalten und einen numerischen Score zu errechnen, welcher das Schadensausmaß einer ausgenutzten Schwachstelle reflektiert. 
     Zudem kann der numerische Score in eine qualitave Repräsentation (low, medium, high und critical) überführt werden, welcher bei der Priorisierung gefundenen Schwachstellen hilft.\cite{CVSSspec}
     \medskip\\
-    Der Base Score besteht aus zwei Subscores, Exploitability Score und Impact Score, welche wie folgt in Listing \ref{eq:cvss_basescore} verrechnet werden:
+    Der Base Score besteht aus zwei Subscores, Exploitability Score und Impact Score, welche wie folgt in Listing \ref{eq:cvss_basescore} verrechnet werden\footnote{Ein Scope Change wird als solcher angesehen, sobald weitere Komponenten, als nur die, deren Schwachstelle ausgenutzt wurde, betroffen sind.}:
+    \smallskip
     \begin{lstlisting}[caption={Berechnung des BaseScore \cite{CVSSspec}},label=eq:cvss_basescore,captionpos=b,mathescape=true]
 if (ImpactSubScore <= 0)
     BaseScore = 0
@@ -43,9 +44,9 @@ if(Scope == Changed)
       Minimum [1.08 $\mathsf{\times}$ (Impact + Exploitability), 10])
     \end{lstlisting}
     
-    \noindent Ziel des Base Scores ist es wesentliche Charakteristiken, die in verschiedenen Umgebungenen und Zeitpunkten konstant sind, einer Schwachstelle zu repräsentieren. 
-    Der Score liegt zwischen dem Wert 0.0 und 10.0, wobei 0 das kleinste Risiko repräsentiert und 10 das Größte\cite{CVSSspec}. 
-    Die \fref{tab:cvss_severity} zeigt die Zuordnung der verschiedenen Scores zu Risikograden. 
+    \indent Ziel des Base Scores ist es wesentliche Charakteristiken einer Schwachstelle, die in verschiedenen Umgebungenen und Zeitpunkten konstant sind, zu repräsentieren. 
+    Der Score liegt zwischen dem Wert 0.0 und 10.0, wobei 0 das kein Risiko repräsentiert und 10 das Größtmögliche\cite{CVSSspec}. 
+    Die \fref{tab:cvss_severity} zeigt die Zuordnung der verschiedenen Scores zu den qualitativen Risikograden. 
     \begin{table}[H]
         \centering
         \sffamily
@@ -66,47 +67,48 @@ if(Scope == Changed)
         \caption[Skala des Ausmaßes einer ausgenutzten Schwachstelle]{Skala des Ausmaßes einer ausgenutzten Schwachstelle\cite{CVSSspec}}
         \label{tab:cvss_severity}
     \end{table}
-    \noindent Der Exploitability Score wird aus den Exploitablility Metrics berechnet(vgl. Listing \ref{eq:cvss_explscore}) und modelliert die Charakteristiken der anfälligen Komponente. 
-    \smallskip\\
+    \newpage
+    \indent Der Exploitability Score wird aus den Exploitablility Metrics berechnet(vgl. Listing \ref{eq:cvss_explscore}) und modelliert die Charakteristiken der anfälligen Komponente. 
+    \smallskip
     \begin{lstlisting}[caption={Berechnung des Exploitability Score \cite{CVSSspec}},label=eq:cvss_explscore,captionpos=b,mathescape=true]
 Exploitability = 8.22 $\mathsf{\times}$ AttackVector $\mathsf{\times}$ AttackComplexity 
   $\mathsf{\times}$ PrivilegeRequired $\mathsf{\times}$ UserInteraction
     \end{lstlisting}
-    \noindent Folgende Variablen werden dabei verrechnet:
+    \indent Bei den Berechnungen werden folgende Variablen verwendet\cite{CVSSspec}:
     \begin{description}[itemsep=0.7em,align=left,labelindent=0pt,leftmargin=0pt]
         \item [Attack Vector:] Beschreibt den Kontext, in der Ausnutzung der Schwachstelle möglich ist.
-            Der Wert, der in den Exploitability Score einfließt ist größert, je entfernter (im technischen Sinne) ein Angreifer sein kann, um einen Angriff zu starten.
+            Der Wert, der in den Exploitability Score einfließt ist größer, je entfernter (im technischen Sinne) ein Angreifer sein kann, um einen Angriff zu starten.
             \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
-                \item [Network:] Schwachstelle ist über Netzerkzugriff ausnutzbar, auch, wenn der Zugriff ein oder mehrere Hops via Layer 3
+                \item [Network:] Die Schwachstelle ist über Netzerkzugriff ausnutzbar, auch, wenn der Zugriff ein oder mehrere Hops via Layer 3
                 \footnote{nach dem OSI-Modell}
                 entfernt ist. 
-                \item [Adjacent:] Schwachstelle ist über Netzerkzugriff ausnutzbar, aber der Angriff ist auf das selbse physische oder logische Netzwerk eingeschränkt und kann nicht über eine Layer 3 Grenze (bspw. einem Router) ausgeführt werden.
-                \item [Local:] Ein lokaler Zugriff ist nötig, um die Schwachstelle ausnutzen zu können und die Komponente ist nicht an den Netzwerkstack gebunden.
+                \item [Adjacent:] Die Schwachstelle ist über Netzwerkzugriff ausnutzbar, aber der Angriff ist auf das selbe physische oder logische Netzwerk eingeschränkt und kann nicht über eine Layer 3 Grenze (beispielsweise einem Router) ausgeführt werden.
+                \item [Local:] Ein lokaler Zugriff ist nötig, um die Schwachstelle ausnutzen zu können oder die Komponente ist nicht an den Netzwerkstack gebunden.
                 Der Angriff funktioniert über lesende/schreibende/ausführende Zugriffe und kann voraussetzen, dass der Angreifer entweder in das System eingeloggt ist und/oder eine Nutzerinteraktion tätigt, bei der eine bösartige Datei ausgefürt wird.
                 \item [Physical:] Der Angreifer muss in der Lage sein die anfällige Komponente über eine bestimmte Zeit physisch zu bedienen oder zu manipulieren.
             \end{description}
-        \item [Attack Complexity:] Beschreibt die Bedingungen außerhalb der Kontrolle des Angreifers, die herrschen müssen, um die Schwachstelle auszunutzen (bspw. bestimmte Systemkonfiguration).
+        \item [Attack Complexity:] Beschreibt die Bedingungen außerhalb der Kontrolle des Angreifers, die herrschen müssen, um die Schwachstelle auszunutzen, beispielsweise bestimmte Systemkonfiguration.
             \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
                 \item [Low:] Spezielle Zugriffsbedingungen oder ähnliches existieren nicht.
                 Ein Angreifer kann wiederkehrenden Erfolg gegen die Komponente erzielen.
-                \item [High:] Ein erfolgreicher Angriff hängt von Zuständen außerhalb des Einflusses des Angreifers ab und kann voraussetzen, dass der Angreifer im Voraus einiges an Aufwand investieren muss, um diese Zuständer herzustellen.
+                \item [High:] Ein erfolgreicher Angriff hängt von Zuständen außerhalb des Einflusses des Angreifers ab und kann voraussetzen, dass der Angreifer im Voraus einiges an Aufwand investieren muss, um diese Zustände herzustellen.
             \end{description}
         \item [Privileges Required:] Beschreibt das Level an Privilegien, die ein Angreifer besitzen muss, um eine Schwachstelle ausnutzen können.
             \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
                 \item [None:] Der Angreifer ist vor dem Angriff nicht autorisiert und benötigt daher keinen Zugriff auf Einstellungen oder Dateien, um den Angriff ausführen zu können.
-                \item [Low:] Der Angreifer ist mit grundlegenden Nutzerrechten autorisisiert.
-                \item [High:] Der Angreifer ist mit erweiterten oder administrativen Rechten autorisiert und kann komponentenweite Einstellungen und Dateien ändern.
+                \item [Low:] Der Angreifer ist mit grundlegenden Nutzerrechten autorisiert.
+                \item [High:] Der Angreifer ist mit erweiterten oder administrativen Rechten autorisiert und kann komponentenweite Einstellungen, sowie Dateien ändern.
             \end{description}
-        \item [User Interaction:] Beschreibt die Voraussetzung, ob ein Angreifer einen erfolgreichen Angriff ohne weitere Beteiligung von anderen Nutzern ausführen kann oder ob ein Nutzer in irgendeiner Weise mitwirken muss.
+        \item [User Interaction:] Beschreibt die Voraussetzung, ob ein Angreifer einen erfolgreichen Angriff ohne weitere Beteiligung von anderen Nutzern ausführen kann oder ob ein Nutzer in irgendeiner Weise durch bestimmte Interaktion mitwirken muss.
             \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
                 \item [None:] Ein Angriff kann ohne Interaktion eines anderen Nutzers erfolgreich sein.
                 \item [Required:] Erfolgreiches Ausnutzen einer Schwachstelle ist nur möglich, wenn ein anderer Nutzer eine oder mehrere bestimmte Aktionen ausführt.
             \end{description}
     \end{description}
     
-    \noindent Der Impact Score wird aus den Impact Metrics berechnet (vgl. Listing \ref{eq:cvss_impscore} und beschreiben die Eigenschaften des betroffenen Komponenten. 
-    Sollte ein erfolgreich ausgeführter Angriff auch andere Komponenten beeinflussen, so wird die Komponente mit dem worst-case, also der höchsten Einstufung gewertet.
-    \smallskip\\\todo[color=green]{ans Ende des Kapitels}
+    \indent Der Impact Score wird aus den Impact Metrics berechnet (vgl. Listing \ref{eq:cvss_impscore}) und beschreibt die Eigenschaften des betroffenen Komponenten. 
+    Sollte ein erfolgreich ausgeführter Angriff auch andere Komponenten beeinflussen, so wird die Komponente nach dem Maximalprinzip, also der höchsten Einstufung gewertet.
+    \smallskip
     \begin{lstlisting}[caption={Berechnung des Impact Score \cite{CVSSspec}},label=eq:cvss_impscore,captionpos=b,mathescape=true]
 $\mathsf{ISC_{Base}}$ = 1 - [(1 - $\mathsf{Impact_{Conf}}$) $\mathsf{\times}$ (1 - $\mathsf{Impact_{Integ}}$) $\mathsf{\times}$ (1-$\mathsf{Impact_{Avail}}$)]
 if ($\mathsf{Scope}$ == Unchanged)
@@ -114,22 +116,23 @@ if ($\mathsf{Scope}$ == Unchanged)
 if ($\mathsf{Scope}$ == Changed)
     $\mathsf{Impact}$ = 7.52 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.029] - 3.25 $\mathsf{\times}$ [$\mathsf{ISC_{Base}}$ - 0.02]$\mathsf{^{15}}$
     \end{lstlisting}
+    \indent Für die Berechnungen werden folgende Variablen verwendet\cite{CVSSspec}:
     \begin{description}[itemsep=0.7em,align=left,labelindent=0pt,leftmargin=0pt]
-        \item [Confidentiality:] Ausmaß auf die Vertraulichkeit der Informationsressourcen, die von einer Softwarekomponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
+        \item [Confidentiality:] Ausmaß auf die Vertraulichkeit der Informationsressourcen, die von einer Komponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
             \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
                 \item [None:] Kein Verlust der Vertraulichkeit.
                 \item [Low:] Der Angreifer erlangt eingeschränkt Zugriff auf Informationen, hat aber keine Kontrolle darüber, welcher Informationen er erlangt.
                     Oder: Die Preisgabe der Informationen verursacht keinen direkten, schweren Verlust bei der betroffenen Konponente.
                 \item [High:] Die Vertraulichkeit ist nicht mehr gegeben.
             \end{description}
-        \item [Integrity:] Ausmaß auf die Integrität der Informationsressourcen, die von einer Softwarekomponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
+        \item [Integrity:] Ausmaß auf die Integrität der Informationsressourcen, die von einer Komponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
             \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
                 \item [None:] Kein Verlust der Integrität.
-                \item [Low:] Änderung von Daten durch einen Angreifer ist möglich, aber der Angreifer selbst hat keine Kontrolle über die Konsequenz seiner Modifikation oder das Maß der Modifikation ist eingeschränkt.
+                \item [Low:] Die Änderung von Daten durch einen Angreifer ist möglich, aber der Angreifer selbst hat keine Kontrolle über die Konsequenz seiner Modifikation oder das Maß der Modifikation ist eingeschränkt.
                 \item [High:] Verlust jeglicher Integrität.
-                    Der Angreifer kann alle Daten, die durch die Komponente geschützt oder kontrolliert werden modifizieren.
+                    Der Angreifer kann alle Daten, die durch die Komponente geschützt oder kontrolliert werden modifizieren, löschen und lesen.
             \end{description}
-        \item [Availability:] Ausmaß auf die Verfügbarkeit der Informationsressourcen, die von einer Softwarekomponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
+        \item [Availability:] Ausmaß auf die Verfügbarkeit der Informationsressourcen, die von einer Komponente verwaltet werden, welche durch das Ausnutzen einer Schwachstelle komprommittiert wurde.
             Damit ist der Verlust der Verfügbarkeit der betroffenen Komponente (wie ein Webservice, eine Datenbank, etc.) selbst gemeint.
             \begin{description}[noitemsep,align=left,labelindent=0.7cm,leftmargin=0.7cm]
                 \item [None:] Kein Verlust der Verfügbarkeit
@@ -146,7 +149,7 @@ if ($\mathsf{Scope}$ == Changed)
             \end{description}
     \end{description}
     
-    \noindent Es existieren Erweiterungen des Base Scores, der Temporal Score und Environmental Score. 
+    \indent Es existieren Erweiterungen des Base Scores, der Temporal Score und Environmental Score. 
     Diese beiden Werte werden in dieser Arbeit nicht verwendet. 
-    Für die genauen Werte, die für die Berechnungen verwendet werden, wird auf \cite{CVSSspec} verwiesen.\todo[color=cyan]{Anhang?}
+    Für die genauen Werte, die für die Berechnungen verwendet werden, wird auf die Spezifikation\cite{CVSSspec} des \gls{cvss} verwiesen.
     
