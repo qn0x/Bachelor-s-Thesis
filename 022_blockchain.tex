@@ -8,7 +8,7 @@
     	\caption[Abstrakte Darstellung einer Blockchain]{Abstrakte Darstellung einer Blockchain. Jeder neu hinzugefügte Block (hier immer rechts angehängt) enthält eine Referenz auf den Vorigen mittels dessen Hashwert.}
     	\label{fig:bc_highlvl}
     \end{figure}
-    \noindent Erstmals 2008 von Satoshi Nakamoto, ursprünglich als Peer-to-Peer Electronic Cash System ,,Bitcoin``
+    \noindent Erstmals 2008 von Satoshi Nakamoto, ursprünglich als \gls{p2p} Electronic Cash System ,,Bitcoin``
     \!\footnote{Heute werden Bitcoin, Ether, Ripple und andere als digitale Zahlungsmittel als sogennante Kryptowährung bezeichnet} 
     erfunden, erregte die Technologie aufgrund ihrer Eigenschaften wie ihres dezentralen, anonymen Konzepts schnell Aufmerksamkeit.\todo[color=orange]{Referenz} 
     Bitcoin ist die erste populäre digitale Währung, die ohne zentrale Autorität wie beispielsweise einer \gls{ttp} das in \fref{sec:sota_doublespend} vorgestellte Double-Spending Problem lösen sollte\cite{Nakamoto2008}. 
@@ -17,28 +17,30 @@
     \!\footnote{Ein Single Point of Failure stellt beipsielsweise eine Bank im Zahlungsverkehr dar.
     Fällt die Bank beispsielsweise aus irgendeinem Grund aus oder wird kompromittiert, haben deren Kunden keine Möglichkeit mehr (sicher) Überweisungen auszuführen und zu empfangen.}
     darstellt, gelöst. 
-    Das Konzept ermöglicht es somit zwei Entitäten, auch, wenn sie sich gegenseitig nicht vertrauen, ohne vermittelnde Person oder Organisation eine sichere (im Sinne der Integrität) direkte Transaktionen miteinander durchzuführen, welche auch im Nachhinein nicht mehr verändert werden können.\cite{Christidis2016}
+    Das Konzept ermöglicht es somit zwei Entitäten, auch, wenn diese sich gegenseitig nicht vertrauen, ohne vermittelnde Person oder Organisation sichere (im Sinne der Integrität) direkte Transaktionen  durchzuführen, welche auch im Nachhinein nicht mehr verändert werden können.\cite{Christidis2016}
     
     \subsubsection{Einführung in das Konzept}
     \label{sec:sota_blockchain_introduction}
     Grundlegend ist die Blockchain eine verteilte Datenstruktur, die zwischen den Mitgliedern eines Netzwerkes repliziert und geteilt wird\cite{Christidis2016}.
     Die Blockchain beinhaltet das maßgebliche ,,Hauptbuch`` (im Englischen ,,Ledger`` genannt) mit allen vergangenen Transaktionen, ein Log, dessen Einträge mit Zeitstempeln jeweils zu unterschiedlichen Blöcken zusammengefasst werden. 
-    Alle vergangenen Transaktionen in der Reihenfolge ihres Auftretens sind für alle Teilnehmer einsehbar\cite{Nakamoto2008}.
+    Alle vergangenen Transaktionen sind in der Reihenfolge ihres Auftretens für alle Teilnehmer einsehbar\cite{Nakamoto2008}.
+    \medskip\\
+    Da das Netzwerk ein \gls{p2p}-Netzwerk ist, ist es nicht nötig, dass alle Knoten jederzeit mit allen anderen Knoten im Netzwerk verbunden sind. 
+    Die Knoten des Netzwerkes speichern stets eine eigene Kopie der Blockchain.
     \medskip\\
     Nutzer nehmen an dem Netzwerk über Knoten teil, wobei ein Knoten auch für mehrere Nutzer einen Zugang bieten kann(s. \fref{fig:bc_network}). 
-    Knoten des Netzwerkes speichern stets eine eigene Kopie der Blockchain.
     Jeder Nutzer interagiert mit dem Netzwerk mittels eines Paares von öffentlichem und privatem Schlüssel, wobei der Öffentliche oder dessen Hashwert zur Adressierung und der Private zur Signierung von Transaktionen des Nutzers verwendet wird.\cite{Christidis2016}
+    \medskip\\
+    Zunächst wurde mit digitalen Coins gehandelt, welche einer in Form einer Kette digitaler Signaturen modelliert werden\cite{Nakamoto2008}.
+    In anderen Anwendungsbereichen außerhalb der Kryptowährungen wird nicht von Coins, sondern von generalisierten Assets gesprochen.
+    Der aktuelle Zustand (,,World View`` genannt) ergibt sich durch das Zurückverfolgen der einzelnen Transaktionen in der Blockchain. 
+    Es wird kein aktueller Stand, welcher Teilnehmer des Netzwerks was und wie viel besitzt, gespeichert.\cite{Christidis2016}
     \begin{figure}[H]
     	\centering
     	\includegraphics[width=\textwidth]{graphics/BCNetwork.png}
     	\caption[Blockchain-Netzwerk]{Blockchain-Netzwerk}
     	\label{fig:bc_network}
     \end{figure}
-    
-    Zunächst wurde mit digitalen Coins gehandelt, welche einer in Form einer Kette digitaler Signaturen modelliert wurden\cite{Nakamoto2008}.
-    In anderen Anwendungsbereichen außerhalb des Bereiches der Kryptowährungen wird von generalisierten Assets gesprochen.
-    Der aktuelle Zustand (,,World View`` genannt) ergibt sich also durch das Zurückverfolgen der einzelnen Transaktionen in der Blockchain. 
-    Es wird also kein aktueller Stand, welcher Teilnehmer des Netzwerks was und wie viel besitzt, gespeichert.\cite{Christidis2016}
     
     \subsubsection{Transaktionen}
     \label{sec:sota_blockchain_trx}
@@ -57,13 +59,12 @@
     
     Der Knoten, der diesen Prozess ausführt wird Miner genannt und von der Auswahl des Knotens und Konsensmechanismus abhängig und unter Umständen in der gleichen Situation unterschiedlich.\cite{Christidis2016}
     
-    \begin{figure}[H]
+    \begin{figure}[!htb]
     	\centering
     	\includegraphics[width=\textwidth]{graphics/transaction.png}
     	\caption[Kette digitaler Signaturen]{Kette digitaler Signaturen\cite{Nakamoto2008}. \lstinline{+K} stellt dabei den öffentlichen und \lstinline{-K} den privaten Schlüssel dar.}
     	\label{fig:txio}
     \end{figure}
-    
     Wie in \fref{fig:txio} dargestellt, werden Assets von einem Versender zu einem Empfänger transferiert, in dem der Sender einen Hash der vorigen Transaktion und den öffentlichen Schlüssel des Empfängers mit seinem eigenen privaten Schlüssel digital signiert und diese Hash dann am Ende des Assets anfügt.
     Der Empfänger, sowie alle Teilnehmer des Netzwerkes können den Besitz des Assets über die Kette der digitalen Signaturen zurückverfolgen.
     Transaktionen können zudem mehrere Ein- und Ausgaben haben.\cite{Nakamoto2008}
@@ -76,6 +77,7 @@
     Transaktionen können zudem mehrere Ein- und Ausgaben haben\cite{Nakamoto2008}.
     
     Der Empfänger, sowie alle Teilnehmer des Netzwerkes können den Besitz des Assets über die Kette der digitalen Signaturen zurückverfolgen\cite{Nakamoto2008}.
+	\FloatBarrier
 	
 	\subsubsection{Typen}
     \label{sec:sota_blockchain_types}

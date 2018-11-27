@@ -106,7 +106,7 @@ Exploitability = 8.22 $\mathsf{\times}$ AttackVector $\mathsf{\times}$ AttackCom
     
     \noindent Der Impact Score wird aus den Impact Metrics berechnet (vgl. Listing \ref{eq:cvss_impscore} und beschreiben die Eigenschaften des betroffenen Komponenten. 
     Sollte ein erfolgreich ausgeführter Angriff auch andere Komponenten beeinflussen, so wird die Komponente mit dem worst-case, also der höchsten Einstufung gewertet.
-    \smallskip\\
+    \smallskip\\\todo[color=green]{ans Ende des Kapitels}
     \begin{lstlisting}[caption={Berechnung des Impact Score \cite{CVSSspec}},label=eq:cvss_impscore,captionpos=b,mathescape=true]
 $\mathsf{ISC_{Base}}$ = 1 - [(1 - $\mathsf{Impact_{Conf}}$) $\mathsf{\times}$ (1 - $\mathsf{Impact_{Integ}}$) $\mathsf{\times}$ (1-$\mathsf{Impact_{Avail}}$)]
 if ($\mathsf{Scope}$ == Unchanged)
