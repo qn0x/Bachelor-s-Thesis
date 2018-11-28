@@ -234,13 +234,6 @@
 	\hspace*{22em}\name
 	\newpage
 	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	% ABSTRACT
-	\thispagestyle{empty}
-	
-	\textsc{{\LARGE Abstracts etc.}}
-	
-	\newpage
 	%---------------------------------------------------
 	%---------------------------------------------------
 	% VERZEICHNISSE -- AUTOMATISCHE EINTRAGUNG
@@ -298,7 +291,9 @@
     \renewcommand{\thesection}{\Roman{section}}
     \appendixpage
     \addappheadtotoc
-    \input{100_appendix_cvss}
     \input{101_appendix_prototype}
+    \newpage
+    \input{100_appendix_cvss}
+    
 
 \end{document}

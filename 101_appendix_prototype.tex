@@ -1,79 +1,224 @@
 \section{Source Code des Prototypen}
 \label{apx:prototype}
-    Der Source Code des Prototypen, sowie eine Anleitung zur Nutzung sind unter \sloppy\url{https://github.com/qn0x/smart-lock-prototype} zu finden.
+    Der Source Code des Prototypen, sowie eine Anleitung zur Nutzung sind im entsprechenden  \href{https://github.com/qn0x/smart-lock-prototype}{Repository} zu finden.
     Zudem sind im Folgedenden die wichtigsten Bestandteile des Prototypen angehängt.
-    
+    \vspace{-1em}
     \subsection{Modelle}
         \begin{lstlisting}[caption={Assets},label=model_assets,captionpos=b]
 asset LockKey identified by keyId {
     o String keyId
-    o DateTime expirationDate
-    o DateTime lastUsed
-    --> Lock lockId
+    o DateTime expirationDate optional
+    --> Lock lock
     --> User owner
     --> User issuer
 }
         \end{lstlisting}
-        \vspace{1em}
-        \begin{lstlisting}[caption={Participants},label=model_participants,captionpos=b]
+        
+        \begin{lstlisting}[caption={Participant-Typen},label=model_participants,captionpos=b]
 participant User identified by userId {
     o String userId
     o String firstName
     o String lastName
-    o UserRole role
+    o UserRole role  // "OWNER" oder "USER"
+    --> LockKey[] keys optional
 }
 
 participant Lock identified by lockId {
     o String lockId
     o String name
-    o DateTime lastUnlocked
-    o LockState state
+    o LockState state  // "LOCKED" oder "UNLOCKED"
+    --> LockKey[] keyInUse
+    --> Vendor vendor
 }
 
-enum UserRole {
-  o USER
-  o ADMIN
-}
-
-enum LockState {
-  o UNLOCKED
-  o LOCKED
+participant Vendor identified by vendorId {
+    o String vendorId
+    --> Lock[] locks
 }
         \end{lstlisting}
         \vspace{1em}
-        \begin{lstlisting}[caption={Transactions},label=model_transactopms,captionpos=b]
+        \begin{lstlisting}[caption={Auswahl relevanter Transactions},label=model_transactopms,captionpos=b]
 transaction Unlock {
-    --> LockKey lockKey
+    --> Lock lock
+}
+
+transaction CloseLock {
     --> Lock lock
 }
 
 transaction GrantUnlock {
-    --> LockKey lockKey
     --> Lock lock
-    --> User issuer
+    o DateTime expirationDate optional
     --> User grantee
 }
 
 transaction RevokeUnlock {
-    --> LockKey lockKey
     --> Lock lock
-    --> User issuer
     --> User revokee
 }
 
-transaction GrantAdmin {
-    --> User issuer
+transaction GrantOwner {
     --> User grantee
 }
 
-transaction RevokeAdmin {
-    --> User issuer
+transaction RevokeOwner {
     --> User revokee
 }
+
+transaction RemoveLock {
+    --> Lock lock
+}
+
+transaction RegisterLock {
+    --> Lock lock
+}
         \end{lstlisting}
-    
+    \newpage
     \subsection{Access Control}
-    \subsection{Transaktionslogik}
+    \begin{lstlisting}[caption={Beispiel der Access Control Rules für ein Schloss},label=acl1,captionpos=b]
+rule OwnersCanUpdateTheLock {
+    description: "owners can create, read, update and delete the lock"
+    participant(u): "de.hftl.user.User"
+    operation: ALL
+    resource(l): "de.hftl.lock.Lock"
+    condition: (u.role == "OWNER")
+    action: ALLOW
+}
+
+rule AnyoneCanSeeTheLocks {
+    description: "anyone can see all locks"
+    participant: "de.hftl.**"
+    operation: READ
+    resource: "de.hftl.lock.Lock"
+    action: ALLOW
+}
+
+rule KeyHoldersCanUpdateTheLockUnlock {
+    description: "key holders can update the lock while unlocking"
+    participant(u): "de.hftl.user.User"
+    operation: UPDATE
+    resource(l): "de.hftl.lock.Lock"
+    transaction(tx): "de.hftl.lock.Unlock"
+    condition: (
+      tx.lockKey.lock.getIdentifier() == tx.lock.getIdentifier()
+        && tx.lock.getIdentifier() == l.getIdentifier()
+        && l.state == "LOCKED"
+        && u.keys.some(function (lockKey) {
+          return 
+             lockKey.lock.getIdentifier() === l.getIdentifier();
+        })
+    )
+    action: ALLOW
+}
+\end{lstlisting}
 \newpage
-\section{Verwendung des Prototypen}
-    For Dummies. 
+\begin{lstlisting}[caption={Beispiel der Access Control Rules für ein Schloss (fortgesetzt)},label=acl2,captionpos=b]
+rule AnyUserCanCloseTheLock {
+    description: "Any user can close the lock if it is open"
+    participant: "de.hftl.user.User"
+    operation: UPDATE
+    resource(l): "de.hftl.lock.Lock"
+    transaction(tx): "de.hftl.lock.CloseLock"
+    condition: (
+        tx.lock.getIdentifier() == l.getIdentifier()
+          && l.state == "UNLOCKED"
+    )
+    action: ALLOW
+}
+
+rule DenyLockModifications {
+    description: "no one can modify the lock"
+    participant: "de.hftl.**"
+    operation: ALL
+    resource: "de.hftl.lock.Lock"
+    action: DENY
+}
+    \end{lstlisting}
+    
+    \newpage
+    \subsection{Transaktionslogik}
+\begin{lstlisting}[
+caption={Verarbeitung der \colorbox{light-gray}{\lstinline{CloseLock}} Transaktion},
+label=tx1
+,captionpos=b
+,numbers=left
+,language=JavaScript
+,numbersep=-1mm
+]
+  function closeLock(tx) {
+	var lock = tx.lock;
+	
+	// check if lock is open first
+	if (lock.state == "UNLOCKED") {
+		lock.keyInUse = new Array();
+		lock.state = "LOCKED";
+		return getAssetRegistry('de.hftl.lock.Lock')
+		.then(function (assetRegistry) {
+			return assetRegistry.update(lock);
+  		});
+  	}
+  }
+\end{lstlisting}
+
+\begin{lstlisting}[
+caption={Verarbeitung der \colorbox{light-gray}{\lstinline{InitializeNetwork}} Transaktion},
+label=tx2
+,captionpos=b
+,numbers=left
+,language=JavaScript
+,numbersep=-1mm
+]
+  function initializeNetwork(tx) {
+	var id = generateID();
+	var factory = getFactory();
+	var firstUser = factory.newResource('de.hftl.user', 'User', id);
+	firstUser.firstName = tx.firstName;
+	firstUser.lastName = tx.lastName;
+	firstUser.role = "OWNER";
+	
+	return getParticipantRegistry('de.hftl.user.User')
+	.then(function (userRegistry) {
+		return userRegistry.add(firstUser);
+	});
+  }
+\end{lstlisting}
+\newpage
+\begin{lstlisting}[
+caption={Verarbeitung der \colorbox{light-gray}{\lstinline{GrantKey}} Transaktion},
+label=tx3
+,captionpos=b
+,numbers=left
+,language=JavaScript
+,numbersep=-1mm
+]
+  function grantKey(tx) {
+	// generate a random id
+	let id = generateID();
+	
+	// create a new key
+	var factory = getFactory();
+	var key = factory.newResource('de.hftl.lock', 'LockKey', id);
+	if (tx.expirationDate !== null) {
+		key.expirationDate = tx.expirationDate;
+	}
+	key.lock = tx.lock;
+	key.owner = tx.grantee;
+	key.issuer = getCurrentParticipant();
+	
+	let grantee = tx.grantee;
+	// check if grantee has no keys yet
+	if (grantee.keys == null) {
+		grantee.keys = new Array();
+	}
+	grantee.keys.push(key);
+	
+	// add the new key to the key asset registry.
+	return getAssetRegistry('de.hftl.lock.LockKey')
+	.then(function (lockKeyRegistry) {
+		return lockKeyRegistry.add(key);
+	})
+	.then(function () {
+		return updateUserInRegistry(grantee);
+	});
+  }
+\end{lstlisting}
