@@ -14,7 +14,7 @@
         \subsubsection*{P2: Insecure Authentification/Authorization}
             \begin{itemize}[leftmargin=0cm,label={}]
     	        \item \emph{ID-Card Theft on Network Initialization}\label{vuln:prototype_id_theft}\\
-    	            Wird ein neues Netzwerk für den Prototypen initlialisiert, so wird der erste Netzwerkteilnehmer, der nicht der initialisierende Hersteller ist zum \colorbox{light-gray}{\lstinline{OWNER}}. 
+    	            Wird ein neues Netzwerk für den Prototypen initlialisiert, so wird der erste Netzwerkteilnehmer, der nicht (der initialisierende) Hersteller ist, zum \colorbox{light-gray}{\lstinline{OWNER}}. 
     	            Schafft es ein Angreifer der erste Teilnehmer zu sein, so hat dieser die Rolle eines \colorbox{light-gray}{\lstinline{OWNER}}s inne und freie Verfügung über das Kundennetzwerk.
     	        \item \emph{Single Point of Failure}\label{vuln:prototype_spf}\\
                     In Composer gibt es zwei unterschiedliche Arten von Administratoren: den Business Network Administrator (je einen pro Business Network) und den Peer Administrator (je einen pro Hyperledger Fabric Instanz) mit unterschiedlichen Aufgaben (s.\fref{sec:prototype_composer}). 
@@ -27,39 +27,39 @@
                 \item \emph{Denial of Service via \gls{rest}-Server}\label{vuln:prototype_dos}\\
         	        Jeder Knoten kann einen \gls{rest}-Server für seine Nutzer bereitstellen. 
         	        Jedoch wird bei der Authentifizierung kein Rate-Limiting angewendet. 
-        	        Bei Knoten, die entsprechend wenig Rechenleistung bieten kann kann dies unter Umständen zu einem \gls{dos} führen. 
+        	        Bei Knoten, die entsprechend wenig Rechenleistung bieten, kann kann dies unter Umständen zu einem \gls{dos} führen. 
         	        Zwar wird dadurch dem Nutzer der Zugriff zum Service verweigert, das Netzwerk an sich bleibt jedoch, wenn genug weitere Knoten nicht betroffen sind, funktional in Betrieb.
             \end{itemize}
             
         \subsubsection*{P4: Lack of Transport Encryption/Integrity Verification}
             Für diese Kategorie wurden keine Schwachstellen gefunden. 
-            Die Kommunikation mit zwischen den Knoten, sowie dem Client und Knoten via \gls{rest}-Server kann mittels \gls{tls} gesichert werden.
             
         \subsubsection*{P5: Privacy Concerns}
             \begin{itemize}[leftmargin=0cm,label={}]
                 \item \emph{Unprotected User Information}\label{vuln:prototype_userdata}\\
-                    Im Prototypen müssen für die validierung der Transaktionen alle Nutzer alle anderen Nutzer sehen. 
+                    Im Prototypen müssen für die Validierung der Transaktionen alle Nutzer alle anderen Nutzer im Netzwerk sehen können. 
                     Dazu muss in den \gls{acl}-Regeln die Operation \colorbox{light-gray}{\lstinline{READ}} auf alle Teilnehmertypen für alle Teilnehmer erlaubt sein. 
                     Der Mechanismus der Regeln im Hyperledger Composer Framework erlaubt es jedoch nicht Regeln für die einzelnen Attribute jeder Ressource festzulegen. 
                     Dazu gehören im Fall des Typs \colorbox{light-gray}{\lstinline{User}} auch personenbezogene Daten wie Vor- und Nachname und E-Mailadresse.\\
-                    Betrachtet man das Beispielnetzwerk in \fref{fig:pt_network} aus \fref{sec:prototype_arch_concept}, so könnte der Hersteller \colorbox{light-gray}{\lstinline{Vendor 1}} auch die Daten der Kunden von \colorbox{light-gray}{\lstinline{Vendor 2}}, in diesem Fall \colorbox{light-gray}{\lstinline{User 2}} einsehen und speichern.
+                    Wird das Beispielnetzwerk in \fref{fig:pt_network} aus \fref{sec:prototype_arch_concept} betrachtet, so könnte der Hersteller \colorbox{light-gray}{\lstinline{Vendor 1}} auch die Daten der Kunden von \colorbox{light-gray}{\lstinline{Vendor 2}}, in diesem Fall \colorbox{light-gray}{\lstinline{User 2}} einsehen und speichern.
             \end{itemize}
             
         \subsubsection*{P6: Insecure Cloud Interface}
             Als Cloud Interface wird hier die Verbindung von einem Peer zum anderen mit Übertragung über das Internet betrachtet.
-            Die Daten aus den Transaktionen werden werden sozusagen hochgeladen und der Nutzer kann nicht genau sagen auf welchem Server bzw. Knoten diese letztendlich auch gespeichert werden.
+            Die Daten aus den Transaktionen werden werden sozusagen ,,hochgeladen`` und der Nutzer kann nicht genau sagen auf welchem Server bzw. Knoten diese letztendlich auch gespeichert oder verarbeitet werden.
             \begin{itemize}[leftmargin=0cm,label={}]
                 \item \emph{Participant Enumeration}\label{vuln:prototype_enum_part}\\
                     Erstellt ein autorisierter Nutzer einen neuen Teilnehmer (der Typ des Nutzers ist irrelevant), so wird diesem automatisch eine ID zugewiesen. 
-                    Diese ID besteht standardmäßig aus lediglich vier Ziffern und ist somit für einen Angreifer einfach zu erraten.
+                    Diese ID besteht standardmäßig lediglich aus vier Ziffern und ist somit für einen Angreifer einfach zu erraten.
                 \item \emph{Asset Enumeration}\label{vuln:prototype_enum_asset}\\
-                    Wie auch bei der Participant Enumeration werrd bei der Erstellung von Assets die IDs automatisch vergeben. 
+                    Wie auch bei der Participant Enumeration wird bei der Erstellung von Assets die ID automatisch vergeben. 
                     Auch hier besteht die ID lediglich aus vier Ziffern.
             \end{itemize}
             
         \subsubsection*{P7: Insecure Mobile Interface}
             Da der Prototyp kein mobiles Interface hat, kann dieser Aspekt nicht betrachtet werden.
             
+        \newpage
         \subsubsection*{P8: Insufficient Security Configurability}
             \begin{itemize}[leftmargin=0cm,label={}]
     	        \item \emph{Unencrypted Data Storage}\label{vuln:prototype_db}\\
@@ -69,28 +69,29 @@
             \end{itemize}
             
         \subsubsection*{P9:Insecure Software/Firmware}
-            Als Firmware wird das unter Hyperledger Composer liegende Fabric-Framework aufgefasst, welches bereits ein Audit\cite{Shaw2017} durchgeführt wurde. 
-            Folgende Schwachstellen wurden gefunden:
+            Als Firmware wird das von Hyperledger Composer genutzte Fabric-Framework aufgefasst, für welches bereits ein Audit\cite{Shaw2017} durchgeführt wurde. 
+            Folgende Schwachstellen wurden dort gefunden:
             \begin{itemize}[leftmargin=0cm,label={}]
     	        \item \emph{Insufficient Sandboxing}\cite{Shaw2017}\label{vuln:fabric_sandbox}\\
-    	            Innerhalb des Docker-Containers kann beliebige Software installiert werden, sowie öffentliche und private Netzwerke, die für den Knoten sichtbar sind. 
+    	            Innerhalb des Docker-Containers kann beliebige Software installiert werden, sowie öffentliche und private Blockchain-Netzwerke, die für den Knoten sichtbar sind. 
     	            Ebenfalls werden Befehle von einem Remoteserver entegengenommen und dessen Ausgaben and diesen zurückgesendet. 
     	            Laut Bericht ist es somit möglich einen ,,Remote Access Trojaner`` als Chaincode zu implementieren.
     	        \item \emph{Log Injection}\cite{Shaw2017}\label{vuln:fabric_log_injection}\\
-    	            Daten können in das Application-Log geschrieben werden.
-    	            Daurch können von Angreifern Lognachrichten fabriziert werden und beispielsweise die automatische Verarbeitung des Logs verhindert werden. 
+    	            Beliebige Daten können in das Application-Log geschrieben werden.
+    	            Dadurch können von Angreifern Lognachrichten fabriziert und beispielsweise die automatische Verarbeitung des Logs gestört werden. 
     	        \item \emph{Code Injection}\cite{Shaw2017}\label{vuln:fabric_code_injection}\\
     	            In einem bestimmten Skript werden Strings unvalidiert in ein Docker-File kopiert. 
-    	            Da die Zeichenklasse, die in dem String kopiert auf sichtbare Zeichen beschränkt, ist es einem Angreifer also nicht möglich in einer neuen Zeile beliebige Befehle auszuführen.
+    	            Da sich die Zeichenklasse, die in dem String kopiert auf sichtbare Zeichen beschränkt, ist es einem Angreifer also nicht möglich in einer neuen Zeile beliebige Befehle auszuführen.
             \end{itemize}
             
         \subsubsection*{P10: Poor Physical Security}
             Wird auch wie in \fref{sec:problem_limit} erwähnt, nicht betrachtet.
     
+    \newpage
     \subsection{Bewertung nach CVSS}
     \label{sec:evaluation_cvss}
-        Auch hier wird die Bewertung der \fref{tab:vulns_cvss_short} mittels des online bereitgestellten Rechners\cite{CvssCalc} für den Base Score durchgeführt. 
-    	Im Anhang befindet sich eine detaillierte \fref{tab:eval_cvss_long}, in der sämtliche einzelne Faktoren dargestellt werden, die Bewertung nachvollziehbar zu machen.
+        Auch hier wird die Bewertung der \fref{tab:eval_cvss_short} wie in \fref{tab:vulns_cvss_short} mittels des online bereitgestellten Rechners\cite{CvssCalc} für den Base Score durchgeführt. 
+    	Im Anhang befindet sich eine detaillierte \fref{tab:eval_cvss_long}, in der sämtliche einzelne Faktoren dargestellt werden, die die Bewertung nachvollziehbar zu machen.
     
     	\begin{table}[H]
             \centering

@@ -1,24 +1,28 @@
 \section{Ergebnis}
 \label{sec:end}
-    Allgemein lässt sich daraus erkennen, dass die meisten Schwachstellen im Prototypen, bis auf eine Ausnahme, mittels \gls{cvss} als ,,Low`` und ,,Medium`` bewertet werden. 
-    Die Schwachstellen in herkömmlichen Smart Lock Systemenw werden fast durchgehend mit ,,Medium`` oder ,,high`` bewertet.
+    Allgemein lässt sich aus dem Vergleich erkennen, dass die meisten Schwachstellen im Prototypen, bis auf eine Ausnahme, mittels \gls{cvss} als ,,Low`` und ,,Medium`` bewertet werden. 
+    Die Schwachstellen in herkömmlichen Smart Lock Systemen werden fast durchgehend mit ,,Medium`` oder ,,high`` bewertet.
     \medskip\\
-    Werden die einzelnen \gls{owasp}-Kategorien für sich betrachtet, so ist erkennbar, dass Schwachstellen, die Autorisierung und Authentifizierung (A2,P2) betreffen, durch die Verwendung eines Blockchain-Frameworks mengentechnisch deutlich reduzieren lassen. 
+    Werden die einzelnen \gls{owasp}-Kategorien einzeln betrachtet, so ist erkennbar, dass Schwachstellen, die Autorisierung und Authentifizierung (A2,P2) betreffen, durch die Verwendung eines Blockchain-Frameworks mengentechnisch deutlich reduzieren lassen. 
     Aufgrund der Verwendung einer privaten Blockchain ist es jedoch nötig alle Teilnehmer des Netzwerkes vor ihrer Teilnahme, gegebenenfalls durch eine \gls{ttp}, zu authentifizieren und zu autorisieren, was sich nur minimal von den Verfahren eines konventionellen Systems unterscheidet.
-    Dies ist auch der Grund weshalb sich die in dieser Kategorie befindlichen Schwachstellen sehr ähneln und somit für diese Kategorie keine Aussage darüber getroffen werden kann, ob die Verwendung einer Blockchain einen Sicherheitsvorteil mit sich bringt, lediglich ob das verwendete Framework dafür gute Werkzeuge bereitstellt.\\
-    Gleiches gilt für die Kategorien des Web- , Mobile- und physischen Interfaces (A1,P1 bzw. A7,P7 und A10,P10) ebenso für die Kategorien.\\
-    Die Möglichkeiten der Sicherheitskonfiguration (A8,P8), das jeweilige Cloud-Interface (A6,P6) und die Sicherheit der darunterliegenden Soft- oder Firmware (A9,P9) sind je nach Framework unterschiedlich und damit nicht bewertbar.\\
-    Durch die Verwendung eines vollständigen und wohldefinierten Protokolls für die Abstimmung zwischen den Knoten des Blockchain-Netzwerkes, sowie die Dezentralität der Validierung und der Speicherung ist der Prototyp in den Kategorien der Netzwerkservices (A3,P3) und der Integritätssicherung (A4,P4) deutlich sicherer als herkömmliche Systeme.\\
+    Dies ist auch der Grund weshalb sich die in dieser Kategorie befindlichen Schwachstellen sehr ähneln und somit für diese Kategorie keine Aussage darüber getroffen werden kann, ob die Verwendung einer Blockchain einen Sicherheitsvorteil mit sich bringt, lediglich ob das verwendete Framework dafür gute Werkzeuge bereitstellt.
+    \medskip\\
+    Gleiches gilt für die Kategorien des Web- , Mobile- und physischen Interfaces (A1,P1 bzw. A7,P7 und A10,P10) ebenso für die Kategorien.
+    Die Möglichkeiten der Sicherheitskonfiguration (A8,P8), das jeweilige Cloud-Interface (A6,P6) und die Sicherheit der darunterliegenden Soft- oder Firmware (A9,P9) sind je nach Framework unterschiedlich und damit nicht bewertbar.
+    \medskip\\
+    Durch die Verwendung eines vollständigen und wohldefinierten Protokolls für die Abstimmung zwischen den Knoten des Blockchain-Netzwerkes, sowie die Dezentralität der Validierung und der Speicherung ist der Prototyp in den Kategorien der Netzwerkservices (A3,P3) und der Integritätssicherung (A4,P4) deutlich sicherer als herkömmliche Systeme.
+    \medskip\\
     In der Kategorie der Privatsphäre (A5,P5) schneidet der Prototyp jedoch etwas schlechter ab, 
-    da zur Authentifizierung auch identifizierende Daten der Nutzer benötigt werden, aber diese durch die Blockchain nicht geschützt werden. 
+    da zur Authentifizierung auch identifizierende Daten der Nutzer benötigt werden, aber diese durch die Blockchain nicht vor ungewolltem lesendem Zugriff von anderen Netzwerkteilnehmern geschützt werden. 
     Andererseits ist die Transparenz, jeder kann alle Transaktionen sehen, wiederrum ein Vorteil, um beispielsweise bösartige Transaktionen durch nicht autorisierte Nutzer schon vor deren Einreichung zur Validierung zu erkennen und durch die Unveränderbarkeit der Blockchain alle Aktionen zurückverfolgen zu können.
-    \bigskip\\
-    Im Endeffekt bedeutet dies schließlich, dass Smart Lock Systeme, die mit dem Hyperledger Composer Blockchain-Framework entworfen werden, im Allgemeinen sicherer sind als solche mit konventionellen Architekturen und der Einsatz einer des Framework im Anwendungsfall von Smart Locks die Sicherheit des Systems erhöht. \\
-    Da sich die in \fref{sec:prototype_framework} betrachteten Frameworks von ihrer Implementierung, als auch der Umsetzung des Konzepts einer Blockchain stark voneinander unterscheiden, kann keine Aussage darüber getroffen werden, ob das Ergebnis auch für andere Frameworks gültig ist.
+    \medskip\\
+    Im Endeffekt bedeutet dies schließlich, dass Smart Lock Systeme, die mit dem Hyperledger Composer Blockchain-Framework entworfen werden, im Allgemeinen sicherer sind als solche mit konventionellen Architekturen und der Einsatz einer des Framework im Anwendungsfall von Smart Locks die Sicherheit des Systems erhöht.
+    \newpage
+    \indent Da sich die in \fref{sec:prototype_framework} betrachteten Frameworks von ihrer Implementierung, als auch der Umsetzung des Konzepts einer Blockchain stark voneinander unterscheiden, kann keine Aussage darüber getroffen werden, ob das Ergebnis auch für andere Frameworks gültig ist.
     
 \section{Ausblick}
 \label{sec:end_further}
-    Um allgemeinere Aussage treffen zu können, ob sich eine Blockchain für die Verwendung in einem Smart Lock System, eventuell sogar im \gls{iot} sicherheitstechnisch lohnt und die hier erarbeiteten Ergebnisse weiter fortzuführen, sollten weitere Prototypen, die mit anderen Frameworks entwickelt werden, nach den gleichen Methoden wie in dieser Arbeit untersucht werden. 
-    Somit rücken die Unterschiede der verschiedenen Blockchain-Frameworks eher in den Hintergrund und es wird schärfer erkennbar, welchen Einfluss das Konzept der Blockchain auf die Sicherheit in Smart Lock Systemen hat. 
+    Um eine allgemeinere Aussage treffen zu können, ob sich eine Blockchain für die Verwendung in einem Smart Lock System, eventuell sogar im \gls{iot} sicherheitstechnisch lohnt und die hier erarbeiteten Ergebnisse weiter fortzuführen, sollten weitere Prototypen, die mit anderen Frameworks entwickelt werden, nach den gleichen Methoden wie in dieser Arbeit, entwickelt und untersucht werden. 
+    Dadurch lassen sich die Unterschiede der verschiedenen Blockchain-Frameworks besser hinausfiltern und es wird stärker erkennbar welchen Einfluss das Konzept der Blockchain auf die Sicherheit in Smart Lock Systemen hat. 
     \medskip\\
     Weiterhin wäre es möglich, um die Dezentralisierung der Systeme zu stärken und den Single Point of Failure einer \gls{ttp} weiter einzuschränken, das Konzept der ,,Selbstsouveränen Identität``\cite{Sherriff2017,W3C} umzusetzen, sobald dieses weiter ausgereift ist. 

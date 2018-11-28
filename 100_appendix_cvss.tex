@@ -1,13 +1,17 @@
 \section{Detaillierte CVSS-Score Tabellen}
-    Die verwendeten Abkürzungen aus den in \fref{sec:sota_sa_cvss} vorgestellen Variablen:
+\label{apx:cvss}
+    Die in den folgenden Tabellen verwendeten Abkürzungen stammen aus den in \fref{sec:sota_sa_cvss} vorgestellen Variablen:
     \begin{itemize}[noitemsep]
         \item Attack Vector(AV): Network(N), Adjacent(A), Local(L), Physical(P)
-        \item Attack Complexity(AC)
-        \item Privileges Required(PR)
-        \item User Interaction
-        \item usw. \todo[color=orange]{ausfüllen}
+        \item Attack Complexity(AC): Low(L), High(H)
+        \item Privileges Required(PR): None(N), Low(L), High(H)
+        \item User Interaction(UI): None(N), Required(E)
+        \item Scope(S): Unchanged(U), Changed(C)
+        \item Confidentiality(C): None(N), Low(L), High(H)
+        \item Integrity(I): None(N), Low(L), High(H)
+        \item Availablity(A): None(N), Low(L), High(H)
     \end{itemize}
-
+\newpage
 \begin{sidewaystable}
 \centering
 \sffamily
@@ -38,7 +42,6 @@
 \label{tab:analysis_cvss_long}
 \end{sidewaystable}
 \newpage
-
 
 \begin{sidewaystable}
 \centering
